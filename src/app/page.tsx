@@ -2,10 +2,16 @@
 
 import { parserApi } from "@/api/parser";
 import Image from "next/image";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setInputText } from "@/store/features/appSlice";
 
 export default function Home() {
-  const [inputValue, setInputValue] = useState("");
+  const dispatch = useAppDispatch();
+  const inputValue = useAppSelector((state) => state.app.inputText);
+
+  const handleInputChange = (value: string) => {
+    dispatch(setInputText(value));
+  };
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
@@ -53,7 +59,7 @@ export default function Home() {
               id="user-input"
               type="text"
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={(e) => handleInputChange(e.target.value)}
               placeholder="Type something here..."
               className="w-full px-4 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl outline-none focus:ring-2 focus:ring-black dark:focus:ring-white/20 transition-all duration-200 shadow-sm"
             />
@@ -62,7 +68,6 @@ export default function Home() {
             <button
               onClick={async () => {
                 try {
-
                   const result = await parserApi.parse(inputValue)
                   console.log(result)
                 } catch (error) {

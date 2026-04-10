@@ -1,105 +1,117 @@
 "use client";
 
-import { parserApi } from "@/api/parser";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setInputText } from "@/store/features/appSlice";
+import { useParseTextMutation } from "@/store/services/api";
 
 export default function Home() {
   const dispatch = useAppDispatch();
   const inputValue = useAppSelector((state) => state.app.inputText);
+  const [parseText, { isLoading, error, data }] = useParseTextMutation();
 
   const handleInputChange = (value: string) => {
     dispatch(setInputText(value));
   };
 
+  const handleParse = async () => {
+    try {
+      const result = await parseText({ prompt: inputValue }).unwrap();
+      console.log("Success:", result);
+    } catch (err) {
+      console.error("Failed to parse:", err);
+    }
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-start justify-between py-32 px-16 bg-white dark:bg-black">
-        <Image
-          className="dark:invert mb-12"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-start gap-6 text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50 underline decoration-zinc-300 underline-offset-4 hover:decoration-zinc-950 transition-colors"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50 underline decoration-zinc-300 underline-offset-4 hover:decoration-zinc-950 transition-colors"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-
-        <div className="w-full max-w-md mt-10 space-y-2">
-          <label
-            htmlFor="user-input"
-            className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 px-1"
-          >
-            Your input
-          </label>
-          <div className="relative group">
-            <input
-              id="user-input"
-              type="text"
-              value={inputValue}
-              onChange={(e) => handleInputChange(e.target.value)}
-              placeholder="Type something here..."
-              className="w-full px-4 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl outline-none focus:ring-2 focus:ring-black dark:focus:ring-white/20 transition-all duration-200 shadow-sm"
-            />
+    <div className="flex flex-col flex-1 items-center justify-center bg-canvas font-sans selection:bg-seeker/20 selection:text-seeker">
+      <main className="flex flex-1 w-full max-w-4xl flex-col items-center justify-center py-24 px-8">
+        <div className="w-full max-w-2xl bg-surface-lowest p-12 rounded-2xl shadow-lugh-blur flex flex-col items-center gap-12 transition-all">
+          <Image
+            className="mb-4"
+            src="/next.svg"
+            alt="Next.js logo"
+            width={120}
+            height={24}
+            priority
+          />
+          
+          <div className="flex flex-col items-center gap-4 text-center">
+            <h1 className="text-4xl font-bold tracking-tight text-zinc-900">
+              The Digital Curator
+            </h1>
+            <p className="max-w-md text-lg text-zinc-500 leading-relaxed">
+              Prioritize signal over noise with intentional asymmetry and massive white space.
+            </p>
           </div>
-          <div className="relative group">
+
+          <div className="w-full space-y-6">
+            <div className="space-y-2">
+              <label
+                htmlFor="user-input"
+                className="block text-sm font-semibold text-zinc-600 px-1 uppercase tracking-wider"
+              >
+                Prompt Input
+              </label>
+              <div className="relative">
+                <input
+                  id="user-input"
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  placeholder="Ask the curator..."
+                  className="w-full px-6 py-4 bg-surface-low rounded-xl outline-none focus:bg-white focus:ring-4 focus:ring-seeker/5 transition-all duration-300 shadow-sm text-lg"
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
+
             <button
-              onClick={async () => {
-                try {
-                  const result = await parserApi.parse(inputValue)
-                  console.log(result)
-                } catch (error) {
-                  console.error(error)
-                }
-              }}
-              className="w-full px-4 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl outline-none focus:ring-2 focus:ring-black dark:focus:ring-white/20 transition-all duration-200 shadow-sm"
+              onClick={handleParse}
+              disabled={isLoading || !inputValue.trim()}
+              className="w-full px-8 py-5 bg-seeker text-white font-bold rounded-xl shadow-lg shadow-seeker/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:grayscale transition-all duration-300 text-lg flex items-center justify-center gap-2"
             >
-              Parse
+              {isLoading ? (
+                <>
+                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Analyzing...
+                </>
+              ) : (
+                "Execute Insights"
+              )}
             </button>
+            
+            {error && (
+              <div className="p-4 bg-red-50 text-red-600 rounded-xl text-center text-sm font-medium animate-in fade-in slide-in-from-top-2">
+                Curator encountered an error. Please refine your query.
+              </div>
+            )}
+
+            {data && (
+              <div className="p-8 bg-seeker-tint rounded-xl animate-in zoom-in-95 duration-500">
+                <p className="text-sm font-bold text-seeker uppercase tracking-widest mb-4">
+                  AI Snippet
+                </p>
+                <div className="text-seeker leading-relaxed font-medium">
+                  {JSON.stringify(data.result || data)}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row mt-12">
+        <div className="flex flex-col gap-8 text-base font-medium sm:flex-row mt-16 scale-90 opacity-60 hover:opacity-100 transition-opacity">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-black text-white px-8 transition-all hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 md:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            className="flex h-12 items-center justify-center gap-2 px-8 transition-colors hover:text-seeker"
+            href="https://vercel.com/new"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            Deploy
           </a>
           <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-zinc-200 px-8 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900 md:w-auto"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            className="flex h-12 items-center justify-center gap-2 px-8 transition-colors hover:text-seeker"
+            href="https://nextjs.org/docs"
             target="_blank"
             rel="noopener noreferrer"
           >

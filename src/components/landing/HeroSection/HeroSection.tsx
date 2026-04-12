@@ -5,11 +5,11 @@ import { RegistrationCard } from "../RegistrationCard/RegistrationCard";
 import { useHeroSection } from "./useHeroSection";
 
 export const HeroSection = () => {
-  const {} = useHeroSection();
+  const { } = useHeroSection();
   return (
     <section className="w-full relative overflow-hidden bg-canvas">
       <div className="max-w-7xl mx-auto px-8 pt-44 pb-38 flex items-center justify-between">
-        <div className="flex-1 max-w-163">
+        <div className="flex-1 max-w-163 mr-50">
           <HeroLeft />
         </div>
 

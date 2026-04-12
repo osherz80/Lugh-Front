@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useHeroLeft } from "./useHeroLeft";
 
 export const HeroLeft = () => {
-  const {} = useHeroLeft();
+  const { } = useHeroLeft();
   return (
     <div className="flex flex-col gap-8 w-full max-w-163">
       {/* Typography */}
@@ -21,31 +21,31 @@ export const HeroLeft = () => {
       <div className="relative w-163 h-48 mt-8 flex">
         {/* Left Image */}
         <div className="absolute left-0 top-0 w-[12.916875rem] h-32 bg-surface-low rounded-2xl overflow-hidden shadow-lg shadow-black/5 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500 cursor-default">
-          <Image 
-            src="/assets/png/house_window.png" 
-            alt="Workspace" 
-            fill 
-            className="object-cover opacity-60 hover:opacity-100 transition-opacity"
+          <Image
+            src="/assets/png/house_window.png"
+            alt="Workspace"
+            fill
+            className="object-cover"
           />
         </div>
-        
+
         {/* Middle Image - Staggered down by 2rem (top-8) */}
         <div className="absolute left-[13.916875rem] top-8 w-[12.916875rem] h-32 bg-surface-low rounded-2xl overflow-hidden shadow-lg shadow-black/5 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500 cursor-default">
-          <Image 
-            src="/assets/png/working_man.png" 
-            alt="Professional" 
-            fill 
-            className="object-cover opacity-60 hover:opacity-100 transition-opacity"
+          <Image
+            src="/assets/png/working_man.png"
+            alt="Professional"
+            fill
+            className="object-cover"
           />
         </div>
-        
+
         {/* Right Image - Staggered down by 1rem (top-4) */}
         <div className="absolute left-[27.833125rem] top-4 w-[12.916875rem] h-32 bg-surface-low rounded-2xl overflow-hidden shadow-lg shadow-black/5 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500 cursor-default">
-          <Image 
-            src="/assets/png/corridor_ilusion.png" 
-            alt="Path" 
-            fill 
-            className="object-cover opacity-60 hover:opacity-100 transition-opacity"
+          <Image
+            src="/assets/png/corridor_ilusion.png"
+            alt="Path"
+            fill
+            className="object-cover"
           />
         </div>
 

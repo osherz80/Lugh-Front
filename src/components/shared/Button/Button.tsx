@@ -14,7 +14,7 @@ export interface ButtonProps extends AriaButtonProps {
 
 const variantStyles: Record<Variant, string> = {
   primary:
-    "bg-seeker text-white shadow-lg shadow-seeker/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:grayscale",
+    "bg-brand text-white shadow-lg shadow-brand/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:grayscale",
   secondary:
     "bg-surface-low text-zinc-900 hover:bg-surface-theme transition-colors disabled:opacity-50",
   outline:
@@ -38,7 +38,7 @@ export const Button = ({
       isDisabled={isDisabled || isLoading}
       className={`
         relative inline-flex items-center justify-center font-bold outline-none transition-all duration-300 rounded-xl
-        focus:ring-2 focus:ring-offset-2 focus:ring-seeker/50
+        focus:ring-2 focus:ring-offset-2 focus:ring-brand/50
         ${variantStyles[variant]}
         ${fullWidth ? "w-full" : ""}
         ${variant === "social" ? "px-10 py-3" : "px-8 py-4"}

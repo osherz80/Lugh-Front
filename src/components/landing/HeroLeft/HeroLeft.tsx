@@ -10,7 +10,7 @@ export const HeroLeft = () => {
       {/* Typography */}
       <div className="flex flex-col gap-6 w-128">
         <h1 className="text-zinc-900 font-medium text-7xl leading-none tracking-[-0.11rem] font-sans">
-          Find your <span className="text-seeker italic font-semibold">soul-match</span> career
+          Find your <span className="text-brand italic font-semibold">soul-match</span> career
         </h1>
         <p className="text-[#3D4946] text-xl leading-8 max-w-117">
           Moving beyond standard databases. We use AI to curate opportunities that align with your unique professional vector, not just your keywords.
@@ -50,7 +50,7 @@ export const HeroLeft = () => {
         </div>
 
         {/* Ambient Blur Behind */}
-        <div className="absolute -left-4 -top-4 w-24 h-24 bg-seeker/5 rounded-full blur-[2rem] -z-10" />
+        <div className="absolute -left-4 -top-4 w-24 h-24 bg-brand/5 rounded-full blur-[2rem] -z-10" />
       </div>
     </div>
   );

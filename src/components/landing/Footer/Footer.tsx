@@ -1,9 +1,12 @@
 "use client";
 
+import { useFooter } from "./useFooter";
+
 export const Footer = () => {
+  const {} = useFooter();
   return (
     <footer className="w-full flex items-center justify-center border-t border-[#F8FAFC] py-10 px-8 mt-auto">
-      <div className="w-full max-w-7xl flex items-center justify-between">
+      <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-6">
           <span className="font-sans font-bold text-sm tracking-[-0.04375rem] text-[#115E59]">LUGH</span>
           <span className="font-medium text-xs text-zinc-500">© 2024 Talent Orchestration Platform</span>

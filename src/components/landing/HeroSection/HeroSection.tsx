@@ -2,17 +2,21 @@
 
 import { HeroLeft } from "../HeroLeft/HeroLeft";
 import { RegistrationCard } from "../RegistrationCard/RegistrationCard";
+import { useHeroSection } from "./useHeroSection";
 
 export const HeroSection = () => {
+  const {} = useHeroSection();
   return (
-    <div className="relative w-full max-w-7xl flex items-center justify-between mx-auto pt-45 pb-37.5 px-8">
-      <div className="flex-1 max-w-163">
-        <HeroLeft />
-      </div>
+    <section className="w-full relative overflow-hidden bg-canvas">
+      <div className="max-w-7xl mx-auto px-8 pt-44 pb-38 flex items-center justify-between">
+        <div className="flex-1 max-w-163">
+          <HeroLeft />
+        </div>
 
-      <div className="flex-1 flex justify-end">
-        <RegistrationCard />
+        <div className="flex-1 flex justify-end">
+          <RegistrationCard />
+        </div>
       </div>
-    </div>
+    </section>
   );
 };

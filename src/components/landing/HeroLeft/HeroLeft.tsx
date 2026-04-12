@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { useHeroLeft } from "./useHeroLeft";
 
 export const HeroLeft = () => {
+  const {} = useHeroLeft();
   return (
     <div className="flex flex-col gap-8 w-full max-w-163">
       {/* Typography */}

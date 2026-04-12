@@ -18,9 +18,9 @@ const variantStyles: Record<Variant, string> = {
   secondary:
     "bg-surface-low text-zinc-900 hover:bg-surface-theme transition-colors disabled:opacity-50",
   outline:
-    "border border-surface-low bg-transparent text-zinc-600 hover:bg-surface-low transition-colors disabled:opacity-50",
+    "bg-surface-low/50 text-zinc-600 hover:bg-surface-low transition-colors disabled:opacity-50",
   social:
-    "border border-[#E5E7EB] bg-transparent hover:bg-surface-low transition-colors flex items-center justify-center h-[2.875rem]",
+    "bg-white shadow-sm hover:bg-surface-low transition-colors flex items-center justify-center h-[2.9rem]",
 };
 
 export const Button = ({

@@ -12,7 +12,7 @@
   --lugh-canvas: #f7f9fb;
   --lugh-surface-low: #f2f4f6;
   --lugh-surface-lowest: #ffffff;
-  --lugh-blur: 0px 4px 60px rgba(0, 0, 0, 0.05);
+  --lugh-blur: 0 0.25rem 3.75rem rgba(0, 0, 0, 0.05);
 }
 
 @theme inline {

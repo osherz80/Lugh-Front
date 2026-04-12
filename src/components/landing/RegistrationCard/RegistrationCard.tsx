@@ -11,10 +11,10 @@ export const RegistrationCard = () => {
   const { register, handleSubmit, errors, isSubmitting } = useRegistrationForm();
 
   return (
-    <div className="w-full max-w-[448px] bg-surface-lowest rounded-2xl shadow-lugh-blur px-10 py-8 flex flex-col gap-6 relative z-10 transition-all">
+    <div className="w-full max-w-md bg-surface-lowest rounded-2xl shadow-lugh-blur px-10 py-8 flex flex-col gap-6 relative z-10 transition-all">
       {/* Header */}
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-bold text-zinc-900 tracking-[-0.6px]">
+        <h2 className="text-2xl font-bold text-zinc-900 tracking-[-0.0375rem]">
           Create your workspace
         </h2>
         <p className="text-sm text-zinc-600">

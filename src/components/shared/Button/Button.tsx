@@ -20,7 +20,7 @@ const variantStyles: Record<Variant, string> = {
   outline:
     "border border-surface-low bg-transparent text-zinc-600 hover:bg-surface-low transition-colors disabled:opacity-50",
   social:
-    "border border-[#E5E7EB] bg-transparent hover:bg-surface-low transition-colors flex items-center justify-center h-[46px]",
+    "border border-[#E5E7EB] bg-transparent hover:bg-surface-low transition-colors flex items-center justify-center h-[2.875rem]",
 };
 
 export const Button = ({

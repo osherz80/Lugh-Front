@@ -24,7 +24,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <AriaInput
           ref={ref}
           placeholder={placeholder}
-          className="w-full px-4 py-3.5 bg-canvas font-sans border-none rounded-xl outline-none transition-all duration-300 focus:bg-white focus:shadow-[0px_0px_0px_2px_rgba(3,143,123,0.2)] text-zinc-900 placeholder:text-zinc-400 disabled:opacity-50"
+          className="w-full px-4 py-3.5 bg-canvas font-sans border-none rounded-xl outline-none transition-all duration-300 focus:bg-white focus:shadow-[0_0_0_0.125rem_rgba(3,143,123,0.2)] text-zinc-900 placeholder:text-zinc-400 disabled:opacity-50"
           {...rest}
         />
         {description && <Text slot="description" className="text-sm text-zinc-500 pl-1">{description}</Text>}

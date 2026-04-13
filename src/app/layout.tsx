@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "@/providers/StoreProvider";
+import { AppThemeProvider } from "@/providers/AppThemeProvider";
 import { Header } from "@/components/landing/Header/Header";
 import { Footer } from "@/components/landing/Footer/Footer";
 
@@ -30,13 +31,15 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-canvas font-sans selection:bg-seeker/20 selection:text-seeker antialiased">
+      <body className="min-h-full flex flex-col bg-canvas font-sans selection:bg-brand/20 selection:text-brand antialiased">
         <StoreProvider>
-          <Header />
-          <main className="flex-1 w-full">
-            {children}
-          </main>
-          <Footer />
+          <AppThemeProvider>
+            <Header />
+            <main className="flex-1 w-full">
+              {children}
+            </main>
+            <Footer />
+          </AppThemeProvider>
         </StoreProvider>
       </body>
     </html>

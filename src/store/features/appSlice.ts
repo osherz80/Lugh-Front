@@ -1,22 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type AppMode = "seeker" | "recruiter";
+
 interface AppState {
-  inputText: string;
+  mode: AppMode;
 }
 
 const initialState: AppState = {
-  inputText: "",
+  mode: "seeker",
 };
 
 export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setInputText: (state, action: PayloadAction<string>) => {
-      state.inputText = action.payload;
+    setMode: (state, action: PayloadAction<AppMode>) => {
+      state.mode = action.payload;
     },
   },
 });
 
-export const { setInputText } = appSlice.actions;
+export const { setMode } = appSlice.actions;
 export default appSlice.reducer;

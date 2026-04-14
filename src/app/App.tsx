@@ -16,10 +16,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Lugh - Elite Talent Network",
-  description: "Matching the best talent with the best opportunities.",
+  description: "Building the future of talent management.",
 };
 
-export default function RootLayout({
+export default function App({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -32,7 +32,9 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-canvas font-sans selection:bg-brand/20 selection:text-brand antialiased">
         <StoreProvider>
           <AppThemeProvider>
-            {children}
+            <main className="flex-1 w-full">
+              {children}
+            </main>
           </AppThemeProvider>
         </StoreProvider>
       </body>

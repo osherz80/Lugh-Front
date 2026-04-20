@@ -4,8 +4,16 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5050",
-    prepareHeaders: (headers) => {
-      headers.set("Content-Type", "application/json");
+    prepareHeaders: (headers, { endpoint }) => {
+      // For file uploads (FormData), we must not set Content-Type manually
+      // so the browser can set it with the correct boundary.
+      if (endpoint === "uploadCV") {
+        return headers;
+      }
+
+      if (!headers.has("Content-Type")) {
+        headers.set("Content-Type", "application/json");
+      }
       return headers;
     },
   }),
@@ -31,7 +39,18 @@ export const api = createApi({
         body: data,
       }),
     }),
+    uploadCV: builder.mutation<any, Blob | File>({
+      query: (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        return {
+          url: "/cv/upload",
+          method: "POST",
+          body: formData,
+        };
+      },
+    }),
   }),
 });
 
-export const { useParseTextMutation, useCreateJobPostMutation, useSearchJobsMutation } = api;
+export const { useParseTextMutation, useCreateJobPostMutation, useSearchJobsMutation, useUploadCVMutation } = api;

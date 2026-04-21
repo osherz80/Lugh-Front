@@ -1,6 +1,6 @@
 "use client";
 
-import { HeroSection } from "@/components/landing/HeroSection/HeroSection";
+import { HeroSection } from "@/screens/landing/components/HeroSection/HeroSection";
 import { useLandingScreen } from "./useLandingScreen";
 
 /**
@@ -9,7 +9,7 @@ import { useLandingScreen } from "./useLandingScreen";
  * while the screen itself remains a full-width composition.
  */
 export const LandingScreen = () => {
-  const {} = useLandingScreen();
+  const { } = useLandingScreen();
   return (
     <>
       <HeroSection />

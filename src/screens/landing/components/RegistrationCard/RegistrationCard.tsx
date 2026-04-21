@@ -8,14 +8,16 @@ import { Divider } from "@/components/shared/Divider/Divider";
 import { BrandIcon } from "@/components/shared/Icon/BrandIcon";
 import { faGoogle, faLinkedinIn, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useAppSelector } from "@/store/hooks";
+import { useGoogleLogin } from "@/hooks/useGoogleLogin";
 
 export const RegistrationCard = () => {
   const router = useRouter();
   const mode = useAppSelector((state) => state.app.mode);
   const { register, handleSubmit, errors, isSubmitting } = useRegistrationForm();
+  const { loginWithGoogle } = useGoogleLogin();
 
   const handleGoogleLogin = () => {
-    router.push(`/${mode}`);
+    loginWithGoogle();
   };
 
   return (

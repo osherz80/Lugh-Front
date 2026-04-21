@@ -1,6 +1,6 @@
 import { useGoogleLogin as useGoogleLoginReact } from '@react-oauth/google';
 import { useAppDispatch } from '@/store/hooks';
-import { setAuthSuccess, setLoading, setAuthFailure } from '@/store/features/authSlice';
+import { setAuthSuccess } from '@/store/features/authSlice';
 import { useGoogleLoginMutation } from '@/store/services/api';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/store/hooks';
@@ -9,10 +9,9 @@ export const useGoogleLogin = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const mode = useAppSelector((state) => state.app.mode);
-    const [googleLoginMutation] = useGoogleLoginMutation();
+    const [googleLoginMutation, { isLoading }] = useGoogleLoginMutation();
 
     const handleGoogleSuccess = async (token: string) => {
-        dispatch(setLoading(true));
         try {
             const response = await googleLoginMutation({ token }).unwrap();
             console.log("response googleLogin", response);
@@ -30,13 +29,11 @@ export const useGoogleLogin = () => {
             router.push(`/${mode}`);
         } catch (error) {
             console.error('Backend verification failed:', error);
-            dispatch(setAuthFailure('Google login failed'));
         }
     };
 
     const handleGoogleError = () => {
         console.error('Google Login Failed');
-        dispatch(setAuthFailure('Google interaction failed'));
     };
 
     const loginWithGoogle = useGoogleLoginReact({
@@ -48,5 +45,6 @@ export const useGoogleLogin = () => {
 
     return {
         loginWithGoogle,
+        isLoading,
     };
 };

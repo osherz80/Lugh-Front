@@ -14,7 +14,7 @@ export const RegistrationCard = () => {
   const router = useRouter();
   const mode = useAppSelector((state) => state.app.mode);
   const { register, handleSubmit, errors, isSubmitting } = useRegistrationForm();
-  const { loginWithGoogle } = useGoogleLogin();
+  const { loginWithGoogle, isLoading } = useGoogleLogin();
 
   const handleGoogleLogin = () => {
     loginWithGoogle();
@@ -66,6 +66,7 @@ export const RegistrationCard = () => {
           fullWidth
           aria-label="Continue with Google"
           onPress={handleGoogleLogin}
+          isLoading={isLoading}
         >
           <BrandIcon icon={faGoogle} className="text-zinc-600 opacity-70" />
         </Button>

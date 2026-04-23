@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useRegistrationForm } from "./useRegistrationForm";
 import { Input } from "@/components/shared/Input/Input";
@@ -11,6 +12,7 @@ import { useAppSelector } from "@/store/hooks";
 import { useGoogleLogin } from "@/hooks/useGoogleLogin";
 
 export const RegistrationCard = () => {
+  const [isLogin, setIsLogin] = useState(true);
   const router = useRouter();
   const mode = useAppSelector((state) => state.app.mode);
   const { register, handleSubmit, errors, isSubmitting } = useRegistrationForm();
@@ -25,10 +27,10 @@ export const RegistrationCard = () => {
       {/* Header */}
       <div className="flex flex-col gap-2">
         <h2 className="text-2xl font-bold text-zinc-900 tracking-[-0.04rem]">
-          Create your workspace
+          {isLogin ? "Welcome back" : "Create your workspace"}
         </h2>
         <p className="text-sm text-zinc-600">
-          Start building your elite talent network today.
+          {isLogin ? "Access your elite talent network." : "Start building your elite talent network today."}
         </p>
       </div>
 
@@ -49,9 +51,21 @@ export const RegistrationCard = () => {
           {...register("password")}
         />
 
+        {/* Toggle between login and signup */}
+        <p className="text-sm text-zinc-600 px-1">
+          {isLogin ? "Don't have an account? " : "Already have an account? "}
+          <button
+            type="button"
+            onClick={() => setIsLogin(!isLogin)}
+            className="underline font-medium text-zinc-900 hover:text-brand transition-colors cursor-pointer"
+          >
+            {isLogin ? "Sign up" : "Log in"}
+          </button>
+        </p>
+
         <div className="pt-2">
           <Button type="submit" variant="primary" fullWidth isLoading={isSubmitting}>
-            {isSubmitting ? "Matching..." : "Start Matching"}
+            {isSubmitting ? "Matching..." : (isLogin ? "Sign In" : "Start Matching")}
           </Button>
         </div>
       </form>
@@ -79,9 +93,11 @@ export const RegistrationCard = () => {
       </div>
 
       {/* Footer Micro-copy */}
-      <p className="text-center text-xs text-zinc-500 pt-1">
-        By joining, you agree to our <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.
-      </p>
+      {!isLogin && (
+        <p className="text-center text-xs text-zinc-500 pt-1">
+          By joining, you agree to our <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.
+        </p>
+      )}
     </div>
   );
 };

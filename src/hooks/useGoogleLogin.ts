@@ -24,7 +24,7 @@ export const useGoogleLogin = () => {
             }));
 
             console.log('User logged in successfully:', user);
-            
+
             // Redirect based on the current mode
             router.push(`/${mode}`);
         } catch (error) {

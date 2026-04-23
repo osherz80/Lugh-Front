@@ -1,9 +1,5 @@
-"use client";
-
 import React from "react";
-import { ProfilePulse } from "@/components/candidate/ProfilePulse/ProfilePulse";
-import { MarketInsights } from "@/components/candidate/MarketInsights/MarketInsights";
-import { StatsGrid } from "@/components/candidate/StatsGrid/StatsGrid";
+import { RightAside } from "@/components/candidate/RightAside/RightAside";
 
 export default function CandidatePage() {
   return (
@@ -15,11 +11,7 @@ export default function CandidatePage() {
         </section>
 
         {/* Right Aside */}
-        <aside className="col-span-4 space-y-8">
-          <ProfilePulse />
-          <MarketInsights />
-          <StatsGrid />
-        </aside>
+        <RightAside />
       </main>
 
       {/* Floating Action Button */}

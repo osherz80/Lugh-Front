@@ -3,16 +3,16 @@
 :root {
   --background: #f7f9fb;
   --foreground: #171717;
-  
+
   /* Lugh Design System Tokens */
-  --lugh-seeker: rgb(3, 143, 123);
-  --lugh-seeker-tint: rgb(226, 244, 243);
+  --lugh-candidate: rgb(3, 143, 123);
+  --lugh-candidate-tint: rgb(226, 244, 243);
   --lugh-recruiter: rgb(99, 102, 241);
   --lugh-recruiter-tint: rgb(238, 242, 255);
 
   /* Dynamic Theme Variables */
-  --primary: var(--lugh-seeker);
-  --primary-tint: var(--lugh-seeker-tint);
+  --primary: var(--lugh-candidate);
+  --primary-tint: var(--lugh-candidate-tint);
 
   --lugh-canvas: #f7f9fb;
   --lugh-surface-low: #f2f4f6;
@@ -30,19 +30,19 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
+
   /* Brand colors (Dynamic) */
   --color-brand: var(--primary);
   --color-brand-tint: var(--primary-tint);
-  
+
   /* Static mode colors */
-  --color-seeker: var(--lugh-seeker);
-  --color-seeker-tint: var(--lugh-seeker-tint);
+  --color-candidate: var(--lugh-candidate);
+  --color-candidate-tint: var(--lugh-candidate-tint);
   --color-recruiter: var(--lugh-recruiter);
   --color-recruiter-tint: var(--lugh-recruiter-tint);
   --color-surface-low: var(--lugh-surface-low);
   --color-surface-lowest: var(--lugh-surface-lowest);
-  
+
   /* Custom shadows */
   --shadow-lugh-blur: var(--lugh-blur);
 }

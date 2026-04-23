@@ -4,7 +4,7 @@ import { Button } from "react-aria-components";
 import { useModeToggle } from "./useModeToggle";
 
 /**
- * ModeToggle - Component to switch between Seeker and Recruiter modes.
+ * ModeToggle - Component to switch between Candidate and Recruiter modes.
  * Strictly adheres to the Hybrid Clean Architecture by delegating state logic to useModeToggle.
  */
 export const ModeToggle = () => {
@@ -13,14 +13,14 @@ export const ModeToggle = () => {
   return (
     <div className="flex bg-[#E6E8EA] rounded-full p-1 w-fit shadow-inner">
       <Button
-        onPress={() => handleModeChange("seeker")}
+        onPress={() => handleModeChange("candidate")}
         className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 outline-none
-          ${mode === "seeker"
-            ? "bg-[#E2F4F3] text-seeker shadow-sm"
+          ${mode === "candidate"
+            ? "bg-[#E2F4F3] text-candidate shadow-sm"
             : "text-zinc-500 hover:text-zinc-700"
           }`}
       >
-        Seeker
+        Candidate
       </Button>
       <Button
         onPress={() => handleModeChange("recruiter")}

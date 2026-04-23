@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type AppMode = "seeker" | "recruiter";
+export type AppMode = "candidate" | "recruiter";
 
 interface AppState {
   mode: AppMode;
 }
 
 const initialState: AppState = {
-  mode: "seeker",
+  mode: "candidate",
 };
 
 export const appSlice = createSlice({

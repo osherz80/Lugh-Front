@@ -18,6 +18,13 @@ export const api = createApi({
     },
   }),
   endpoints: (builder) => ({
+    googleLogin: builder.mutation<any, { token: string }>({
+      query: (body) => ({
+        url: "/auth/google",
+        method: "POST",
+        body,
+      }),
+    }),
     parseText: builder.mutation<{ result: any }, { prompt: string }>({
       query: (body) => ({
         url: "/parser",
@@ -50,7 +57,21 @@ export const api = createApi({
         };
       },
     }),
+    register: builder.mutation<any, any>({
+      query: (body) => ({
+        url: "/auth/register",
+        method: "POST",
+        body,
+      }),
+    }),
+    login: builder.mutation<any, any>({
+      query: (body) => ({
+        url: "/auth/login",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useParseTextMutation, useCreateJobPostMutation, useSearchJobsMutation, useUploadCVMutation } = api;
+export const { useParseTextMutation, useCreateJobPostMutation, useSearchJobsMutation, useUploadCVMutation, useGoogleLoginMutation, useRegisterMutation, useLoginMutation } = api;

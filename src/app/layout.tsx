@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "@/providers/StoreProvider";
 import { AppThemeProvider } from "@/providers/AppThemeProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-canvas font-sans selection:bg-brand/20 selection:text-brand antialiased">
         <StoreProvider>
-          <AppThemeProvider>
-            {children}
-          </AppThemeProvider>
+          <GoogleOAuthProvider clientId={process.env.NEXT_GOOGLE_CLIENT_ID || ''}>
+            <AppThemeProvider>
+              {children}
+            </AppThemeProvider>
+          </GoogleOAuthProvider>
         </StoreProvider>
       </body>
     </html>

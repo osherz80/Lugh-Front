@@ -1,7 +1,7 @@
 "use client";
 
-import { HeroLeft } from "../HeroLeft/HeroLeft";
-import { RegistrationCard } from "../RegistrationCard/RegistrationCard";
+import { HeroLeft } from "@/screens/landing/components/HeroLeft/HeroLeft";
+import { RegistrationCard } from "@/screens/landing/components/RegistrationCard/RegistrationCard";
 import { useHeroSection } from "./useHeroSection";
 
 export const HeroSection = () => {

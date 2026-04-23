@@ -15,7 +15,7 @@ export const RegistrationCard = () => {
   const [isLogin, setIsLogin] = useState(true);
   const router = useRouter();
   const mode = useAppSelector((state) => state.app.mode);
-  const { register, handleSubmit, errors, isSubmitting } = useRegistrationForm();
+  const { register, handleSubmit, errors, isSubmitting } = useRegistrationForm(isLogin);
   const { loginWithGoogle, isLoading } = useGoogleLogin();
 
   const handleGoogleLogin = () => {

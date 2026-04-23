@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRegisterMutation, useLoginMutation } from "@/store/services/api";
 
 const registrationSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email format"),
@@ -15,7 +16,11 @@ const registrationSchema = z.object({
 
 export type RegistrationFormData = z.infer<typeof registrationSchema>;
 
-export const useRegistrationForm = () => {
+
+export const useRegistrationForm = (isLogin: boolean) => {
+  const [registerMutation] = useRegisterMutation();
+  const [loginMutation] = useLoginMutation();
+
   const {
     register,
     handleSubmit,
@@ -30,8 +35,21 @@ export const useRegistrationForm = () => {
   });
 
   const onSubmit = async (data: RegistrationFormData) => {
-    console.log("Form Submitted", data);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      if (isLogin) {
+        await loginMutation({
+          email: data.email,
+          password: data.password,
+        }).unwrap();
+      } else {
+        await registerMutation({
+          email: data.email,
+          password: data.password,
+        }).unwrap();
+      }
+    } catch (error) {
+      console.error("Authentication failed:", error);
+    }
   };
 
   return {

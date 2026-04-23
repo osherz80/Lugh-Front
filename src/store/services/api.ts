@@ -57,7 +57,21 @@ export const api = createApi({
         };
       },
     }),
+    register: builder.mutation<any, any>({
+      query: (body) => ({
+        url: "/auth/register",
+        method: "POST",
+        body,
+      }),
+    }),
+    login: builder.mutation<any, any>({
+      query: (body) => ({
+        url: "/auth/login",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useParseTextMutation, useCreateJobPostMutation, useSearchJobsMutation, useUploadCVMutation, useGoogleLoginMutation } = api;
+export const { useParseTextMutation, useCreateJobPostMutation, useSearchJobsMutation, useUploadCVMutation, useGoogleLoginMutation, useRegisterMutation, useLoginMutation } = api;

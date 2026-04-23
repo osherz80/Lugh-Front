@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRegisterMutation, useLoginMutation } from "@/store/services/api";
+import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/store/hooks";
 
 const registrationSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email format"),
@@ -20,6 +22,8 @@ export type RegistrationFormData = z.infer<typeof registrationSchema>;
 export const useRegistrationForm = (isLogin: boolean) => {
   const [registerMutation] = useRegisterMutation();
   const [loginMutation] = useLoginMutation();
+  const router = useRouter();
+  const mode = useAppSelector((state) => state.app.mode);
 
   const {
     register,
@@ -47,6 +51,8 @@ export const useRegistrationForm = (isLogin: boolean) => {
           password: data.password,
         }).unwrap();
       }
+
+      router.push(`/${mode}`);
     } catch (error) {
       console.error("Authentication failed:", error);
     }

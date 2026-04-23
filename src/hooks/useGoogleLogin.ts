@@ -16,11 +16,10 @@ export const useGoogleLogin = () => {
             const response = await googleLoginMutation({ token }).unwrap();
             console.log("response googleLogin", response);
 
-            const { user, isAuth, accessToken } = response;
+            const { user, isAuth } = response;
             dispatch(setAuthSuccess({
                 user,
-                isAuth,
-                accessToken
+                isAuth
             }));
 
             console.log('User logged in successfully:', user);

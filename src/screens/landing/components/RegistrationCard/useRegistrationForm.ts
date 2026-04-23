@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRegisterMutation, useLoginMutation } from "@/store/services/api";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { setAuthSuccess } from "@/store/features/authSlice";
 
 const registrationSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email format"),
@@ -18,11 +19,11 @@ const registrationSchema = z.object({
 
 export type RegistrationFormData = z.infer<typeof registrationSchema>;
 
-
 export const useRegistrationForm = (isLogin: boolean) => {
   const [registerMutation] = useRegisterMutation();
   const [loginMutation] = useLoginMutation();
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const mode = useAppSelector((state) => state.app.mode);
 
   const {
@@ -40,17 +41,21 @@ export const useRegistrationForm = (isLogin: boolean) => {
 
   const onSubmit = async (data: RegistrationFormData) => {
     try {
+      let response;
       if (isLogin) {
-        await loginMutation({
+        response = await loginMutation({
           email: data.email,
           password: data.password,
         }).unwrap();
       } else {
-        await registerMutation({
+        response = await registerMutation({
           email: data.email,
           password: data.password,
         }).unwrap();
       }
+
+      const { user, isAuth } = response;
+      dispatch(setAuthSuccess({ user, isAuth }));
 
       router.push(`/${mode}`);
     } catch (error) {

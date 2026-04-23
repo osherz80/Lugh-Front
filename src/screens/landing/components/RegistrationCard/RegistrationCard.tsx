@@ -50,6 +50,15 @@ export const RegistrationCard = () => {
           error={errors.password?.message}
           {...register("password")}
         />
+        {!isLogin && (
+          <Input
+            label="Confirm Password"
+            type="password"
+            placeholder="••••••••"
+            error={errors.confirmPassword?.message}
+            {...register("confirmPassword")}
+          />
+        )}
 
         {/* Toggle between login and signup */}
         <p className="text-sm text-zinc-600 px-1">

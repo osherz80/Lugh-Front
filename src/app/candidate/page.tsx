@@ -20,6 +20,23 @@ const MOCK_JOBS = [
     matchScore: 92,
     matchReason: "Your experience leading the 'Vortex' project aligns with their need for someone who can manage distributed engineering teams and high-scale AI infrastructure.",
     tags: ["GraphQL", "Tailwind", "Node.js"],
+    isFavorited: true,
+  },
+  {
+    id: 3,
+    title: "Fullstack Developer",
+    location: "New York, NY (Remote)",
+    matchScore: 88,
+    matchReason: "Your background in Node.js and PostgreSQL perfectly complements their stack. Your recent work with real-time sockets is exactly what they need for their new collab feature.",
+    tags: ["Node.js", "PostgreSQL", "Socket.io"],
+  },
+  {
+    id: 4,
+    title: "UI/UX Engineer",
+    location: "Berlin, Germany (On-site)",
+    matchScore: 95,
+    matchReason: "Your portfolio demonstrates a deep understanding of design systems and accessibility, which is the core focus of their upcoming platform redesign.",
+    tags: ["Figma", "Tailwind", "Accessibility"],
   },
 ];
 

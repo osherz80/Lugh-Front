@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ProfilePulse } from "../ProfilePulse/ProfilePulse";
-import { MarketInsights } from "../MarketInsights/MarketInsights";
-import { StatsGrid } from "../StatsGrid/StatsGrid";
+import { ProfilePulse } from "./ProfilePulse";
+import { ProfileCompletion } from "./ProfileCompletion";
+import { QuickTip } from "./QuickTip";
 import { SidebarToggle } from "../../shared/SidebarToggle/SidebarToggle";
 
 export function RightAside() {
@@ -23,8 +23,8 @@ export function RightAside() {
 
       <div className="flex flex-col space-y-8">
         <ProfilePulse isCollapsed={isCollapsed} />
-        <MarketInsights isCollapsed={isCollapsed} />
-        <StatsGrid isCollapsed={isCollapsed} />
+        <ProfileCompletion isCollapsed={isCollapsed} />
+        <QuickTip isCollapsed={isCollapsed} />
       </div>
     </motion.aside>
   );

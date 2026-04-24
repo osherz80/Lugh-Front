@@ -70,7 +70,7 @@ export function ProfilePulse({ isCollapsed }: ProfilePulseProps) {
             exit={{ opacity: 0, scale: 0.95 }}
             className="w-full seeker-gradient text-white py-4 rounded-xl font-bold text-sm shadow-xl shadow-brand/20 hover:shadow-brand/30 transition-all active:scale-[0.98]"
           >
-            Complete Profile
+            Complete Profile to Unlock AI Match Scores
           </motion.button>
         )}
       </AnimatePresence>

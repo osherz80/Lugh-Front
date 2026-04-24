@@ -43,20 +43,20 @@ const MOCK_JOBS = [
 export default function CandidatePage() {
   return (
     <>
-      <main className="ml-[260px] pt-28 px-8 pb-12 flex gap-8 min-h-screen">
-        {/* Main Content Area */}
-        <section className="flex-grow space-y-6 relative">
+      <main className="ml-[260px] pt-20 flex h-screen overflow-hidden">
+        {/* Main Content Area - Only this part scrolls */}
+        <section className="flex-grow overflow-y-auto px-8 py-12 space-y-6 no-scrollbar">
           <JobSearch />
           <JobFilters />
           
-          <div className="space-y-6">
+          <div className="space-y-6 pb-12">
             {MOCK_JOBS.map((job) => (
               <JobCard key={job.id} {...job} />
             ))}
           </div>
         </section>
 
-        {/* Right Aside */}
+        {/* Right Aside - Stays fixed but can have its own scroll if content exceeds height */}
         <RightAside />
       </main>
     </>

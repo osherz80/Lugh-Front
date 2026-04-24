@@ -14,7 +14,7 @@ export function RightAside() {
       initial={false}
       animate={{ width: isCollapsed ? 80 : 350 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="relative space-y-8 flex-shrink-0 overflow-visible whitespace-nowrap bg-canvas/50 backdrop-blur-sm border-l border-zinc-200/50 p-4"
+      className="relative flex-shrink-0 bg-canvas/50 backdrop-blur-sm border-l border-zinc-200/50 p-6 h-full no-scrollbar"
     >
       <SidebarToggle
         isCollapsed={isCollapsed}

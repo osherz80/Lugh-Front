@@ -43,7 +43,7 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="h-screen w-[260px] fixed left-0 top-0 flex flex-col py-8 px-4 bg-slate-50 dark:bg-slate-900 font-sans text-base antialiased z-50 border-r border-zinc-200/50">
+    <aside className="h-screen w-[16.25rem] fixed left-0 top-0 flex flex-col py-8 px-4 bg-slate-50 dark:bg-slate-900 font-sans text-base antialiased z-50 border-r border-zinc-200/50">
       <div className="mb-10 px-4">
         <h1 className="text-2xl font-bold text-brand tracking-tight">Lugh Candidate</h1>
         <p className="text-xs text-zinc-500 font-medium opacity-70">The Digital Curator</p>

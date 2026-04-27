@@ -11,7 +11,7 @@ import { ProgressBar } from "@/components/shared/ProgressBar/ProgressBar";
  */
 export const ResumeLabScreen = () => {
   return (
-    <main className="ml-[260px] pt-20 flex h-screen overflow-hidden bg-canvas">
+    <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden bg-canvas">
       {/* Main Content Area */}
       <section className="flex-grow overflow-y-auto px-8 py-12 space-y-8 no-scrollbar">
         <div className="max-w-5xl mx-auto">
@@ -39,7 +39,7 @@ export const ResumeLabScreen = () => {
       </section>
 
       {/* Right Sidebar - Analysis & Insights */}
-      <aside className="w-[380px] border-l border-zinc-200/50 bg-white dark:bg-slate-900/50 overflow-y-auto no-scrollbar hidden 2xl:block">
+      <aside className="w-[23.75rem] border-l border-zinc-200/50 bg-white dark:bg-slate-900/50 overflow-y-auto no-scrollbar hidden 2xl:block">
         <div className="p-8 space-y-10">
           {/* Active Asset Info */}
           <section className="space-y-4">
@@ -67,7 +67,7 @@ export const ResumeLabScreen = () => {
               label={
                 <>
                   ATS Readability
-                  <span className="material-symbols-outlined text-[14px]">info</span>
+                  <span className="material-symbols-outlined text-sm">info</span>
                 </>
               }
               value={62}
@@ -78,7 +78,7 @@ export const ResumeLabScreen = () => {
               label={
                 <>
                   Keywords
-                  <span className="material-symbols-outlined text-[14px]">info</span>
+                  <span className="material-symbols-outlined text-sm">info</span>
                 </>
               }
               value={93}
@@ -89,7 +89,7 @@ export const ResumeLabScreen = () => {
               label={
                 <>
                   Verb Impact
-                  <span className="material-symbols-outlined text-[14px]">info</span>
+                  <span className="material-symbols-outlined text-sm">info</span>
                 </>
               }
               value={41}
@@ -100,7 +100,7 @@ export const ResumeLabScreen = () => {
               label={
                 <>
                   Contact Density
-                  <span className="material-symbols-outlined text-[14px]">info</span>
+                  <span className="material-symbols-outlined text-sm">info</span>
                 </>
               }
               value={100}
@@ -122,13 +122,13 @@ export const ResumeLabScreen = () => {
                     <p className="text-sm font-bold text-slate-700 dark:text-zinc-300">
                       Card {fix.id}: {fix.title}
                     </p>
-                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
+                    <span className="text-[0.625rem] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
                       {fix.boost} Match Score
                     </span>
                   </div>
                   {fix.tag && (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-brand bg-brand-tint px-2 py-1 rounded-lg">
-                      <span className="material-symbols-outlined text-[12px]">auto_awesome</span>
+                    <span className="inline-flex items-center gap-1 text-[0.625rem] font-bold text-brand bg-brand-tint px-2 py-1 rounded-lg">
+                      <span className="material-symbols-outlined text-xs">auto_awesome</span>
                       {fix.tag}
                     </span>
                   )}

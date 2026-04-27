@@ -12,7 +12,7 @@ export function RightAside() {
   return (
     <motion.aside
       initial={false}
-      animate={{ width: isCollapsed ? 80 : 350 }}
+      animate={{ width: isCollapsed ? "5rem" : "21.875rem" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className="relative flex-shrink-0 bg-canvas/50 backdrop-blur-sm border-l border-zinc-200/50 p-6 h-full no-scrollbar"
     >

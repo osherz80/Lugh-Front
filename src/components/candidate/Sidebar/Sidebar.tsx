@@ -21,18 +21,17 @@ export function Sidebar() {
 
   const NavLink = ({ href, icon, label }: { href: string; icon: string; label: string }) => {
     const isActive = pathname === href;
-    
+
     return (
-      <Link 
-        href={href} 
-        className={`flex items-center gap-3 px-4 py-3 transition-all active:scale-95 rounded-xl ${
-          isActive 
-            ? "bg-brand-tint dark:bg-brand/20 text-brand font-semibold" 
+      <Link
+        href={href}
+        className={`flex items-center gap-3 px-4 py-3 transition-all active:scale-95 rounded-xl ${isActive
+            ? "bg-brand-tint dark:bg-brand/20 text-brand font-semibold"
             : "text-zinc-500 hover:text-brand hover:bg-surface-low"
-        }`}
+          }`}
       >
-        <span 
-          className="material-symbols-outlined" 
+        <span
+          className="material-symbols-outlined"
           style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}
         >
           {icon}

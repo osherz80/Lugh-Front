@@ -22,11 +22,11 @@ export function ProgressBar({
   return (
     <AriaProgressBar
       {...props}
-      className="w-full flex flex-col gap-2 font-sans antialiased"
+      className="w-full flex flex-col gap-1 font-sans antialiased"
     >
       {({ percentage, valueText }) => (
         <>
-          <div className="flex justify-between items-center text-sm font-bold">
+          <div className="flex justify-between items-center text-[0.85rem] font-bold">
             {label && (
               <Label className="text-zinc-500 flex items-center gap-1">
                 {label}

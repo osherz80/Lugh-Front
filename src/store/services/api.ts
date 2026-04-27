@@ -1,3 +1,4 @@
+import { FullUser, User, UserRes } from "@/app/common/types/general";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
@@ -58,21 +59,37 @@ export const api = createApi({
         };
       },
     }),
-    register: builder.mutation<any, any>({
+    register: builder.mutation<UserRes, any>({
       query: (body) => ({
         url: "/auth/register",
         method: "POST",
         body,
       }),
     }),
-    login: builder.mutation<any, any>({
+    login: builder.mutation<UserRes, any>({
       query: (body) => ({
         url: "/auth/login",
         method: "POST",
         body,
       }),
     }),
+    getCandidateCVs: builder.query<any, string>({
+      query: (userId) => ({
+        url: `/cvs/${userId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useParseTextMutation, useCreateJobPostMutation, useSearchJobsMutation, useUploadCVMutation, useGoogleLoginMutation, useRegisterMutation, useLoginMutation } = api;
+export const {
+  useParseTextMutation,
+  useCreateJobPostMutation,
+  useSearchJobsMutation,
+  useUploadCVMutation,
+  useGoogleLoginMutation,
+  useRegisterMutation,
+  useLoginMutation,
+  useGetCandidateCVsQuery,
+  useLazyGetCandidateCVsQuery,
+} = api;

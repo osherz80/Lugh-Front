@@ -7,6 +7,7 @@ import { useRegisterMutation, useLoginMutation } from "@/store/services/api";
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setAuthSuccess } from "@/store/features/authSlice";
+import { UserRes } from "@/app/common/types/general";
 
 const registrationSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email format"),
@@ -41,7 +42,7 @@ export const useRegistrationForm = (isLogin: boolean) => {
 
   const onSubmit = async (data: RegistrationFormData) => {
     try {
-      let response;
+      let response: UserRes;
       if (isLogin) {
         response = await loginMutation({
           email: data.email,
@@ -55,6 +56,7 @@ export const useRegistrationForm = (isLogin: boolean) => {
       }
 
       const { user, isAuth } = response;
+      console.log(user, isAuth);
       dispatch(setAuthSuccess({ user, isAuth }));
 
       router.push(`/${mode}`);

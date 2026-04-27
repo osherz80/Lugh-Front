@@ -1,8 +1,13 @@
+"use client";
+
 import React from "react";
 import { RightAside } from "@/components/candidate/RightAside/RightAside";
 import { JobSearch } from "@/components/candidate/JobSearch/JobSearch";
 import { JobFilters } from "@/components/candidate/JobFilters/JobFilters";
 import { JobCard } from "@/components/candidate/JobCard/JobCard";
+import { useAppSelector } from "@/store/hooks";
+import { motion } from "framer-motion";
+import { EmptyDashboard } from "@/components/candidate/EmptyState/EmptyDashboard";
 
 const MOCK_JOBS = [
   {
@@ -41,19 +46,28 @@ const MOCK_JOBS = [
 ];
 
 export default function CandidatePage() {
+  const user = useAppSelector((state) => state.auth.user);
+  const hasCV = user?.candidate?.cvs && user.candidate.cvs.length > 0;
+
   return (
     <>
       <main className="ml-[260px] pt-20 flex h-screen overflow-hidden">
         {/* Main Content Area - Only this part scrolls */}
         <section className="flex-grow overflow-y-auto px-8 py-12 space-y-6 no-scrollbar">
-          <JobSearch />
-          <JobFilters />
-          
-          <div className="space-y-6 pb-12">
-            {MOCK_JOBS.map((job) => (
-              <JobCard key={job.id} {...job} />
-            ))}
-          </div>
+          {hasCV ? (
+            <>
+              <JobSearch />
+              <JobFilters />
+
+              <div className="space-y-6 pb-12">
+                {MOCK_JOBS.map((job) => (
+                  <JobCard key={job.id} {...job} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <EmptyDashboard />
+          )}
         </section>
 
         {/* Right Aside - Stays fixed but can have its own scroll if content exceeds height */}

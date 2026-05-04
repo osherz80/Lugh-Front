@@ -8,7 +8,7 @@ import {
   Text,
   composeRenderProps,
 } from "react-aria-components";
-import { useUploadCVMutation } from "@/store/services/api/api";
+import { useUploadCVMutation } from "@/store/services/api/cv";
 import { useAppSelector } from "@/store/hooks";
 import { tv } from "tailwind-variants";
 

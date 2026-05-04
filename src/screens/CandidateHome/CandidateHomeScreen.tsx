@@ -7,6 +7,7 @@ import { JobFilters } from "@/components/candidate/JobFilters/JobFilters";
 import { JobCard } from "@/components/candidate/JobCard/JobCard";
 import { useAppSelector } from "@/store/hooks";
 import { EmptyDashboard } from "@/components/candidate/EmptyState/EmptyDashboard";
+import { useCandidateHome } from "./useCandidateHome";
 
 const MOCK_JOBS = [
   {
@@ -47,9 +48,11 @@ const MOCK_JOBS = [
 /**
  * HomeScreen - The primary dashboard view for candidates.
  */
-export const HomeScreen = () => {
+export const CandidateHomeScreen = () => {
   const user = useAppSelector((state) => state.auth.user);
   const hasCV = user?.hasCv;
+
+  const { cvs, error, isLoading } = useCandidateHome();
 
   return (
     <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden">

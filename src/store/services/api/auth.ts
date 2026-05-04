@@ -1,4 +1,4 @@
-import { UserRes } from "@/app/common/types/general";
+import { UserRes } from "@/common/types";
 import { api } from "@/store/services/api/api"
 
 export const authApi = api.injectEndpoints({

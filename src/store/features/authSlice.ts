@@ -1,14 +1,12 @@
-import { FullUser, User } from "@/app/common/types/general";
+import { FullUser, User } from "@/common/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface AuthState {
   user: User | null;
-  isAuth: boolean;
 }
 
 const initialState: AuthState = {
   user: null,
-  isAuth: false,
 };
 
 export const authSlice = createSlice({
@@ -17,14 +15,12 @@ export const authSlice = createSlice({
   reducers: {
     setAuthSuccess: (
       state,
-      action: PayloadAction<{ user: User; isAuth: boolean }>
+      action: PayloadAction<{ user: User }>
     ) => {
       state.user = action.payload.user;
-      state.isAuth = action.payload.isAuth;
     },
     logout: (state) => {
       state.user = null;
-      state.isAuth = false;
     },
   },
 });

@@ -1,7 +1,7 @@
 import { useGoogleLogin as useGoogleLoginReact } from '@react-oauth/google';
 import { useAppDispatch } from '@/store/hooks';
 import { setAuthSuccess } from '@/store/features/authSlice';
-import { useGoogleLoginMutation } from '@/store/services/api/api';
+import { useGoogleLoginMutation } from '@/store/services/api/auth';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/store/hooks';
 
@@ -16,10 +16,9 @@ export const useGoogleLogin = () => {
             const response = await googleLoginMutation({ token }).unwrap();
             console.log("response googleLogin", response);
 
-            const { user, isAuth } = response;
+            const { user } = response;
             dispatch(setAuthSuccess({
                 user,
-                isAuth
             }));
 
             console.log('User logged in successfully:', user);

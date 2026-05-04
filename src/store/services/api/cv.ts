@@ -1,4 +1,6 @@
 import { api } from '@/store/services/api/api'
+import { CV } from '@/store/services/types/types.d'
+import { saveCvs } from '@/store/services/handlers/cvHandler'
 
 export const cvApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -14,16 +16,17 @@ export const cvApi = api.injectEndpoints({
                 };
             },
         }),
-        getCandidateCVs: builder.query<any, string>({
+        getCandidateCVs: builder.query<CV[], string>({
             query: (userId) => ({
                 url: `/cv/${userId}`,
                 method: "GET",
             }),
+            onQueryStarted: saveCvs,
         }),
     }),
 });
 
 export const {
     useUploadCVMutation,
-    useGetCandidateCVsQuery
+    useLazyGetCandidateCVsQuery
 } = cvApi;

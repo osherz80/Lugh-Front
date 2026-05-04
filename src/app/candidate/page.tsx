@@ -1,5 +1,5 @@
-import { HomeScreen } from "@/screens/home/HomeScreen";
+import { CandidateHomeScreen } from "@/screens/CandidateHome/CandidateHomeScreen";
 
 export default function CandidatePage() {
-  return <HomeScreen />;
+  return <CandidateHomeScreen />;
 }

@@ -29,5 +29,4 @@ export type FullUser = User & {
 
 export type UserRes = {
     user: FullUser,
-    isAuth: bollean
 }

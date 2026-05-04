@@ -49,7 +49,7 @@ const MOCK_JOBS = [
  */
 export const HomeScreen = () => {
   const user = useAppSelector((state) => state.auth.user);
-  const hasCV = user?.candidate?.cvs && user.candidate.cvs.length > 0;
+  const hasCV = user?.hasCv;
 
   return (
     <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden">

@@ -1,7 +1,14 @@
 import React from "react";
 import { AssetCard } from "./AssetCard";
+import { CV } from "@/store/services/types/types.d";
 
-export function CVList() {
+interface CVListProps {
+  cvs: CV[];
+  onCvClick: (cv: CV) => void;
+  currentCvId?: string;
+}
+
+export function CVList({ cvs, onCvClick, currentCvId }: CVListProps) {
   return (
     <>
       <header className="mb-10">
@@ -16,41 +23,14 @@ export function CVList() {
 
       {/* Grid of Assets */}
       <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-8 pb-12">
-        <AssetCard
-          type="master"
-          title="Master_Source_2024"
-          tags={["FULLSTACK", "ARCHITECTURE"]}
-          score={90}
-          date="Oct 12, 2024"
-          format="PDF/DOCX"
-        />
-        <AssetCard
-          type="tailored"
-          title="Fullstack_Senior_G"
-          tags={["REACT", "GO"]}
-          score={86}
-          tailoredFor="Google"
-          date="2d ago"
-          format="PDF"
-        />
-        <AssetCard
-          type="tailored"
-          title="Fullstack_Senior_G"
-          tags={["REACT", "GO"]}
-          score={86}
-          tailoredFor="Google"
-          date="2d ago"
-          format="PDF"
-        />
-        <AssetCard
-          type="tailored"
-          title="Fullstack_Senior_G"
-          tags={["REACT", "GO"]}
-          score={86}
-          tailoredFor="Google"
-          date="2d ago"
-          format="PDF"
-        />
+        {cvs.map((cv) => (
+          <AssetCard
+            key={cv.id}
+            onClick={() => onCvClick(cv)}
+            isActive={cv.id === currentCvId}
+            {...cv}
+          />
+        ))}
       </div>
     </>
   );

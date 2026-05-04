@@ -6,12 +6,18 @@ import { ResumeAnalysisSidebar } from "@/components/candidate/ResumeAnalysisSide
 import { OriginCard } from "@/components/candidate/ResumeLab/OriginCard";
 import { AdaptationCard } from "@/components/candidate/ResumeLab/AdaptationCard";
 import { CVList } from "@/components/candidate/ResumeLab/CVList";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useResumeLab } from "./useResumeLab";
 
 
 /**
  * ResumeLabScreen - The dedicated space for resume experimentation and optimization.
  */
 export const ResumeLabScreen = () => {
+  const dispatch = useAppDispatch();
+  const cvs = useAppSelector((state) => state.cv.cvs);
+  const { currentCv, handleCvClick } = useResumeLab();
+
   return (
     <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden bg-canvas">
       {/* Main Content Area */}
@@ -23,12 +29,16 @@ export const ResumeLabScreen = () => {
             <AdaptationCard />
           </div>
 
-          <CVList />
+          <CVList
+            cvs={cvs}
+            onCvClick={handleCvClick}
+            currentCvId={currentCv?.id}
+          />
         </div>
       </section>
 
       {/* Right Sidebar - Analysis & Insights */}
-      <ResumeAnalysisSidebar />
+      <ResumeAnalysisSidebar cv={currentCv} />
     </main>
   );
 };

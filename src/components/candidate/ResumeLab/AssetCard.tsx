@@ -1,28 +1,31 @@
-import React from "react";
+import { CV } from "@/store/services/types/types";
+import { DonutChart } from "@/components/shared/DonutChart/DonutChart";
 
-interface AssetCardProps {
-  type: "master" | "tailored";
-  title: string;
-  tags: string[];
-  score: number;
-  tailoredFor?: string;
-  date: string;
-  format: string;
+interface AssetCardProps extends CV {
+  onClick?: () => void;
+  isActive?: boolean;
 }
 
 export function AssetCard({
-  type,
-  title,
-  tags,
-  score,
-  tailoredFor,
-  date,
-  format,
+  overallScore,
+  roleTag,
+  fileName,
+  isMaster,
+  updatedAt,
+  onClick,
+  isActive
 }: AssetCardProps) {
   return (
-    <div className="relative bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 flex flex-col hover:-translate-y-1 transition-transform duration-300">
+    <div
+      onClick={onClick}
+      className={`relative bg-white rounded-[2rem] p-6 shadow-sm border transition-all duration-300 flex flex-col hover:-translate-y-1 cursor-pointer ${
+        isActive 
+          ? "border-brand ring-2 ring-brand/10 shadow-md" 
+          : "border-slate-100 hover:shadow-md"
+      }`}
+    >
       {/* Master Badge */}
-      {type === "master" && (
+      {isMaster && (
         <div className="absolute -top-3 left-6 bg-brand text-white text-[0.625rem] font-bold px-3 py-1 uppercase tracking-wider rounded-full shadow-sm">
           Master
         </div>
@@ -45,52 +48,24 @@ export function AssetCard({
       <div className="flex justify-between items-start gap-4">
         <div>
           <h3 className="text-xl font-bold text-slate-900 tracking-tight line-clamp-1">
-            {title}
+            {fileName.split(".")[0]}
           </h3>
           <div className="flex gap-2 mt-2.5 flex-wrap">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-surface-low text-zinc-600 text-[0.625rem] font-bold px-2.5 py-1 rounded border border-zinc-200/50 uppercase tracking-wide"
-              >
-                {tag}
-              </span>
-            ))}
+            <span
+              className="bg-surface-low text-zinc-600 text-[0.625rem] font-bold px-2.5 py-1 rounded border border-zinc-200/50 uppercase"
+            >
+              {roleTag}
+            </span>
+
           </div>
         </div>
-        
-        {/* Score Circle */}
-        <div className="w-12 h-12 rounded-full border-[2.5px] border-brand flex items-center justify-center shrink-0">
-          <span className="text-brand font-extrabold text-[0.8rem]">{score}%</span>
-        </div>
+
+        {/* Match Score Chart */}
+        <DonutChart score={overallScore} size={14} label="Match Score" />
       </div>
 
       {/* Spacer to push footer to bottom if needed */}
       <div className="flex-grow"></div>
-
-      {/* Info Line */}
-      <div className="mt-8 flex items-center gap-1.5">
-        {type === "tailored" ? (
-          <>
-            <span
-              className="material-symbols-outlined text-[0.95rem] text-brand"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            >
-              domain
-            </span>
-            <span className="text-sm font-bold text-brand">
-              Tailored for: {tailoredFor}
-            </span>
-          </>
-        ) : (
-          <>
-            <span className="material-symbols-outlined text-[0.95rem] text-slate-400">
-              info
-            </span>
-            <span className="text-sm text-slate-500">Source for all variants</span>
-          </>
-        )}
-      </div>
 
       {/* Footer Line */}
       <div className="mt-4 flex items-center justify-between">
@@ -98,10 +73,10 @@ export function AssetCard({
           <span className="material-symbols-outlined text-[0.95rem]">
             history
           </span>
-          <span className="text-xs font-medium">{date}</span>
+          <span className="text-xs font-medium">{updatedAt ? new Date(updatedAt).toISOString().split('T')[0] : 'N/A'}</span>
         </div>
-        <span className="bg-surface-low text-zinc-500 font-bold text-[0.625rem] px-2 py-1 rounded">
-          {format}
+        <span className="bg-surface-low text-zinc-500 font-bold text-[0.625rem] px-2 py-1 rounded uppercase">
+          {fileName.split(".")[1]}
         </span>
       </div>
     </div>

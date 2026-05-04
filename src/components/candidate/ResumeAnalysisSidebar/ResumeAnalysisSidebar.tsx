@@ -1,33 +1,35 @@
 import React from "react";
 import { DonutChart } from "@/components/shared/DonutChart/DonutChart";
 import { CVMetricsCard } from "@/components/candidate/CVMetricsCard/CVMetricsCard";
-
-interface InsightFix {
-  id: number;
-  title: string;
-  boost: string;
-  tag?: string;
-}
+import { CV } from '@/store/services/types/types'
 
 interface ResumeAnalysisSidebarProps {
-  targetRole?: string;
-  fileName?: string;
-  overallScore?: number;
-  metrics?: Record<string, number>;
-  insights?: InsightFix[];
+  cv: CV | null;
 }
 
-export function ResumeAnalysisSidebar({
-  targetRole = "Fullstack Engineer",
-  fileName = "ActiveMaster_2026.pdf",
-  overallScore = 76,
-  metrics,
-  insights = [
+export function ResumeAnalysisSidebar({ cv }: ResumeAnalysisSidebarProps) {
+  const insights = [
     { id: 1, title: "Quantify Results at Lugh", boost: "+4%", tag: "AI Magic" },
     { id: 2, title: "Add 3 Missing Keywords", boost: "+2%" },
     { id: 3, title: "Complete LinkedIn Profile", boost: "+6%" },
-  ],
-}: ResumeAnalysisSidebarProps) {
+  ];
+
+  if (!cv) {
+    return (
+      <aside className="w-[24rem] border-l border-zinc-200/50 bg-white dark:bg-slate-900/50 overflow-y-auto no-scrollbar hidden 2xl:block">
+        <div className="p-8 h-full flex flex-col items-center justify-center text-center space-y-4">
+          <span className="material-symbols-outlined text-5xl text-slate-300">
+            description
+          </span>
+          <div>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">No CV Selected</h3>
+            <p className="text-sm text-slate-500">Select a CV from your assets to see detailed analysis and insights.</p>
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
   return (
     <aside className="w-[24rem] border-l border-zinc-200/50 bg-white dark:bg-slate-900/50 overflow-y-auto no-scrollbar hidden 2xl:block">
       <div className="p-8 space-y-10">
@@ -36,23 +38,23 @@ export function ResumeAnalysisSidebar({
           <div className="space-y-1">
             <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Target Role</p>
             <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
-              {targetRole} <span className="text-zinc-400 font-normal">(or dynamic role)</span>
+              {cv.roleTag} <span className="text-zinc-400 font-normal">(or dynamic role)</span>
             </h3>
           </div>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-            {fileName}
+            {cv.fileName}
           </h2>
         </section>
 
         {/* Score Section using DonutChart component */}
         <section className="flex flex-col items-center justify-center py-6">
           <div className="relative flex flex-col items-center">
-            <DonutChart score={overallScore} size={48} text="Current Score" />
+            <DonutChart score={cv.overallScore} size={48} text="Current Score" />
           </div>
         </section>
 
         {/* Metrics Analysis */}
-        <CVMetricsCard metrics={metrics} />
+        <CVMetricsCard cv={cv} />
 
         {/* Insights & Fixes Placeholder */}
         <section className="space-y-4">

@@ -1,3 +1,5 @@
+import { CV } from '@/store/services/types/types'
+
 export type User = {
     id: string;
     username: string | null;
@@ -10,15 +12,6 @@ export type Candidate = {
     name: string;
     userId: string;
     embedding: number[] | null;
-}
-
-export type CV = {
-    id: string;
-    createdAt: Date | null;
-    updatedAt: Date | null;
-    embedding: number[] | null;
-    candidateId: string;
-    content: string;
 }
 
 export type FullUser = User & {

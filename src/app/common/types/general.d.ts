@@ -2,11 +2,8 @@ export type User = {
     id: string;
     username: string | null;
     email: string;
-    password: string;
     profilePicture: string | null;
-    refreshTokens: string[] | null;
-    createdAt: Date | null;
-    updatedAt: Date | null;
+    hasCv: boolean;
 }
 
 export type Candidate = {

@@ -1,8 +1,8 @@
-import { FullUser } from "@/app/common/types/general";
+import { FullUser, User } from "@/app/common/types/general";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface AuthState {
-  user: FullUser | null;
+  user: User | null;
   isAuth: boolean;
 }
 
@@ -17,7 +17,7 @@ export const authSlice = createSlice({
   reducers: {
     setAuthSuccess: (
       state,
-      action: PayloadAction<{ user: FullUser; isAuth: boolean }>
+      action: PayloadAction<{ user: User; isAuth: boolean }>
     ) => {
       state.user = action.payload.user;
       state.isAuth = action.payload.isAuth;

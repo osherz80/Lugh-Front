@@ -9,7 +9,7 @@ export function Sidebar() {
 
   const navItems = [
     { href: "/candidate", icon: "home", label: "Home" },
-    { href: "#", icon: "account_circle", label: "Smart Profile" },
+    { href: "/candidate/smart-profile", icon: "account_circle", label: "Smart Profile" },
     { href: "#", icon: "description", label: "Applications" },
     { href: "/candidate/resume-lab", icon: "biotech", label: "Resume Lab" },
   ];

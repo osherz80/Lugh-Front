@@ -1,7 +1,7 @@
 import { useGoogleLogin as useGoogleLoginReact } from '@react-oauth/google';
 import { useAppDispatch } from '@/store/hooks';
 import { setAuthSuccess } from '@/store/features/authSlice';
-import { useGoogleLoginMutation } from '@/store/services/api';
+import { useGoogleLoginMutation } from '@/store/services/api/api';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/store/hooks';
 

@@ -48,10 +48,11 @@ export const api = createApi({
         body: data,
       }),
     }),
-    uploadCV: builder.mutation<any, Blob | File>({
-      query: (file) => {
+    uploadCV: builder.mutation<any, { file: Blob | File; userId: string }>({
+      query: ({ file, userId }) => {
         const formData = new FormData();
         formData.append("file", file);
+        formData.append("userId", userId);
         return {
           url: "/cv/upload",
           method: "POST",

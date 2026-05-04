@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useRegisterMutation, useLoginMutation } from "@/store/services/api";
+import { useRegisterMutation, useLoginMutation } from "@/store/services/api/api";
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setAuthSuccess } from "@/store/features/authSlice";

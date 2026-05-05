@@ -1,6 +1,6 @@
 import React from "react";
-import { AssetCard } from "./AssetCard";
 import { CV } from "@/store/services/types/types.d";
+import { CVCard } from "./CVCard/CVCard";
 
 interface CVListProps {
   cvs: CV[];
@@ -24,7 +24,7 @@ export function CVList({ cvs, onCvClick, currentCvId }: CVListProps) {
       {/* Grid of Assets */}
       <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-8 pb-12">
         {cvs.map((cv) => (
-          <AssetCard
+          <CVCard
             key={cv.id}
             onClick={() => onCvClick(cv)}
             isActive={cv.id === currentCvId}

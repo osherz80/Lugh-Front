@@ -48,15 +48,15 @@ export function DonutChart({ score, size = 20, label = "Match Score", text }: Do
                                 cy="18"
                             />
                         </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <div className={`absolute inset-0 flex flex-col items-center justify-center ${text && 'pt-1'}`}>
                             <span
                                 style={{ fontSize: `${(size * 0.9) / 16}rem` }}
-                                className="font-extrabold text-brand leading-none"
+                                className="font-bold text-brand leading-none"
                             >
                                 {percentage}%
                             </span>
                             {text && (
-                                <span className="text-[0.625rem] font-bold text-zinc-400 uppercase mt-1">
+                                <span className="text-[0.625rem] font-medium text-zinc-400 uppercase mt-1">
                                     {text}
                                 </span>
                             )}

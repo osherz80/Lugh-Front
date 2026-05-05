@@ -3,7 +3,7 @@
 import React from "react";
 import { DonutChart } from "@/components/shared/DonutChart/DonutChart";
 import { MatchHighlight } from "./MatchHighlight";
-import { JobTag } from "./JobTag";
+import { Tag } from "@/components/shared/Tag/Tag";
 import { JobTitle } from "./JobTitle";
 import { LikeJob } from "./LikeJob";
 import { JobApply } from "./JobApply";
@@ -34,7 +34,7 @@ export function JobCard({ title, location, matchScore, matchReason, tags, isFavo
           <LikeJob isFavorited={isFavorited} onClick={onLikeClick} />
           <div className="flex gap-2">
             {tags.map((tag) => (
-              <JobTag key={tag} label={tag} onClick={onTagClick} />
+              <Tag key={tag} label={tag} onClick={onTagClick} />
             ))}
           </div>
         </div>

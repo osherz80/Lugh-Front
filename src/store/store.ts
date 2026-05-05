@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import appReducer from "@/store/features/appSlice";
 import authReducer from "@/store/features/authSlice";
-import { api } from "@/store/services/api";
+import cvReducer from "@/store/features/cvSlice";
+import { api } from "@/store/services/api/api";
 
 export const store = configureStore({
   reducer: {
     app: appReducer,
     auth: authReducer,
+    cv: cvReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>

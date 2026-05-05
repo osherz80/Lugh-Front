@@ -39,7 +39,7 @@ export function EmptyDashboard() {
 
             <div className="space-y-3">
               <h2 className="text-2xl font-bold text-zinc-900">Populate Your Feed</h2>
-              <p className="text-zinc-500 leading-relaxed max-w-[280px] mx-auto">
+              <p className="text-zinc-500 leading-relaxed max-w-[17.5rem] mx-auto">
                 Our AI needs your professional story to curate high-match opportunities. Upload your CV to see tailored roles.
               </p>
             </div>

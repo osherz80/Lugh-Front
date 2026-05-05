@@ -7,7 +7,7 @@ interface QuickTipProps {
 
 export function QuickTip({ isCollapsed }: QuickTipProps) {
   return (
-    <div className="min-w-[280px]">
+    <div className="min-w-[17.5rem]">
       <div className="bg-brand-tint/40 p-6 rounded-2xl border border-brand/10 space-y-3">
         <div className="flex items-center gap-3">
           <span className="material-symbols-outlined text-brand text-xl" style={{ fontVariationSettings: "'FILL' 0" }}>lightbulb</span>

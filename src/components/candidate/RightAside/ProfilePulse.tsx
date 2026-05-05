@@ -7,7 +7,7 @@ interface ProfilePulseProps {
 
 export function ProfilePulse({ isCollapsed }: ProfilePulseProps) {
   return (
-    <div className="bg-surface-lowest p-6 rounded-2xl no-line-shadow border-t-4 border-brand min-w-[280px]">
+    <div className="bg-surface-lowest p-6 rounded-2xl no-line-shadow border-t-4 border-brand min-w-[17.5rem]">
       <div className="flex items-center gap-3 mb-4">
         <span
           className="material-symbols-outlined text-brand shrink-0"

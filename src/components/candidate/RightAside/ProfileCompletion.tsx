@@ -14,7 +14,7 @@ const CHECKLIST_ITEMS = [
 
 export function ProfileCompletion({ isCollapsed }: ProfileCompletionProps) {
   return (
-    <div className="space-y-4 min-w-[280px]">
+    <div className="space-y-4 min-w-[17.5rem]">
       <AnimatePresence>
         {!isCollapsed && (
           <motion.h3
@@ -32,7 +32,7 @@ export function ProfileCompletion({ isCollapsed }: ProfileCompletionProps) {
         {CHECKLIST_ITEMS.map((item) => (
           <div key={item.id} className="flex gap-4 group items-start">
             <div className={`shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${item.completed ? 'bg-brand border-brand text-white' : 'border-zinc-300 bg-white'}`}>
-              {item.completed && <span className="material-symbols-outlined text-[14px] font-bold">check</span>}
+              {item.completed && <span className="material-symbols-outlined text-sm font-bold">check</span>}
             </div>
             
             <AnimatePresence>
@@ -48,12 +48,12 @@ export function ProfileCompletion({ isCollapsed }: ProfileCompletionProps) {
                       {item.label}
                     </h4>
                     {item.bonus && (
-                      <span className="text-[10px] font-bold text-brand bg-brand-tint px-1.5 py-0.5 rounded">
+                      <span className="text-[0.625rem] font-bold text-brand bg-brand-tint px-1.5 py-0.5 rounded">
                         {item.bonus}
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-zinc-400 mt-0.5 leading-tight truncate">
+                  <p className="text-[0.6875rem] text-zinc-400 mt-0.5 leading-tight truncate">
                     {item.sublabel}
                   </p>
                 </motion.div>

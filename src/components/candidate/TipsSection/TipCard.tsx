@@ -13,8 +13,8 @@ export function TipCard({ tip, isExpanded, onToggle }: TipCardProps) {
         <div
             onClick={onToggle}
             className={`p-4 rounded-2xl bg-white dark:bg-slate-800 border transition-all duration-300 cursor-pointer group ${isExpanded
-                    ? "border-emerald-200 dark:border-emerald-900 shadow-md"
-                    : "border-slate-200 dark:border-slate-700 shadow-sm hover:border-slate-300"
+                ? "border-emerald-200 dark:border-emerald-900 shadow-md"
+                : "border-slate-200 dark:border-slate-700 shadow-sm hover:border-slate-300"
                 }`}
         >
             <div className="flex justify-between items-start gap-4">
@@ -44,9 +44,22 @@ export function TipCard({ tip, isExpanded, onToggle }: TipCardProps) {
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
-                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-3">
-                            {tip.tip}
-                        </p>
+                        <div className="border-t border-slate-100 dark:border-slate-700 pt-3 space-y-4">
+                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                                {tip.tip}
+                            </p>
+                            <div className="flex justify-end">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        // TODO: Implement apply logic
+                                    }}
+                                    className="text-[0.625rem] font-black text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-1.5 rounded-xl transition-all shadow-md hover:shadow-emerald-200 dark:hover:shadow-none active:scale-95 uppercase tracking-wider"
+                                >
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

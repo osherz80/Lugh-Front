@@ -1,3 +1,10 @@
+export type CVTip = {
+    category: string;
+    title: string;
+    tip: string;
+    gain: number;
+}
+
 export type CV = {
     id: string;
     candidateId: string;
@@ -12,6 +19,7 @@ export type CV = {
     layoutScore: number;
     embedding?: number[];
     content?: string;
+    tips: CVTip[];
     createdAt: Date;
     updatedAt: Date;
 }

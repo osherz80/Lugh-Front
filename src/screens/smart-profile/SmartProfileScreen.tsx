@@ -56,10 +56,23 @@ const steps: StepData[] = [
 
 export const SmartProfileScreen = () => {
   const { } = useSmartProfile();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (scrollRef.current) {
+      // Direct scrollLeft modification for smooth horizontal scrolling with mouse wheel
+      // Multiplied by 1.5 to increase scroll speed as requested
+      scrollRef.current.scrollLeft += e.deltaY * 0.8;
+    }
+  };
 
   return (
     <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden bg-[#F8FAFC]">
-      <section className="flex-grow overflow-x-auto no-scrollbar py-12 px-20 flex items-center">
+      <section
+        ref={scrollRef}
+        onWheel={handleWheel}
+        className="flex-grow overflow-x-auto no-scrollbar py-12 px-20 flex items-center"
+      >
         <div className="flex items-center min-w-max pr-40 h-full">
           {/* Start Node */}
           <StartNode />

@@ -56,6 +56,7 @@ const steps: StepData[] = [
 
 import { Step1Modal } from "./components/Step1Modal/Step1Modal";
 import { Step2Modal } from "./components/Step2Modal/Step2Modal";
+import { Step3Modal } from "./components/Step3Modal/Step3Modal";
 
 export const SmartProfileScreen = () => {
   const { 
@@ -66,7 +67,10 @@ export const SmartProfileScreen = () => {
     closeStep1Modal,
     isStep2ModalOpen,
     openStep2Modal,
-    closeStep2Modal
+    closeStep2Modal,
+    isStep3ModalOpen,
+    openStep3Modal,
+    closeStep3Modal
   } = useSmartProfile();
 
   return (
@@ -90,6 +94,7 @@ export const SmartProfileScreen = () => {
                 onAction={
                   step.id === 1 ? openStep1Modal : 
                   step.id === 2 ? openStep2Modal : 
+                  step.id === 3 ? openStep3Modal : 
                   undefined
                 } 
               />
@@ -114,8 +119,14 @@ export const SmartProfileScreen = () => {
         isOpen={isStep2ModalOpen} 
         onOpenChange={closeStep2Modal} 
       />
+
+      <Step3Modal 
+        isOpen={isStep3ModalOpen} 
+        onOpenChange={closeStep3Modal} 
+      />
     </main>
   );
 };
+
 
 

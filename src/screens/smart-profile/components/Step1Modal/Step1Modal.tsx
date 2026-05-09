@@ -99,14 +99,26 @@ export const Step1Modal = ({ isOpen, onOpenChange }: Step1ModalProps) => {
                         />
                       </NumberField>
 
-                      {/* General Location */}
-                      <TextField className="flex flex-col gap-2.5">
-                        <Label className="text-[#1e293b] font-bold text-[15px] ml-1">General Location</Label>
-                        <Input 
-                          placeholder="City, Country (e.g., Tel Aviv, Israel)" 
-                          className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
-                        />
-                      </TextField>
+                      {/* Location (Country & City) */}
+                      <div className="grid grid-cols-2 gap-6">
+                        {/* Country */}
+                        <TextField className="flex flex-col gap-2.5">
+                          <Label className="text-[#1e293b] font-bold text-[15px] ml-1">Country</Label>
+                          <Input 
+                            placeholder="e.g., Israel" 
+                            className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700 w-full"
+                          />
+                        </TextField>
+
+                        {/* City */}
+                        <TextField className="flex flex-col gap-2.5">
+                          <Label className="text-[#1e293b] font-bold text-[15px] ml-1">City</Label>
+                          <Input 
+                            placeholder="e.g., Tel Aviv" 
+                            className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700 w-full"
+                          />
+                        </TextField>
+                      </div>
 
                       {/* Pro Tip */}
                       <div className="bg-[#eefcf9] border-l-[6px] border-[#00a18a] p-5 rounded-2xl flex gap-4 items-center">

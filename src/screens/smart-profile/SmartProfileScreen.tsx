@@ -55,6 +55,7 @@ const steps: StepData[] = [
 
 
 import { Step1Modal } from "./components/Step1Modal/Step1Modal";
+import { Step2Modal } from "./components/Step2Modal/Step2Modal";
 
 export const SmartProfileScreen = () => {
   const { 
@@ -62,7 +63,10 @@ export const SmartProfileScreen = () => {
     handleWheel, 
     isStep1ModalOpen, 
     openStep1Modal, 
-    closeStep1Modal 
+    closeStep1Modal,
+    isStep2ModalOpen,
+    openStep2Modal,
+    closeStep2Modal
   } = useSmartProfile();
 
   return (
@@ -83,7 +87,11 @@ export const SmartProfileScreen = () => {
             <React.Fragment key={step.id}>
               <StepCard 
                 step={step} 
-                onAction={step.id === 1 ? openStep1Modal : undefined} 
+                onAction={
+                  step.id === 1 ? openStep1Modal : 
+                  step.id === 2 ? openStep2Modal : 
+                  undefined
+                } 
               />
               {index < steps.length - 1 && <Trail />}
             </React.Fragment>
@@ -101,7 +109,13 @@ export const SmartProfileScreen = () => {
         isOpen={isStep1ModalOpen} 
         onOpenChange={closeStep1Modal} 
       />
+
+      <Step2Modal 
+        isOpen={isStep2ModalOpen} 
+        onOpenChange={closeStep2Modal} 
+      />
     </main>
   );
 };
+
 

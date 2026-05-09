@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 
 export const useSmartProfile = () => {
     const [isStep1ModalOpen, setIsStep1ModalOpen] = useState(false);
+    const [isStep2ModalOpen, setIsStep2ModalOpen] = useState(false);
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -16,11 +17,17 @@ export const useSmartProfile = () => {
     const openStep1Modal = () => setIsStep1ModalOpen(true);
     const closeStep1Modal = () => setIsStep1ModalOpen(false);
 
+    const openStep2Modal = () => setIsStep2ModalOpen(true);
+    const closeStep2Modal = () => setIsStep2ModalOpen(false);
+
     return {
         scrollRef,
         handleWheel,
         isStep1ModalOpen,
         openStep1Modal,
         closeStep1Modal,
+        isStep2ModalOpen,
+        openStep2Modal,
+        closeStep2Modal,
     };
-};
+};

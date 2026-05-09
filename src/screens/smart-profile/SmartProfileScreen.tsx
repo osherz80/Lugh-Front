@@ -54,17 +54,16 @@ const steps: StepData[] = [
 
 
 
-export const SmartProfileScreen = () => {
-  const { } = useSmartProfile();
-  const scrollRef = useRef<HTMLDivElement>(null);
+import { Step1Modal } from "./components/Step1Modal/Step1Modal";
 
-  const handleWheel = (e: React.WheelEvent) => {
-    if (scrollRef.current) {
-      // Direct scrollLeft modification for smooth horizontal scrolling with mouse wheel
-      // Multiplied by 1.5 to increase scroll speed as requested
-      scrollRef.current.scrollLeft += e.deltaY * 0.8;
-    }
-  };
+export const SmartProfileScreen = () => {
+  const { 
+    scrollRef, 
+    handleWheel, 
+    isStep1ModalOpen, 
+    openStep1Modal, 
+    closeStep1Modal 
+  } = useSmartProfile();
 
   return (
     <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden bg-[#F8FAFC]">
@@ -82,7 +81,10 @@ export const SmartProfileScreen = () => {
           {/* Steps Flow */}
           {steps.map((step, index) => (
             <React.Fragment key={step.id}>
-              <StepCard step={step} />
+              <StepCard 
+                step={step} 
+                onAction={step.id === 1 ? openStep1Modal : undefined} 
+              />
               {index < steps.length - 1 && <Trail />}
             </React.Fragment>
           ))}
@@ -94,6 +96,12 @@ export const SmartProfileScreen = () => {
           </div>
         </div>
       </section>
+
+      <Step1Modal 
+        isOpen={isStep1ModalOpen} 
+        onOpenChange={closeStep1Modal} 
+      />
     </main>
   );
 };
+

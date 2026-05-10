@@ -6,6 +6,7 @@ import { Trail } from "@/components/shared/Trail/Trail";
 import { StartNode } from "./components/StartNode/StartNode";
 import { StepCard } from "./components/StepCard/StepCard";
 import { useSmartProfile } from "./useSmartProfile";
+import dynamic from "next/dynamic";
 
 export interface StepData {
   id: number;
@@ -54,16 +55,16 @@ const steps: StepData[] = [
 
 
 
-import { Step1Modal } from "./components/Step1Modal/Step1Modal";
-import { Step2Modal } from "./components/Step2Modal/Step2Modal";
-import { Step3Modal } from "./components/Step3Modal/Step3Modal";
+const Step1Modal = dynamic(() => import("./components/Step1Modal/Step1Modal"), { ssr: false });
+const Step2Modal = dynamic(() => import("./components/Step2Modal/Step2Modal"), { ssr: false });
+const Step3Modal = dynamic(() => import("./components/Step3Modal/Step3Modal"), { ssr: false });
 
 export const SmartProfileScreen = () => {
-  const { 
-    scrollRef, 
-    handleWheel, 
-    isStep1ModalOpen, 
-    openStep1Modal, 
+  const {
+    scrollRef,
+    handleWheel,
+    isStep1ModalOpen,
+    openStep1Modal,
     closeStep1Modal,
     isStep2ModalOpen,
     openStep2Modal,
@@ -89,14 +90,14 @@ export const SmartProfileScreen = () => {
           {/* Steps Flow */}
           {steps.map((step, index) => (
             <React.Fragment key={step.id}>
-              <StepCard 
-                step={step} 
+              <StepCard
+                step={step}
                 onAction={
-                  step.id === 1 ? openStep1Modal : 
-                  step.id === 2 ? openStep2Modal : 
-                  step.id === 3 ? openStep3Modal : 
-                  undefined
-                } 
+                  step.id === 1 ? openStep1Modal :
+                    step.id === 2 ? openStep2Modal :
+                      step.id === 3 ? openStep3Modal :
+                        undefined
+                }
               />
               {index < steps.length - 1 && <Trail />}
             </React.Fragment>
@@ -110,19 +111,19 @@ export const SmartProfileScreen = () => {
         </div>
       </section>
 
-      <Step1Modal 
-        isOpen={isStep1ModalOpen} 
-        onOpenChange={closeStep1Modal} 
+      <Step1Modal
+        isOpen={isStep1ModalOpen}
+        onOpenChange={closeStep1Modal}
       />
 
-      <Step2Modal 
-        isOpen={isStep2ModalOpen} 
-        onOpenChange={closeStep2Modal} 
+      <Step2Modal
+        isOpen={isStep2ModalOpen}
+        onOpenChange={closeStep2Modal}
       />
 
-      <Step3Modal 
-        isOpen={isStep3ModalOpen} 
-        onOpenChange={closeStep3Modal} 
+      <Step3Modal
+        isOpen={isStep3ModalOpen}
+        onOpenChange={closeStep3Modal}
       />
     </main>
   );

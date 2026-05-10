@@ -3,7 +3,7 @@ name: CI/CD to Oracle Cloud
 on:
   push:
     branches:
-      - development
+      - add-deploy-ci-cd
   workflow_dispatch:
 
 jobs:

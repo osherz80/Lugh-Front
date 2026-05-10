@@ -29,9 +29,9 @@ jobs:
               cd $TARGET_DIR
             else
               cd $TARGET_DIR
-              git fetch origin dev
+              git fetch origin add-deploy-ci-cd
               # זה מוודא שהקוד בשרת נמחק ומתעדכן למה שיש בגיטהאב עכשיו
-              git reset --hard origin/dev
+              git reset --hard origin/add-deploy-ci-cd
               git clean -fd
             fi
 

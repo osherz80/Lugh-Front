@@ -60,6 +60,16 @@ const steps: StepData[] = [
     icon: "school",
     isEmoji: false,
   },
+  {
+    id: 5,
+    stepNumber: 5,
+    totalSteps: 6,
+    title: "Work Persona",
+    description: "Define your professional style and strongest attributes",
+    quote: "Your persona is your unique professional footprint",
+    icon: "psychology_alt",
+    isEmoji: false,
+  },
 ];
 
 
@@ -68,6 +78,7 @@ const Step1Modal = dynamic(() => import("./components/Step1Modal/Step1Modal"), {
 const Step2Modal = dynamic(() => import("./components/Step2Modal/Step2Modal"), { ssr: false });
 const Step3Modal = dynamic(() => import("./components/Step3Modal/Step3Modal"), { ssr: false });
 const Step4Modal = dynamic(() => import("./components/Step4Modal/Step4Modal"), { ssr: false });
+const Step5Modal = dynamic(() => import("./components/Step5Modal/Step5Modal"), { ssr: false });
 
 export const SmartProfileScreen = () => {
   const {
@@ -84,7 +95,10 @@ export const SmartProfileScreen = () => {
     closeStep3Modal,
     isStep4ModalOpen,
     openStep4Modal,
-    closeStep4Modal
+    closeStep4Modal,
+    isStep5ModalOpen,
+    openStep5Modal,
+    closeStep5Modal
   } = useSmartProfile();
 
   return (
@@ -110,7 +124,8 @@ export const SmartProfileScreen = () => {
                     step.id === 2 ? openStep2Modal :
                       step.id === 3 ? openStep3Modal :
                         step.id === 4 ? openStep4Modal :
-                          undefined
+                          step.id === 5 ? openStep5Modal :
+                            undefined
                 }
               />
               {index < steps.length - 1 && <Trail />}
@@ -143,6 +158,11 @@ export const SmartProfileScreen = () => {
       <Step4Modal
         isOpen={isStep4ModalOpen}
         onOpenChange={closeStep4Modal}
+      />
+
+      <Step5Modal
+        isOpen={isStep5ModalOpen}
+        onOpenChange={closeStep5Modal}
       />
     </main>
   );

@@ -46,7 +46,7 @@ export const StepModal = ({ isOpen, onOpenChange, stepNumber, children }: StepMo
                   {/* Close Button */}
                   <button
                     onClick={close}
-                    className="absolute top-8 right-8 text-slate-400 hover:text-slate-600 transition-colors p-2 hover:bg-slate-50 rounded-full z-20"
+                    className="absolute top-8 right-8 text-slate-400 hover:text-slate-600 transition-all p-2 bg-slate-50 hover:bg-slate-100 rounded-full z-20 border border-slate-100 shadow-sm"
                   >
                     <X size={24} />
                   </button>

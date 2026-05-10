@@ -3,6 +3,7 @@ import { StepModal } from '../StepModal/StepModal';
 import { Button, Heading, Input, TextArea, TextField } from 'react-aria-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Search, Sparkles } from 'lucide-react';
+import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
 
 interface Step2ModalProps {
   isOpen: boolean;
@@ -57,16 +58,11 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
     >
       {({ close }) => (
         <>
-          {/* Icon & Title */}
-          <div className="text-center mb-10">
-            <div className="text-6xl mb-6 select-none">👋</div>
-            <Heading slot="title" className="text-[32px] font-[900] text-[#1e293b] mb-2 tracking-tight">
-              Let's uncover your Professional DNA.
-            </Heading>
-            <p className="text-slate-500 font-medium text-[17px]">
-              This data powers our AI to match you with top-tier opportunities.
-            </p>
-          </div>
+          <StepModalHeader
+            icon="👋"
+            title="Let's uncover your Professional DNA."
+            subTitle="This data powers our AI to match you with top-tier opportunities."
+          />
 
           {/* Skill Search */}
           <div className="relative mb-8">

@@ -6,6 +6,7 @@ export const useSmartProfile = () => {
     const [isStep3ModalOpen, setIsStep3ModalOpen] = useState(false);
     const [isStep4ModalOpen, setIsStep4ModalOpen] = useState(false);
     const [isStep5ModalOpen, setIsStep5ModalOpen] = useState(false);
+    const [isStep6ModalOpen, setIsStep6ModalOpen] = useState(false);
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -32,6 +33,9 @@ export const useSmartProfile = () => {
     const openStep5Modal = () => setIsStep5ModalOpen(true);
     const closeStep5Modal = () => setIsStep5ModalOpen(false);
 
+    const openStep6Modal = () => setIsStep6ModalOpen(true);
+    const closeStep6Modal = () => setIsStep6ModalOpen(false);
+
     return {
         scrollRef,
         handleWheel,
@@ -50,5 +54,8 @@ export const useSmartProfile = () => {
         isStep5ModalOpen,
         openStep5Modal,
         closeStep5Modal,
+        isStep6ModalOpen,
+        openStep6Modal,
+        closeStep6Modal,
     };
 };

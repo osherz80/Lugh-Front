@@ -1,0 +1,52 @@
+name: CI/CD to Oracle Cloud
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # עדכון לגרסה העדכנית
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3 # גרסה יציבה ועדכנית
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # הגדרת נתיבים
+            TARGET_DIR="~/Lugh-Front"
+            REPO_URL="https://github.com/${{ github.repository }}.git"
+
+            # בדיקה אם התיקייה קיימת - אם לא עושים Clone, אם כן עושים Pull חזק
+            if [ ! -d "$TARGET_DIR" ]; then
+              echo "Directory does not exist. Cloning..."
+              git clone $REPO_URL $TARGET_DIR
+              cd $TARGET_DIR
+            else
+              echo "Directory exists. Updating code..."
+              cd $TARGET_DIR
+              git fetch origin dev
+              git reset --hard origin/dev
+            fi
+
+            # בניית ה-Image
+            echo "Building Docker image..."
+            docker build -t lugh-front-image .
+
+            # ניהול הקונטיינרים
+            # שים לב: עדיף לקרוא לקונטיינר בשם שונה מה-Image כדי למנוע בלבול
+            echo "Stopping old container..."
+            docker stop lugh-front-container || true
+            docker rm lugh-front-container || true
+
+            echo "Starting new container..."
+            # הרצה - כאן הפורט בשרת הוא 80 ובתוך הדוקר הוא 80
+            docker run -d --name lugh-front-container -p 80:3000 lugh-front-image
+
+            echo "Deployment finished successfully!"

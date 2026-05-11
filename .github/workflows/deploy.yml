@@ -32,33 +32,29 @@ jobs:
           script: |
             set -e
 
-            # --- התקנת Nginx אם הוא לא קיים ---
+            # 1. עצירת הקונטיינר הישן שתופס את פורט 80 (חובה לפני הפעלת Nginx)
+            echo "Stopping old container to free port 80..."
+            docker stop lugh-front-container || true
+            docker rm lugh-front-container || true
+
+            # 2. התקנת Nginx אם הוא לא קיים
             if ! command -v nginx > /dev/null; then
               echo "Nginx not found, installing..."
               sudo apt update
               sudo apt install nginx -y
             fi
 
-            # --- טיפול ב-Nginx ---
+            # 3. הגדרת Nginx
             echo "Configuring Nginx..."
-            # וודא שהתיקייה קיימת (ליתר ביטחון)
-            sudo mkdir -p /etc/nginx/sites-available/
-            sudo mkdir -p /etc/nginx/sites-enabled/
-
-            # העתקה מהבית לתיקיית הקונפיגורציות של Nginx
             sudo cp ~/nginx/lugh.site.conf /etc/nginx/sites-available/lugh.site
-
-            # יצירת Symlink (קישור)
             sudo ln -sf /etc/nginx/sites-available/lugh.site /etc/nginx/sites-enabled/
-
-            # הסרת ברירת המחדל של Nginx כדי שלא תתנגש
             sudo rm -f /etc/nginx/sites-enabled/default
 
-            # בדיקת תקינות וריסטארט
+            # 4. הפעלה מחדש של Nginx (עכשיו כשפורט 80 פנוי)
             sudo nginx -t
-            sudo systemctl restart nginx
+            sudo systemctl restart nginx || sudo systemctl start nginx
 
-            # --- טיפול ב-Docker ---
+            # 5. עדכון קוד ובניית Docker (כרגיל)
             TARGET_DIR="~/Lugh-Front"
             REPO_URL="https://github.com/${{ github.repository }}.git"
 
@@ -72,15 +68,12 @@ jobs:
               git clean -fd
             fi
 
-            echo "Building Docker image without cache..."
+            echo "Building Docker image..."
             docker build --no-cache \
               --build-arg NEXT_PUBLIC_API_URL="${{ secrets.NEXT_PUBLIC_API_URL }}" \
               --build-arg NEXT_GOOGLE_CLIENT_ID="${{ secrets.NEXT_GOOGLE_CLIENT_ID }}" \
               -t lugh-front-image .
 
-            echo "Restarting container..."
-            docker stop lugh-front-container || true
-            docker rm lugh-front-container || true
-
-            # הרצה על פורט 3000 (כי Nginx תופס את 80)
+            # 6. הרצת הקונטיינר בפורט 3000 (Nginx יעביר אליו את התנועה מ-80)
+            echo "Starting new container on port 3000..."
             docker run -d --name lugh-front-container -p 3000:3000 lugh-front-image

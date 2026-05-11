@@ -3,7 +3,7 @@ name: CI/CD to Oracle Cloud
 on:
   push:
     branches:
-      - add-deploy-ci-cd
+      - development
   workflow_dispatch:
 
 jobs:
@@ -63,8 +63,8 @@ jobs:
               cd $TARGET_DIR
             else
               cd $TARGET_DIR
-              git fetch origin add-deploy-ci-cd
-              git reset --hard origin/add-deploy-ci-cd
+              git fetch origin development
+              git reset --hard origin/development
               git clean -fd
             fi
 

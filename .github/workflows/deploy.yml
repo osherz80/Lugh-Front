@@ -32,14 +32,28 @@ jobs:
           script: |
             set -e
 
+            # --- התקנת Nginx אם הוא לא קיים ---
+            if ! command -v nginx > /dev/null; then
+              echo "Nginx not found, installing..."
+              sudo apt update
+              sudo apt install nginx -y
+            fi
+
             # --- טיפול ב-Nginx ---
             echo "Configuring Nginx..."
+            # וודא שהתיקייה קיימת (ליתר ביטחון)
+            sudo mkdir -p /etc/nginx/sites-available/
+            sudo mkdir -p /etc/nginx/sites-enabled/
+
             # העתקה מהבית לתיקיית הקונפיגורציות של Nginx
             sudo cp ~/nginx/lugh.site.conf /etc/nginx/sites-available/lugh.site
-            # יצירת Symlink (קישור) אם לא קיים
+
+            # יצירת Symlink (קישור)
             sudo ln -sf /etc/nginx/sites-available/lugh.site /etc/nginx/sites-enabled/
+
             # הסרת ברירת המחדל של Nginx כדי שלא תתנגש
             sudo rm -f /etc/nginx/sites-enabled/default
+
             # בדיקת תקינות וריסטארט
             sudo nginx -t
             sudo systemctl restart nginx
@@ -68,5 +82,5 @@ jobs:
             docker stop lugh-front-container || true
             docker rm lugh-front-container || true
 
-            # שים לב: הפורט שונה ל-3000:3000 כי Nginx תופס את 80
+            # הרצה על פורט 3000 (כי Nginx תופס את 80)
             docker run -d --name lugh-front-container -p 3000:3000 lugh-front-image

@@ -26,8 +26,8 @@ export function Sidebar() {
       <Link
         href={href}
         className={`flex items-center gap-3 px-4 py-3 transition-all active:scale-95 rounded-xl ${isActive
-            ? "bg-brand-tint dark:bg-brand/20 text-brand font-semibold"
-            : "text-zinc-500 hover:text-brand hover:bg-surface-low"
+          ? "bg-brand-tint dark:bg-brand/20 text-brand font-semibold"
+          : "text-zinc-500 hover:text-brand hover:bg-surface-low"
           }`}
       >
         <span

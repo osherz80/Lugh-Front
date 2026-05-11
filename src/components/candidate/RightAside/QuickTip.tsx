@@ -24,7 +24,7 @@ export function QuickTip({ isCollapsed }: QuickTipProps) {
             )}
           </AnimatePresence>
         </div>
-        
+
         <AnimatePresence>
           {!isCollapsed && (
             <motion.p

@@ -34,7 +34,7 @@ export function ProfileCompletion({ isCollapsed }: ProfileCompletionProps) {
             <div className={`shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${item.completed ? 'bg-brand border-brand text-white' : 'border-zinc-300 bg-white'}`}>
               {item.completed && <span className="material-symbols-outlined text-sm font-bold">check</span>}
             </div>
-            
+
             <AnimatePresence>
               {!isCollapsed && (
                 <motion.div

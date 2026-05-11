@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/shared/Input/Input";
 import { Button } from "@/components/shared/Button/Button";
-import { useCreateJobPostMutation } from "@/store/services/api";
+import { useCreateJobPostMutation } from "@/store/services/api/job";
 
 export default function RecruiterPage() {
   const [jobDescription, setJobDescription] = useState("");

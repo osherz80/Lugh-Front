@@ -37,7 +37,10 @@ jobs:
 
             # בנייה מחדש ללא Cache כדי למנוע זכירת שגיאות
             echo "Building Docker image without cache..."
-            docker build --no-cache -t lugh-front-image .
+            docker build --no-cache \
+              --build-arg NEXT_PUBLIC_API_URL="${{ secrets.NEXT_PUBLIC_API_URL }}" \
+              --build-arg NEXT_GOOGLE_CLIENT_ID="${{ secrets.NEXT_GOOGLE_CLIENT_ID }}" \
+              -t lugh-front-image .
 
             echo "Restarting container..."
             docker stop lugh-front-container || true

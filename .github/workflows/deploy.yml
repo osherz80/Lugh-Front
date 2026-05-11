@@ -11,16 +11,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # עדכון לגרסה העדכנית
+        uses: actions/checkout@v4
+
+      # שלב חדש: העתקת קובץ הקונפיגורציה של Nginx מהפרויקט לשרת
+      - name: Copy Nginx Config to Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "nginx/lugh.site.conf"
+          target: "~/" # מעתיק לתיקיית הבית בשרת
 
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3 # גרסה יציבה ועדכנית
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
+
+            # --- טיפול ב-Nginx ---
+            echo "Configuring Nginx..."
+            # העתקה מהבית לתיקיית הקונפיגורציות של Nginx
+            sudo cp ~/nginx/lugh.site.conf /etc/nginx/sites-available/lugh.site
+            # יצירת Symlink (קישור) אם לא קיים
+            sudo ln -sf /etc/nginx/sites-available/lugh.site /etc/nginx/sites-enabled/
+            # הסרת ברירת המחדל של Nginx כדי שלא תתנגש
+            sudo rm -f /etc/nginx/sites-enabled/default
+            # בדיקת תקינות וריסטארט
+            sudo nginx -t
+            sudo systemctl restart nginx
+
+            # --- טיפול ב-Docker ---
             TARGET_DIR="~/Lugh-Front"
             REPO_URL="https://github.com/${{ github.repository }}.git"
 
@@ -30,12 +54,10 @@ jobs:
             else
               cd $TARGET_DIR
               git fetch origin add-deploy-ci-cd
-              # זה מוודא שהקוד בשרת נמחק ומתעדכן למה שיש בגיטהאב עכשיו
               git reset --hard origin/add-deploy-ci-cd
               git clean -fd
             fi
 
-            # בנייה מחדש ללא Cache כדי למנוע זכירת שגיאות
             echo "Building Docker image without cache..."
             docker build --no-cache \
               --build-arg NEXT_PUBLIC_API_URL="${{ secrets.NEXT_PUBLIC_API_URL }}" \
@@ -45,4 +67,6 @@ jobs:
             echo "Restarting container..."
             docker stop lugh-front-container || true
             docker rm lugh-front-container || true
-            docker run -d --name lugh-front-container -p 80:3000 lugh-front-image
+
+            # שים לב: הפורט שונה ל-3000:3000 כי Nginx תופס את 80
+            docker run -d --name lugh-front-container -p 3000:3000 lugh-front-image

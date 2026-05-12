@@ -16,9 +16,10 @@ import { useStep1Modal } from './useStep1Modal';
 interface Step1ModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  icon: string;
 }
 
-const Step1Modal = ({ isOpen, onOpenChange }: Step1ModalProps) => {
+const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
   const { control, handleSubmit, errors, onSubmit } = useStep1Modal();
 
   return (
@@ -30,7 +31,7 @@ const Step1Modal = ({ isOpen, onOpenChange }: Step1ModalProps) => {
       {({ close }) => (
         <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader 
-            icon="👋"
+            icon={icon}
             title="First, let's build your foundation."
             subTitle="This info will form the header of your smart resume."
           />

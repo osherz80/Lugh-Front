@@ -10,9 +10,10 @@ import { Controller } from 'react-hook-form';
 interface Step2ModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  icon: string;
 }
 
-const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
+const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
   const {
     control,
     handleSubmit,
@@ -35,7 +36,7 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
       {({ close }) => (
         <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader
-            icon="👋"
+            icon={icon}
             title="Let's uncover your Professional DNA."
             subTitle="This data powers our AI to match you with top-tier opportunities."
           />

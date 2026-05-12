@@ -8,9 +8,10 @@ import { useStep4Modal } from './useStep4Modal';
 interface Step4ModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  icon: string;
 }
 
-const Step4Modal = ({ isOpen, onOpenChange }: Step4ModalProps) => {
+const Step4Modal = ({ isOpen, onOpenChange, icon }: Step4ModalProps) => {
   const {
     control,
     handleSubmit,
@@ -30,7 +31,7 @@ const Step4Modal = ({ isOpen, onOpenChange }: Step4ModalProps) => {
       {({ close }) => (
         <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader
-            icon="👋"
+            icon={icon}
             title="Where did you gain your expertise?"
             subTitle="Academic degrees, certifications, or even self-taught paths—it all counts."
           />

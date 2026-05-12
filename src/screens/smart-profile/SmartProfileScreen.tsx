@@ -10,7 +10,6 @@ import dynamic from "next/dynamic";
 export interface StepData {
   id: number;
   stepNumber: number;
-  totalSteps: number;
   title: string;
   description: string;
   quote: string;
@@ -26,13 +25,11 @@ const steps: StepData[] = [
     title: "Hello!",
     description: "Hi nice to meet you! I am so excited to get to know you!",
     quote: "Some sentence about how exiting is to meet new people",
-    totalSteps: 6,
     isEmoji: false,
   },
   {
     id: 2,
     stepNumber: 2,
-    totalSteps: 6,
     title: "Skills",
     description: "Let us know what Skills & Tools you good at",
     quote: "Some sentence about how exiting is to meet new people",
@@ -42,7 +39,6 @@ const steps: StepData[] = [
   {
     id: 3,
     stepNumber: 3,
-    totalSteps: 6,
     title: "Experience",
     description: "Tell us about your career milestones and achievements",
     quote: "Every great career started with a single story",
@@ -52,7 +48,6 @@ const steps: StepData[] = [
   {
     id: 4,
     stepNumber: 4,
-    totalSteps: 6,
     title: "Education",
     description: "Showcase your degrees, certifications and self-taught paths",
     quote: "Knowledge is the only asset that grows when shared",
@@ -62,7 +57,6 @@ const steps: StepData[] = [
   {
     id: 5,
     stepNumber: 5,
-    totalSteps: 6,
     title: "Personality",
     description: "Define your professional style and strongest attributes",
     quote: "Your persona is your unique professional footprint",
@@ -72,7 +66,6 @@ const steps: StepData[] = [
   {
     id: 6,
     stepNumber: 6,
-    totalSteps: 6,
     title: "Contact",
     description: "We would like to stay in touch and hear more about you",
     quote: "Your story is global, let's make sure it resonates everywhere",
@@ -141,6 +134,7 @@ export const SmartProfileScreen = () => {
                             step.id === 6 ? openStep6Modal :
                               undefined
                 }
+                totalSteps={steps.length}
               />
               {index < steps.length - 1 && <Trail />}
             </React.Fragment>
@@ -157,31 +151,37 @@ export const SmartProfileScreen = () => {
       <Step1Modal
         isOpen={isStep1ModalOpen}
         onOpenChange={closeStep1Modal}
+        icon={steps[0].icon}
       />
 
       <Step2Modal
         isOpen={isStep2ModalOpen}
         onOpenChange={closeStep2Modal}
+        icon={steps[1].icon}
       />
 
       <Step3Modal
         isOpen={isStep3ModalOpen}
         onOpenChange={closeStep3Modal}
+        icon={steps[2].icon}
       />
 
       <Step4Modal
         isOpen={isStep4ModalOpen}
         onOpenChange={closeStep4Modal}
+        icon={steps[3].icon}
       />
 
       <Step5Modal
         isOpen={isStep5ModalOpen}
         onOpenChange={closeStep5Modal}
+        icon={steps[4].icon}
       />
 
       <Step6Modal
         isOpen={isStep6ModalOpen}
         onOpenChange={closeStep6Modal}
+        icon={steps[5].icon}
       />
     </main>
   );

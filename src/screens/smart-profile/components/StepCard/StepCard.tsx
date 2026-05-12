@@ -2,7 +2,13 @@ import { motion } from "framer-motion";
 import { StepData } from "../../SmartProfileScreen";
 import { QuoteBox } from "@/components/shared/QuoteBox/QuoteBox";
 
-export const StepCard = ({ step, onAction }: { step: StepData, onAction?: () => void }) => (
+type stepProps = {
+    step: StepData,
+    onAction?: () => void,
+    totalSteps: number
+}
+
+export const StepCard = ({ step, onAction, totalSteps }: stepProps) => (
     <motion.div
         initial={{ opacity: 0, x: 20 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -11,7 +17,7 @@ export const StepCard = ({ step, onAction }: { step: StepData, onAction?: () => 
     >
         {/* Step Badge */}
         <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-[#008f7a] text-white text-[14px] font-bold px-6 py-2 rounded-full tracking-wider uppercase shadow-lg shadow-[#008f7a]/20">
-            Step {step.stepNumber}/{step.totalSteps}
+            Step {step.stepNumber}/{totalSteps}
         </div>
 
         {/* Icon Container */}
@@ -19,10 +25,10 @@ export const StepCard = ({ step, onAction }: { step: StepData, onAction?: () => 
             {step.isEmoji ? (
                 <span className="text-7xl drop-shadow-sm">{step.icon}</span>
             ) : (
-                <img 
-                    src={step.icon} 
-                    alt={step.title} 
-                    className="w-24 h-24 object-contain drop-shadow-sm" 
+                <img
+                    src={step.icon}
+                    alt={step.title}
+                    className="w-24 h-24 object-contain drop-shadow-sm"
                 />
             )}
         </div>
@@ -40,7 +46,7 @@ export const StepCard = ({ step, onAction }: { step: StepData, onAction?: () => 
         </div>
 
         {/* Action Button */}
-        <button 
+        <button
             onClick={onAction}
             className="w-full bg-[#00a18a] hover:bg-[#008f7a] text-white font-bold py-5 px-8 rounded-[24px] transition-all shadow-xl shadow-[#00a18a]/20 active:scale-[0.98] mt-10 text-[19px]"
         >

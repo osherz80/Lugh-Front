@@ -39,7 +39,7 @@ export const StepModal = ({ isOpen, onOpenChange, stepNumber, children }: StepMo
                   {/* Header Badge */}
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
                     <div className="bg-[#005c4d] text-white text-[12px] font-bold px-6 py-2 rounded-full tracking-wider uppercase shadow-lg shadow-[#005c4d]/20 border-2 border-white">
-                      Step {typeof stepNumber === 'number' ? stepNumber.toString().padStart(2, '0') : stepNumber}
+                      Step {stepNumber}
                     </div>
                   </div>
 

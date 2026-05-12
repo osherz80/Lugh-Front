@@ -31,9 +31,10 @@ const WORK_STYLES = [
 interface Step5ModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  icon: string;
 }
 
-const Step5Modal = ({ isOpen, onOpenChange }: Step5ModalProps) => {
+const Step5Modal = ({ isOpen, onOpenChange, icon }: Step5ModalProps) => {
   const {
     control,
     handleSubmit,
@@ -54,7 +55,7 @@ const Step5Modal = ({ isOpen, onOpenChange }: Step5ModalProps) => {
       {({ close }) => (
         <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader
-            icon="👋"
+            icon={icon}
             title="Let's capture your Workplace Persona."
             subTitle="Define your style to show how you operate, collaborate, and lead."
           />

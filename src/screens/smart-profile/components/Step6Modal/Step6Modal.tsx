@@ -10,9 +10,10 @@ import { useStep6Modal } from './useStep6Modal';
 interface Step6ModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  icon: string;
 }
 
-const Step6Modal = ({ isOpen, onOpenChange }: Step6ModalProps) => {
+const Step6Modal = ({ isOpen, onOpenChange, icon }: Step6ModalProps) => {
   const {
     control,
     handleSubmit,
@@ -29,7 +30,7 @@ const Step6Modal = ({ isOpen, onOpenChange }: Step6ModalProps) => {
       {({ close }) => (
         <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader
-            icon="👋"
+            icon={icon}
             title="Your Complete Story & Global Impact."
             subTitle="Let's wrap up. Add your final contact details and anything else that makes your profile uniquely you."
           />

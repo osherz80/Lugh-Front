@@ -13,9 +13,10 @@ import { useStep3Modal } from './useStep3Modal';
 interface Step3ModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  icon: string;
 }
 
-const Step3Modal = ({ isOpen, onOpenChange }: Step3ModalProps) => {
+const Step3Modal = ({ isOpen, onOpenChange, icon }: Step3ModalProps) => {
   const {
     control,
     handleSubmit,
@@ -35,7 +36,7 @@ const Step3Modal = ({ isOpen, onOpenChange }: Step3ModalProps) => {
       {({ close }) => (
         <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader
-            icon="👋"
+            icon={icon}
             title="Let's build your professional story, step-by-step."
             subTitle="Add your previous work experience. We'll use this to create your resume."
           />

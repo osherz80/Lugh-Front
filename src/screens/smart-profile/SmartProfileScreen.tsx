@@ -24,7 +24,7 @@ const steps: StepData[] = [
     icon: "/assets/svg/waving-hand.svg",
     title: "Hello!",
     description: "Hi nice to meet you! I am so excited to get to know you!",
-    quote: "Some sentence about how exiting is to meet new people",
+    quote: "Every great CV starts with a single, authentic introduction. Let’s build yours.",
     isEmoji: false,
   },
   {
@@ -32,7 +32,7 @@ const steps: StepData[] = [
     stepNumber: 2,
     title: "Skills",
     description: "Let us know what Skills & Tools you good at",
-    quote: "Some sentence about how exiting is to meet new people",
+    quote: "Your skills are the tools, but your expertise is the masterpiece.",
     icon: "/assets/svg/radar.svg",
     isEmoji: false,
   },
@@ -41,7 +41,7 @@ const steps: StepData[] = [
     stepNumber: 3,
     title: "Experience",
     description: "Tell us about your career milestones and achievements",
-    quote: "Every great career started with a single story",
+    quote: "Don't just list where you've worked—show us the impact you've made.",
     icon: "/assets/svg/construction-building.svg",
     isEmoji: false,
   },
@@ -50,7 +50,7 @@ const steps: StepData[] = [
     stepNumber: 4,
     title: "Education",
     description: "Showcase your degrees, certifications and self-taught paths",
-    quote: "Knowledge is the only asset that grows when shared",
+    quote: "Education is the foundation; lifelong learning is the skyscraper.",
     icon: "/assets/svg/gear-book.svg",
     isEmoji: false,
   },
@@ -59,7 +59,7 @@ const steps: StepData[] = [
     stepNumber: 5,
     title: "Personality",
     description: "Define your professional style and strongest attributes",
-    quote: "Your persona is your unique professional footprint",
+    quote: "Hard skills get you the interview, but your persona gets you the job.",
     icon: "/assets/svg/personality.svg",
     isEmoji: false,
   },
@@ -68,7 +68,7 @@ const steps: StepData[] = [
     stepNumber: 6,
     title: "Contact",
     description: "We would like to stay in touch and hear more about you",
-    quote: "Your story is global, let's make sure it resonates everywhere",
+    quote: "Your story is global. Let's make sure the world knows how to reach it.",
     icon: "/assets/svg/contact-book.svg",
     isEmoji: false,
   },
@@ -153,7 +153,7 @@ export const SmartProfileScreen = () => {
                 <span className="material-symbols-outlined text-white text-[18px]">check</span>
               </div>
             </div>
-            
+
             <div className="text-center space-y-3">
               <h3 className="text-[#1e293b] font-[900] text-2xl tracking-tight">Ready to Fly?</h3>
               <p className="text-slate-500 font-bold text-[15px] leading-relaxed max-w-[280px]">
@@ -161,7 +161,7 @@ export const SmartProfileScreen = () => {
               </p>
             </div>
 
-            <button 
+            <button
               onClick={handleSend}
               disabled={isSending}
               className="w-full bg-[#00a18a] hover:bg-[#008f7a] text-white font-black py-6 px-10 rounded-[28px] transition-all shadow-2xl shadow-[#00a18a]/30 active:scale-[0.98] text-[20px] flex items-center justify-center gap-4 group disabled:opacity-70 disabled:cursor-not-allowed"

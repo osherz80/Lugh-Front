@@ -1,9 +1,11 @@
 import React from 'react';
 import { StepModal } from '../StepModal/StepModal';
-import { Button, Heading, Input, TextArea, TextField } from 'react-aria-components';
+import { Button, Heading, Input, TextArea, TextField, FieldError } from 'react-aria-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Search, Sparkles } from 'lucide-react';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
+import { useStep2Modal } from './useStep2Modal';
+import { Controller } from 'react-hook-form';
 
 interface Step2ModalProps {
   isOpen: boolean;
@@ -11,44 +13,18 @@ interface Step2ModalProps {
 }
 
 const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
-  const initialSkills = [
-    'Project Management',
-    'Marketing Strategy',
-    'Figma',
-    'Data Analysis',
-    'AWS',
-    'React',
-  ];
-
-  const [selectedSkills, setSelectedSkills] = React.useState<string[]>(['AWS', 'React']);
-  const [skillDescriptions, setSkillDescriptions] = React.useState<Record<string, string>>({});
-  const [expandedSkills, setExpandedSkills] = React.useState<string[]>([]);
-
-  const toggleSkill = (skillName: string) => {
-    setSelectedSkills(prev => {
-      const isRemoving = prev.includes(skillName);
-      if (isRemoving) {
-        setExpandedSkills(exp => exp.filter(s => s !== skillName));
-        return prev.filter(s => s !== skillName);
-      } else {
-        return [...prev, skillName];
-      }
-    });
-  };
-
-  const toggleExpand = (skillName: string) => {
-    setExpandedSkills(prev =>
-      prev.includes(skillName)
-        ? prev.filter(s => s !== skillName)
-        : [...prev, skillName]
-    );
-  };
-
-  const handleDescriptionChange = (skillName: string, value: string) => {
-    if (value.length <= 600) {
-      setSkillDescriptions(prev => ({ ...prev, [skillName]: value }));
-    }
-  };
+  const {
+    control,
+    handleSubmit,
+    errors,
+    onSubmit,
+    currentSkills,
+    selectedSkillNames,
+    expandedSkills,
+    toggleSkill,
+    toggleExpand,
+    initialSkills,
+  } = useStep2Modal();
 
   return (
     <StepModal
@@ -57,7 +33,7 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
       stepNumber={2}
     >
       {({ close }) => (
-        <>
+        <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader
             icon="👋"
             title="Let's uncover your Professional DNA."
@@ -78,7 +54,7 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
           {/* Skills Chips */}
           <div className="flex flex-wrap gap-3 mb-12">
             {initialSkills.map((skillName) => {
-              const isSelected = selectedSkills.includes(skillName);
+              const isSelected = selectedSkillNames.includes(skillName);
               return (
                 <div
                   key={skillName}
@@ -99,7 +75,7 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
 
           {/* Adaptive Input Fields */}
           <AnimatePresence mode="popLayout">
-            {selectedSkills.length > 0 && (
+            {selectedSkillNames.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -109,9 +85,9 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
                 <Heading className="text-[#1e293b] font-[900] text-[20px] tracking-tight ml-1">Adaptive Input Fields</Heading>
 
                 <div className="space-y-4">
-                  {selectedSkills.map((skillName) => {
+                  {selectedSkillNames.map((skillName) => {
                     const isExpanded = expandedSkills.includes(skillName);
-                    const currentLength = skillDescriptions[skillName]?.length || 0;
+                    const currentLength = currentSkills[skillName]?.length || 0;
 
                     return (
                       <motion.div
@@ -123,6 +99,7 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
                       >
                         {/* Toggle Header */}
                         <button
+                          type="button"
                           onClick={() => toggleExpand(skillName)}
                           className="w-full flex items-center justify-between p-6 hover:bg-[#00a18a]/5 transition-colors text-left"
                         >
@@ -130,7 +107,7 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
                             "Tell us a bit about your work with <span className="text-[#00a18a]">{skillName}</span>."
                           </p>
                           <div className="flex items-center gap-3">
-                            {skillDescriptions[skillName]?.trim().length > 0 && (
+                            {currentSkills[skillName]?.trim().length > 0 && (
                               <motion.span
                                 initial={{ scale: 0, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
@@ -157,18 +134,27 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
                               transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
                             >
                               <div className="p-6 pt-0">
-                                <TextField className="w-full relative">
-                                  <TextArea
-                                    value={skillDescriptions[skillName] || ''}
-                                    onChange={(e) => handleDescriptionChange(skillName, e.target.value)}
-                                    maxLength={600}
-                                    placeholder={`Feel free to write naturally. e.g., working with ${skillName} in...`}
-                                    className="w-full bg-white border-2 border-[#00a18a]/20 rounded-2xl p-5 pb-10 text-[16px] placeholder:text-slate-300 focus:border-[#00a18a] outline-none transition-all font-medium text-slate-700 shadow-sm min-h-[140px] resize-none"
-                                  />
-                                  <div className={`absolute bottom-4 right-5 text-[12px] font-bold transition-colors ${currentLength >= 550 ? 'text-red-400' : 'text-slate-300'}`}>
-                                    {currentLength}/600
-                                  </div>
-                                </TextField>
+                                <Controller
+                                  name={skillName}
+                                  control={control}
+                                  render={({ field }) => (
+                                    <TextField 
+                                      className="w-full relative"
+                                      isInvalid={!!errors[skillName]}
+                                    >
+                                      <TextArea
+                                        {...field}
+                                        maxLength={600}
+                                        placeholder={`Feel free to write naturally. e.g., working with ${skillName} in...`}
+                                        className="w-full bg-white border-2 border-[#00a18a]/20 rounded-2xl p-5 pb-10 text-[16px] placeholder:text-slate-300 focus:border-[#00a18a] outline-none transition-all font-medium text-slate-700 shadow-sm min-h-[140px] resize-none"
+                                      />
+                                      <div className={`absolute bottom-4 right-5 text-[12px] font-bold transition-colors ${currentLength >= 550 ? 'text-red-400' : 'text-slate-300'}`}>
+                                        {currentLength}/600
+                                      </div>
+                                      {errors[skillName] && <FieldError className="text-red-500 text-sm mt-1">{errors[skillName]?.message as string}</FieldError>}
+                                    </TextField>
+                                  )}
+                                />
                               </div>
                             </motion.div>
                           )}
@@ -200,12 +186,13 @@ const Step2Modal = ({ isOpen, onOpenChange }: Step2ModalProps) => {
               Skip for now
             </Button>
             <Button
+              type="submit"
               className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
               Save & Continue to Arsenal
             </Button>
           </div>
-        </>
+        </form>
       )}
     </StepModal>
   );

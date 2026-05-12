@@ -1,4 +1,4 @@
-import { CV } from '@/store/services/types/types'
+import { CV } from '@/store/types/types'
 
 export type User = {
     id: string;

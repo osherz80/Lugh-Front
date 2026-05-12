@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CV } from "@/store/services/types/types.d";
+import { CV } from "@/store/types/types";
 
 export const useResumeLab = () => {
   const [currentCv, setCurrentCv] = useState<CV | null>(null);

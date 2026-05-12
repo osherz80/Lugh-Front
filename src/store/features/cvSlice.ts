@@ -1,4 +1,4 @@
-import { CV } from "@/store/services/types/types.d";
+import { CV } from "@/store/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface CVState {

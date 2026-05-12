@@ -1,6 +1,6 @@
 import { setCvs } from '@/store/features/cvSlice'
 import { AppDispatch } from '@/store/store'
-import { CV } from '@/store/services/types/types.d'
+import { CV } from '@/store/types/types'
 
 export const saveCvs = async (_arg: string, { dispatch, queryFulfilled }: { dispatch: AppDispatch, queryFulfilled: Promise<{ data: CV[] }> }) => {
     try {

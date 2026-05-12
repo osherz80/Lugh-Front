@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import { 
-  Modal, 
-  Dialog, 
+import {
+  Modal,
+  Dialog,
   ModalOverlay
 } from 'react-aria-components';
 import { motion, AnimatePresence } from 'framer-motion';

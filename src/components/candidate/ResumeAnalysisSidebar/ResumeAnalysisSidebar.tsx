@@ -1,7 +1,7 @@
 import React from "react";
 import { DonutChart } from "@/components/shared/DonutChart/DonutChart";
 import { CVMetricsCard } from "@/components/candidate/CVMetricsCard/CVMetricsCard";
-import { CV } from '@/store/services/types/types'
+import { CV } from '@/store/types/types'
 
 interface ResumeAnalysisSidebarProps {
   cv: CV | null;

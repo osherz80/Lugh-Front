@@ -1,5 +1,5 @@
 import { api } from '@/store/services/api/api'
-import { CV } from '@/store/services/types/types.d'
+import { CV } from '@/store/types/types'
 import { saveCvs } from '@/store/services/handlers/cvHandler'
 
 export const cvApi = api.injectEndpoints({

@@ -16,7 +16,15 @@ export const StepCard = ({ step, onAction }: { step: StepData, onAction?: () => 
 
         {/* Icon Container */}
         <div className="h-28 flex items-center justify-center mb-8">
-            <span className="text-7xl drop-shadow-sm">{step.icon}</span>
+            {step.isEmoji ? (
+                <span className="text-7xl drop-shadow-sm">{step.icon}</span>
+            ) : (
+                <img 
+                    src={step.icon} 
+                    alt={step.title} 
+                    className="w-24 h-24 object-contain drop-shadow-sm" 
+                />
+            )}
         </div>
 
         {/* Title & Description */}

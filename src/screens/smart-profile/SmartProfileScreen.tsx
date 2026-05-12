@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 import { Trail } from "@/components/shared/Trail/Trail";
 import { StartNode } from "./components/StartNode/StartNode";
 import { StepCard } from "./components/StepCard/StepCard";
@@ -23,61 +22,61 @@ const steps: StepData[] = [
   {
     id: 1,
     stepNumber: 1,
-    icon: "👋",
-    title: "HI! Nice to meet",
-    description: "in this step we will get to know you for the first time!",
+    icon: "/assets/svg/waving-hand.svg",
+    title: "Hello!",
+    description: "Hi nice to meet you! I am so excited to get to know you!",
     quote: "Some sentence about how exiting is to meet new people",
     totalSteps: 6,
-    isEmoji: true,
+    isEmoji: false,
   },
   {
     id: 2,
     stepNumber: 2,
     totalSteps: 6,
-    title: "Lets go to work",
-    description: "in this step we will meet you at your workspace",
+    title: "Skills",
+    description: "Let us know what Skills & Tools you good at",
     quote: "Some sentence about how exiting is to meet new people",
-    icon: "engineering", // Material icon name
+    icon: "/assets/svg/radar.svg",
     isEmoji: false,
   },
   {
     id: 3,
     stepNumber: 3,
     totalSteps: 6,
-    title: "Professional Story",
+    title: "Experience",
     description: "Tell us about your career milestones and achievements",
     quote: "Every great career started with a single story",
-    icon: "history_edu",
+    icon: "/assets/svg/construction-building.svg",
     isEmoji: false,
   },
   {
     id: 4,
     stepNumber: 4,
     totalSteps: 6,
-    title: "Academic Expertise",
+    title: "Education",
     description: "Showcase your degrees, certifications and self-taught paths",
     quote: "Knowledge is the only asset that grows when shared",
-    icon: "school",
+    icon: "/assets/svg/gear-book.svg",
     isEmoji: false,
   },
   {
     id: 5,
     stepNumber: 5,
     totalSteps: 6,
-    title: "Work Persona",
+    title: "Personality",
     description: "Define your professional style and strongest attributes",
     quote: "Your persona is your unique professional footprint",
-    icon: "psychology_alt",
+    icon: "/assets/svg/personality.svg",
     isEmoji: false,
   },
   {
     id: 6,
     stepNumber: 6,
     totalSteps: 6,
-    title: "Global Impact",
-    description: "Finalize your contact details and highlight your unique value",
+    title: "Contact",
+    description: "We would like to stay in touch and hear more about you",
     quote: "Your story is global, let's make sure it resonates everywhere",
-    icon: "public",
+    icon: "/assets/svg/contact-book.svg",
     isEmoji: false,
   },
 ];

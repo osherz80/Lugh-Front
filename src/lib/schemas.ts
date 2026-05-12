@@ -51,3 +51,13 @@ export const personaSchema = z.object({
 });
 
 export type PersonaSchema = z.infer<typeof personaSchema>;
+
+export const contactSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(5, "Invalid phone number"),
+  linkedin: z.string().optional().or(z.literal("")),
+  portfolio: z.string().optional().or(z.literal("")),
+  anythingElse: z.string().max(600, "Content is too long"),
+});
+
+export type ContactSchema = z.infer<typeof contactSchema>;

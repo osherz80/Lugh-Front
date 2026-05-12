@@ -1,13 +1,11 @@
-"use client";
-
-import React from 'react';
-import { Button, TextField, Label, Input, TextArea } from 'react-aria-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Button, TextField, Label, Input, TextArea, FieldError } from 'react-aria-components';
 import { Mail, Phone, Globe, Link as LinkIcon, Sparkles } from 'lucide-react';
+import { Controller } from 'react-hook-form';
 import { BrandIcon } from "@/components/shared/Icon/BrandIcon";
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 import { StepModal } from '../StepModal/StepModal';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
+import { useStep6Modal } from './useStep6Modal';
 
 interface Step6ModalProps {
   isOpen: boolean;
@@ -15,8 +13,12 @@ interface Step6ModalProps {
 }
 
 const Step6Modal = ({ isOpen, onOpenChange }: Step6ModalProps) => {
-  const [description, setDescription] = React.useState('');
-  const [isExpanded, setIsExpanded] = React.useState(true);
+  const {
+    control,
+    handleSubmit,
+    errors,
+    onSubmit,
+  } = useStep6Modal();
 
   return (
     <StepModal
@@ -25,7 +27,7 @@ const Step6Modal = ({ isOpen, onOpenChange }: Step6ModalProps) => {
       stepNumber={6}
     >
       {({ close }) => (
-        <>
+        <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader
             icon="👋"
             title="Your Complete Story & Global Impact."
@@ -36,106 +38,114 @@ const Step6Modal = ({ isOpen, onOpenChange }: Step6ModalProps) => {
             {/* Contact Grid */}
             <div className="grid grid-cols-2 gap-6">
               {/* Email */}
-              <TextField className="flex flex-col gap-2.5">
-                <div className="flex items-center gap-2 ml-1">
-                  <Label className="text-[#1e293b] font-[800] text-[16px]">Email Address</Label>
-                  <Mail size={16} className="text-slate-400" />
-                </div>
-                <Input
-                  placeholder="e.g., example@lugh.ai"
-                  className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
-                />
-              </TextField>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <TextField className="flex flex-col gap-2.5" isInvalid={!!errors.email}>
+                    <div className="flex items-center gap-2 ml-1">
+                      <Label className="text-[#1e293b] font-[800] text-[16px]">Email Address</Label>
+                      <Mail size={16} className="text-slate-400" />
+                    </div>
+                    <Input
+                      {...field}
+                      placeholder="e.g., example@lugh.ai"
+                      className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
+                    />
+                    {errors.email && <FieldError className="text-red-500 text-sm ml-1">{errors.email.message}</FieldError>}
+                  </TextField>
+                )}
+              />
 
               {/* Phone */}
-              <TextField className="flex flex-col gap-2.5">
-                <div className="flex items-center gap-2 ml-1">
-                  <Label className="text-[#1e293b] font-[800] text-[16px]">Phone Number</Label>
-                  <Phone size={16} className="text-slate-400" />
-                </div>
-                <Input
-                  placeholder="e.g., +972..."
-                  className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
-                />
-              </TextField>
+              <Controller
+                name="phone"
+                control={control}
+                render={({ field }) => (
+                  <TextField className="flex flex-col gap-2.5" isInvalid={!!errors.phone}>
+                    <div className="flex items-center gap-2 ml-1">
+                      <Label className="text-[#1e293b] font-[800] text-[16px]">Phone Number</Label>
+                      <Phone size={16} className="text-slate-400" />
+                    </div>
+                    <Input
+                      {...field}
+                      placeholder="e.g., +972..."
+                      className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
+                    />
+                    {errors.phone && <FieldError className="text-red-500 text-sm ml-1">{errors.phone.message}</FieldError>}
+                  </TextField>
+                )}
+              />
 
               {/* LinkedIn */}
-              <TextField className="flex flex-col gap-2.5">
-                <div className="flex items-center gap-2 ml-1">
-                  <Label className="text-[#1e293b] font-[800] text-[16px]">LinkedIn Profile URL</Label>
-                  <div className="flex items-center gap-1">
-                    <BrandIcon icon={faLinkedinIn} className="text-[#0077b5] text-[14px]" />
-                    <Globe size={14} className="text-slate-400" />
-                  </div>
-                </div>
-                <Input
-                  placeholder="linkedin.com/in/username"
-                  className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
-                />
-              </TextField>
+              <Controller
+                name="linkedin"
+                control={control}
+                render={({ field }) => (
+                  <TextField className="flex flex-col gap-2.5" isInvalid={!!errors.linkedin}>
+                    <div className="flex items-center gap-2 ml-1">
+                      <Label className="text-[#1e293b] font-[800] text-[16px]">LinkedIn Profile URL</Label>
+                      <div className="flex items-center gap-1">
+                        <BrandIcon icon={faLinkedinIn} className="text-[#0077b5] text-[14px]" />
+                        <Globe size={14} className="text-slate-400" />
+                      </div>
+                    </div>
+                    <Input
+                      {...field}
+                      placeholder="linkedin.com/in/username"
+                      className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
+                    />
+                    {errors.linkedin && <FieldError className="text-red-500 text-sm ml-1">{errors.linkedin.message}</FieldError>}
+                  </TextField>
+                )}
+              />
 
               {/* Portfolio */}
-              <TextField className="flex flex-col gap-2.5">
-                <div className="flex items-center gap-2 ml-1">
-                  <Label className="text-[#1e293b] font-[800] text-[16px]">Portfolio / GitHub</Label>
-                  <LinkIcon size={16} className="text-slate-400" />
-                </div>
-                <Input
-                  placeholder="e.g., github.com/username"
-                  className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
-                />
-              </TextField>
+              <Controller
+                name="portfolio"
+                control={control}
+                render={({ field }) => (
+                  <TextField className="flex flex-col gap-2.5" isInvalid={!!errors.portfolio}>
+                    <div className="flex items-center gap-2 ml-1">
+                      <Label className="text-[#1e293b] font-[800] text-[16px]">Portfolio / GitHub</Label>
+                      <LinkIcon size={16} className="text-slate-400" />
+                    </div>
+                    <Input
+                      {...field}
+                      placeholder="e.g., github.com/username"
+                      className="bg-[#f1f5f9] border-none rounded-2xl p-5 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
+                    />
+                    {errors.portfolio && <FieldError className="text-red-500 text-sm ml-1">{errors.portfolio.message}</FieldError>}
+                  </TextField>
+                )}
+              />
             </div>
 
-            {/* Anything Else? Collapsible */}
-            <div className="border-2 border-[#00a18a]/10 rounded-[28px] overflow-hidden bg-[#f1fcfb]/50">
-              <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="w-full flex items-center justify-between p-6 hover:bg-[#00a18a]/5 transition-colors text-left"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="bg-[#00a18a]/10 p-2 rounded-xl">
-                    <span className="material-symbols-outlined text-[#00a18a] text-[24px]">public</span>
-                  </div>
-                  <div>
-                    <p className="text-[#1e293b] font-[900] text-[16px]">Anything Else? ✨</p>
-                  </div>
-                </div>
-                <div className={`text-[#00a18a] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
-                  <span className="material-symbols-outlined font-bold text-[24px]">expand_more</span>
-                </div>
-              </button>
-
-              <AnimatePresence initial={false}>
-                {isExpanded && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-                  >
-                    <div className="p-6 pt-0">
-                      <div className="mb-4">
-                        <p className="text-[#1e293b] font-[800] text-[15px]">The Final Piece - What's your 'Anything Else'?</p>
-                        <p className="text-slate-500 font-bold text-[13px] mt-1 leading-relaxed">
-                          Is there any final detail we missed? A unique skill, an international project, a key quantifiable impact, or even a personal passion that makes you stand out?
-                        </p>
-                      </div>
-                      <TextField className="relative">
-                        <TextArea
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value.slice(0, 600))}
-                          placeholder="Tell us anything else you'd like to include..."
-                          className="w-full bg-white border-2 border-[#00a18a]/20 rounded-2xl p-6 pb-12 text-[16px] placeholder:text-slate-300 focus:border-[#00a18a] outline-none transition-all font-medium text-slate-700 shadow-sm min-h-[120px] resize-none leading-relaxed"
-                        />
-                        <div className={`absolute bottom-5 right-6 text-[12px] font-bold transition-colors ${description.length >= 550 ? 'text-red-400' : 'text-slate-300'}`}>
-                          {description.length}/600
-                        </div>
-                      </TextField>
+            {/* Anything Else? Section */}
+            <div className="space-y-3">
+              <div>
+                <Label className="text-[#1e293b] font-[800] text-[16px] ml-1">Anything Else? ✨</Label>
+                <p className="text-slate-500 font-bold text-[13px] mt-1 ml-1 leading-relaxed">
+                  Is there any final detail we missed? A unique skill, an international project, a key quantifiable impact, or even a personal passion that makes you stand out?
+                </p>
+              </div>
+              <Controller
+                name="anythingElse"
+                control={control}
+                render={({ field }) => (
+                  <TextField className="relative" isInvalid={!!errors.anythingElse}>
+                    <TextArea
+                      {...field}
+                      placeholder="Tell us anything else you'd like to include..."
+                      className="w-full bg-white border-2 border-[#00a18a]/20 rounded-2xl p-6 pb-12 text-[16px] placeholder:text-slate-300 focus:border-[#00a18a] outline-none transition-all font-medium text-slate-700 shadow-sm min-h-[120px] resize-none leading-relaxed"
+                    />
+                    <div className={`absolute bottom-5 right-6 text-[12px] font-bold transition-colors ${(field.value?.length || 0) >= 550 ? 'text-red-400' : 'text-slate-300'}`}>
+                      {field.value?.length || 0}/600
                     </div>
-                  </motion.div>
+                    {errors.anythingElse && <FieldError className="text-red-500 text-sm mt-1">{errors.anythingElse.message}</FieldError>}
+                  </TextField>
                 )}
-              </AnimatePresence>
+              />
             </div>
           </div>
 
@@ -163,13 +173,14 @@ const Step6Modal = ({ isOpen, onOpenChange }: Step6ModalProps) => {
               Skip for now
             </Button>
             <Button
+              type="submit"
               className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer flex items-center gap-3"
             >
               Complete Profile & View Final CV
               <Sparkles size={18} className="animate-pulse" />
             </Button>
           </div>
-        </>
+        </form>
       )}
     </StepModal>
   );

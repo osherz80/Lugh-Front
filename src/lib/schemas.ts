@@ -43,3 +43,11 @@ export const educationSchema = z.object({
 });
 
 export type EducationSchema = z.infer<typeof educationSchema>;
+
+export const personaSchema = z.object({
+  style: z.array(z.string()).min(1, "Select at least one work style"),
+  strengths: z.array(z.string()).min(1, "Select at least one strength").max(3, "Select up to 3 strengths"),
+  story: z.string().max(600, "Story is too long"),
+});
+
+export type PersonaSchema = z.infer<typeof personaSchema>;

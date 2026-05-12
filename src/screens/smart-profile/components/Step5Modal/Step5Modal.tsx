@@ -1,11 +1,9 @@
-"use client";
-
-import React from 'react';
-import { Button, TextArea, TextField, Label } from 'react-aria-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Button, TextArea, TextField, Label, FieldError } from 'react-aria-components';
 import { Lightbulb, Check } from 'lucide-react';
+import { Controller } from 'react-hook-form';
 import { StepModal } from '../StepModal/StepModal';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
+import { useStep5Modal } from './useStep5Modal';
 
 interface Strength {
   id: string;
@@ -36,24 +34,16 @@ interface Step5ModalProps {
 }
 
 const Step5Modal = ({ isOpen, onOpenChange }: Step5ModalProps) => {
-  const [selectedStyles, setSelectedStyles] = React.useState<string[]>(['Collaborator', 'Problem Solver']);
-  const [selectedStrengths, setSelectedStrengths] = React.useState<string[]>(['integrity', 'initiative', 'results-oriented']);
-  const [description, setDescription] = React.useState('');
-  const [isExpanded, setIsExpanded] = React.useState(true);
-
-  const toggleStyle = (style: string) => {
-    setSelectedStyles(prev =>
-      prev.includes(style) ? prev.filter(s => s !== style) : [...prev, style]
-    );
-  };
-
-  const toggleStrength = (id: string) => {
-    setSelectedStrengths(prev => {
-      if (prev.includes(id)) return prev.filter(s => s !== id);
-      if (prev.length >= 3) return prev;
-      return [...prev, id];
-    });
-  };
+  const {
+    control,
+    handleSubmit,
+    errors,
+    onSubmit,
+    selectedStyles,
+    selectedStrengths,
+    toggleStyle,
+    toggleStrength,
+  } = useStep5Modal();
 
   return (
     <StepModal
@@ -62,7 +52,7 @@ const Step5Modal = ({ isOpen, onOpenChange }: Step5ModalProps) => {
       stepNumber={5}
     >
       {({ close }) => (
-        <>
+        <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader
             icon="👋"
             title="Let's capture your Workplace Persona."
@@ -82,6 +72,7 @@ const Step5Modal = ({ isOpen, onOpenChange }: Step5ModalProps) => {
                   return (
                     <button
                       key={style}
+                      type="button"
                       onClick={() => toggleStyle(style)}
                       className={`
                         px-5 py-2.5 rounded-2xl text-[14px] font-bold transition-all border-2
@@ -96,6 +87,7 @@ const Step5Modal = ({ isOpen, onOpenChange }: Step5ModalProps) => {
                   );
                 })}
               </div>
+              {errors.style && <p className="text-red-500 text-sm ml-1">{errors.style.message}</p>}
             </div>
 
             {/* Personality Strengths Selection */}
@@ -110,6 +102,7 @@ const Step5Modal = ({ isOpen, onOpenChange }: Step5ModalProps) => {
                   return (
                     <button
                       key={strength.id}
+                      type="button"
                       onClick={() => toggleStrength(strength.id)}
                       className={`
                         relative group p-6 rounded-[24px] border-2 transition-all flex flex-col items-center gap-3
@@ -134,53 +127,35 @@ const Step5Modal = ({ isOpen, onOpenChange }: Step5ModalProps) => {
                   );
                 })}
               </div>
+              {errors.strengths && <p className="text-red-500 text-sm ml-1">{errors.strengths.message}</p>}
             </div>
 
-            {/* The Deep Dive - Workplace Persona Stories */}
-            <div className="border-2 border-[#00a18a]/10 rounded-[28px] overflow-hidden bg-[#f1fcfb]/50">
-              <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="w-full flex items-center justify-between p-6 hover:bg-[#00a18a]/5 transition-colors text-left"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="bg-[#00a18a]/10 p-2 rounded-xl">
-                    <span className="material-symbols-outlined text-[#00a18a] text-[24px]">edit_note</span>
-                  </div>
-                  <div>
-                    <p className="text-[#1e293b] font-[900] text-[16px]">The Deep Dive - Workplace Persona Stories</p>
-                    <p className="text-slate-500 font-bold text-[13px]">Describe how you work best.</p>
-                  </div>
-                </div>
-                <div className={`text-[#00a18a] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
-                  <span className="material-symbols-outlined font-bold text-[24px]">expand_more</span>
-                </div>
-              </button>
-
-              <AnimatePresence initial={false}>
-                {isExpanded && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+            {/* Workplace Persona Stories */}
+            <div className="space-y-3">
+              <div>
+                <Label className="text-[#1e293b] font-[800] text-[18px] ml-1">Workplace Persona Stories</Label>
+                <p className="text-slate-500 font-bold text-[13px] mt-1 ml-1">Share a brief story about how you work or lead.</p>
+              </div>
+              <Controller
+                name="story"
+                control={control}
+                render={({ field }) => (
+                  <TextField 
+                    className="relative"
+                    isInvalid={!!errors.story}
                   >
-                    <div className="p-6 pt-0">
-                      <p className="text-slate-500 font-bold text-[13px] mb-3 ml-1">Share a brief story about how you work or lead.</p>
-                      <TextField className="relative">
-                        <TextArea
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value.slice(0, 600))}
-                          placeholder="Write naturally. For example, 'I thrive in fast-paced environments and love to bring structure to ambiguity,' or 'My leadership style focuses on empowering team members to own their roles.' (up to 600 chars)"
-                          className="w-full bg-white border-2 border-[#00a18a]/20 rounded-2xl p-6 pb-12 text-[16px] placeholder:text-slate-300 focus:border-[#00a18a] outline-none transition-all font-medium text-slate-700 shadow-sm min-h-[140px] resize-none leading-relaxed"
-                        />
-                        <div className={`absolute bottom-5 right-6 text-[12px] font-bold transition-colors ${description.length >= 550 ? 'text-red-400' : 'text-slate-300'}`}>
-                          {description.length}/600
-                        </div>
-                      </TextField>
+                    <TextArea
+                      {...field}
+                      placeholder="Write naturally. For example, 'I thrive in fast-paced environments and love to bring structure to ambiguity,' or 'My leadership style focuses on empowering team members to own their roles.' (up to 600 chars)"
+                      className="w-full bg-white border-2 border-[#00a18a]/20 rounded-2xl p-6 pb-12 text-[16px] placeholder:text-slate-300 focus:border-[#00a18a] outline-none transition-all font-medium text-slate-700 shadow-sm min-h-[140px] resize-none leading-relaxed"
+                    />
+                    <div className={`absolute bottom-5 right-6 text-[12px] font-bold transition-colors ${(field.value?.length || 0) >= 550 ? 'text-red-400' : 'text-slate-300'}`}>
+                      {field.value?.length || 0}/600
                     </div>
-                  </motion.div>
+                    {errors.story && <FieldError className="text-red-500 text-sm mt-1">{errors.story.message}</FieldError>}
+                  </TextField>
                 )}
-              </AnimatePresence>
+              />
             </div>
           </div>
 
@@ -205,12 +180,13 @@ const Step5Modal = ({ isOpen, onOpenChange }: Step5ModalProps) => {
               Skip for now
             </Button>
             <Button
+              type="submit"
               className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
               Save & Continue to Reach
             </Button>
           </div>
-        </>
+        </form>
       )}
     </StepModal>
   );

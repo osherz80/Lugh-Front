@@ -30,3 +30,16 @@ export const experienceSchema = z.object({
 });
 
 export type ExperienceSchema = z.infer<typeof experienceSchema>;
+
+export const educationSchema = z.object({
+  education: z.array(z.object({
+    institution: z.string().min(2, "Institution is required"),
+    degree: z.string().min(2, "Degree is required"),
+    startDate: z.string().min(2, "Start date is required"),
+    endDate: z.string().optional(),
+    isOngoing: z.boolean(),
+    description: z.string().max(600, "Description is too long"),
+  }))
+});
+
+export type EducationSchema = z.infer<typeof educationSchema>;

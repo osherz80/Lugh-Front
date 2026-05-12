@@ -11,14 +11,16 @@ export const useStep4Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
   const education = useSelector((state: RootState) => state.smartProfile.education);
 
+  const today = new Date().toISOString().split('T')[0];
+
   const { control, handleSubmit, reset, formState: { errors } } = useForm<EducationSchema>({
     resolver: zodResolver(educationSchema),
     defaultValues: {
       education: education.length > 0 ? education : [{
         institution: "",
         degree: "",
-        startDate: "",
-        endDate: "",
+        startDate: today,
+        endDate: today,
         isOngoing: false,
         description: "",
       }]
@@ -31,14 +33,14 @@ export const useStep4Modal = (isOpen: boolean) => {
         education: education.length > 0 ? education : [{
           institution: "",
           degree: "",
-          startDate: "",
-          endDate: "",
+          startDate: today,
+          endDate: today,
           isOngoing: false,
           description: "",
         }]
       });
     }
-  }, [isOpen, reset, education]);
+  }, [isOpen, reset, education, today]);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -49,8 +51,8 @@ export const useStep4Modal = (isOpen: boolean) => {
     append({
       institution: "",
       degree: "",
-      startDate: "",
-      endDate: "",
+      startDate: today,
+      endDate: today,
       isOngoing: false,
       description: "",
     });

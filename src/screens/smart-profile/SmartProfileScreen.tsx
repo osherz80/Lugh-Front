@@ -140,10 +140,31 @@ export const SmartProfileScreen = () => {
             </React.Fragment>
           ))}
 
-          {/* Future Steps Indicator */}
+          {/* Finish & Send Action */}
           <Trail />
-          <div className="w-[400px] h-[520px] rounded-[40px] border-2 border-dashed border-slate-200 flex items-center justify-center bg-slate-50/50">
-            <span className="text-slate-300 font-bold text-xl uppercase tracking-widest">Upcoming Steps</span>
+          <div className="w-[400px] flex flex-col items-center justify-center gap-10 py-12 px-8 bg-white/40 rounded-[40px] border-2 border-dashed border-[#00a18a]/30 backdrop-blur-sm">
+            <div className="relative">
+              <div className="w-28 h-28 bg-[#00a18a]/10 rounded-full flex items-center justify-center animate-pulse">
+                <span className="material-symbols-outlined text-[#00a18a] text-6xl">rocket_launch</span>
+              </div>
+              <div className="absolute -top-2 -right-2 w-8 h-8 bg-[#005c4d] rounded-full flex items-center justify-center border-2 border-white shadow-lg">
+                <span className="material-symbols-outlined text-white text-[18px]">check</span>
+              </div>
+            </div>
+            
+            <div className="text-center space-y-3">
+              <h3 className="text-[#1e293b] font-[900] text-2xl tracking-tight">Ready to Fly?</h3>
+              <p className="text-slate-500 font-bold text-[15px] leading-relaxed max-w-[280px]">
+                Your smart profile is complete. Send it to our AI to generate your professional story.
+              </p>
+            </div>
+
+            <button 
+              className="w-full bg-[#00a18a] hover:bg-[#008f7a] text-white font-black py-6 px-10 rounded-[28px] transition-all shadow-2xl shadow-[#00a18a]/30 active:scale-[0.98] text-[20px] flex items-center justify-center gap-4 group"
+            >
+              Finish & Send
+              <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </button>
           </div>
         </div>
       </section>

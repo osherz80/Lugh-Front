@@ -11,6 +11,8 @@ export const useStep3Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
   const experience = useSelector((state: RootState) => state.smartProfile.experience);
 
+  const today = new Date().toISOString().split('T')[0];
+
   const { control, handleSubmit, reset, formState: { errors } } = useForm<ExperienceSchema>({
     resolver: zodResolver(experienceSchema),
     defaultValues: {
@@ -18,8 +20,8 @@ export const useStep3Modal = (isOpen: boolean) => {
         id: Math.random().toString(36).substring(7),
         company: "",
         roleTag: "",
-        startDate: "",
-        endDate: "",
+        startDate: today,
+        endDate: today,
         isCurrent: false,
         description: "",
       }]
@@ -33,14 +35,14 @@ export const useStep3Modal = (isOpen: boolean) => {
           id: Math.random().toString(36).substring(7),
           company: "",
           roleTag: "",
-          startDate: "",
-          endDate: "",
+          startDate: today,
+          endDate: today,
           isCurrent: false,
           description: "",
         }]
       });
     }
-  }, [isOpen, reset, experience]);
+  }, [isOpen, reset, experience, today]);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -52,8 +54,8 @@ export const useStep3Modal = (isOpen: boolean) => {
       id: Math.random().toString(36).substring(7),
       company: "",
       roleTag: "",
-      startDate: "",
-      endDate: "",
+      startDate: today,
+      endDate: today,
       isCurrent: false,
       description: "",
     });

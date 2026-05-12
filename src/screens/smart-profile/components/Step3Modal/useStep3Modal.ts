@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,11 +7,11 @@ import { RootState } from '@/store/store';
 import { setProfileData, setProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
-export const useStep3Modal = () => {
+export const useStep3Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
   const experience = useSelector((state: RootState) => state.smartProfile.experience);
 
-  const { control, handleSubmit, formState: { errors } } = useForm<ExperienceSchema>({
+  const { control, handleSubmit, reset, formState: { errors } } = useForm<ExperienceSchema>({
     resolver: zodResolver(experienceSchema),
     defaultValues: {
       experience: experience.length > 0 ? experience : [{
@@ -24,6 +25,22 @@ export const useStep3Modal = () => {
       }]
     },
   });
+
+  useEffect(() => {
+    if (!isOpen) {
+      reset({
+        experience: experience.length > 0 ? experience : [{
+          id: Math.random().toString(36).substring(7),
+          company: "",
+          roleTag: "",
+          startDate: "",
+          endDate: "",
+          isCurrent: false,
+          description: "",
+        }]
+      });
+    }
+  }, [isOpen, reset, experience]);
 
   const { fields, append, remove } = useFieldArray({
     control,

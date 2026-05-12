@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,14 +7,20 @@ import { RootState } from '@/store/store';
 import { setProfileData, setProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
-export const useStep5Modal = () => {
+export const useStep5Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
   const persona = useSelector((state: RootState) => state.smartProfile.persona);
 
-  const { control, handleSubmit, setValue, watch, formState: { errors } } = useForm<PersonaSchema>({
+  const { control, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<PersonaSchema>({
     resolver: zodResolver(personaSchema),
     defaultValues: persona,
   });
+
+  useEffect(() => {
+    if (!isOpen) {
+      reset(persona);
+    }
+  }, [isOpen, reset, persona]);
 
   const selectedStyles = watch("style") || [];
   const selectedStrengths = watch("strengths") || [];

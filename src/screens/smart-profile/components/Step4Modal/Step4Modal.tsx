@@ -20,7 +20,7 @@ const Step4Modal = ({ isOpen, onOpenChange, icon }: Step4ModalProps) => {
     fields,
     addEducation,
     removeEducation,
-  } = useStep4Modal();
+  } = useStep4Modal(isOpen);
 
   return (
     <StepModal

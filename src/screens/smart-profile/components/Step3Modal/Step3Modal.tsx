@@ -25,7 +25,7 @@ const Step3Modal = ({ isOpen, onOpenChange, icon }: Step3ModalProps) => {
     fields,
     addExperience,
     removeExperience,
-  } = useStep3Modal();
+  } = useStep3Modal(isOpen);
 
   return (
     <StepModal

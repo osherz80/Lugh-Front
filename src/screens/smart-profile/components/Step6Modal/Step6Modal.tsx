@@ -19,7 +19,7 @@ const Step6Modal = ({ isOpen, onOpenChange, icon }: Step6ModalProps) => {
     handleSubmit,
     errors,
     onSubmit,
-  } = useStep6Modal();
+  } = useStep6Modal(isOpen);
 
   return (
     <StepModal

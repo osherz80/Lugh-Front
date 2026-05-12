@@ -20,7 +20,7 @@ interface Step1ModalProps {
 }
 
 const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
-  const { control, handleSubmit, errors, onSubmit } = useStep1Modal();
+  const { control, handleSubmit, errors, onSubmit } = useStep1Modal(isOpen);
 
   return (
     <StepModal

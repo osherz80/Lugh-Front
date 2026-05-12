@@ -44,7 +44,7 @@ const Step5Modal = ({ isOpen, onOpenChange, icon }: Step5ModalProps) => {
     selectedStrengths,
     toggleStyle,
     toggleStrength,
-  } = useStep5Modal();
+  } = useStep5Modal(isOpen);
 
   return (
     <StepModal

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,11 +7,11 @@ import { RootState } from '@/store/store';
 import { setProfileData, setProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
-export const useStep4Modal = () => {
+export const useStep4Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
   const education = useSelector((state: RootState) => state.smartProfile.education);
 
-  const { control, handleSubmit, formState: { errors } } = useForm<EducationSchema>({
+  const { control, handleSubmit, reset, formState: { errors } } = useForm<EducationSchema>({
     resolver: zodResolver(educationSchema),
     defaultValues: {
       education: education.length > 0 ? education : [{
@@ -23,6 +24,21 @@ export const useStep4Modal = () => {
       }]
     },
   });
+
+  useEffect(() => {
+    if (!isOpen) {
+      reset({
+        education: education.length > 0 ? education : [{
+          institution: "",
+          degree: "",
+          startDate: "",
+          endDate: "",
+          isOngoing: false,
+          description: "",
+        }]
+      });
+    }
+  }, [isOpen, reset, education]);
 
   const { fields, append, remove } = useFieldArray({
     control,

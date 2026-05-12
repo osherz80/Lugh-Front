@@ -25,7 +25,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
     toggleSkill,
     toggleExpand,
     initialSkills,
-  } = useStep2Modal();
+  } = useStep2Modal(isOpen);
 
   return (
     <StepModal

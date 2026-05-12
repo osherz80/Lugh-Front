@@ -8,6 +8,7 @@ import { Sparkles, Plus, Trash2 } from 'lucide-react';
 import { StepModal } from '../StepModal/StepModal';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
 import { CareerStation } from '../CareerStation/CareerStation';
+import { useStep3Modal } from './useStep3Modal';
 
 interface Step3ModalProps {
   isOpen: boolean;
@@ -15,15 +16,15 @@ interface Step3ModalProps {
 }
 
 const Step3Modal = ({ isOpen, onOpenChange }: Step3ModalProps) => {
-  const [stations, setStations] = React.useState([0]);
-
-  const addStation = () => {
-    setStations(prev => [...prev, Math.max(...prev) + 1]);
-  };
-
-  const removeStation = (id: number) => {
-    setStations(prev => prev.filter(s => s !== id));
-  };
+  const {
+    control,
+    handleSubmit,
+    errors,
+    onSubmit,
+    fields,
+    addExperience,
+    removeExperience,
+  } = useStep3Modal();
 
   return (
     <StepModal
@@ -32,7 +33,7 @@ const Step3Modal = ({ isOpen, onOpenChange }: Step3ModalProps) => {
       stepNumber={3}
     >
       {({ close }) => (
-        <>
+        <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
           <StepModalHeader
             icon="👋"
             title="Let's build your professional story, step-by-step."
@@ -41,12 +42,12 @@ const Step3Modal = ({ isOpen, onOpenChange }: Step3ModalProps) => {
 
           {/* Form Fields */}
           <div className="space-y-12 mb-10">
-            {stations.map((id, index) => (
-              <div key={id} className={`relative ${index > 0 ? "pt-12 border-t-2 border-dashed border-slate-100 mt-12" : ""}`}>
+            {fields.map((field, index) => (
+              <div key={field.id} className={`relative ${index > 0 ? "pt-12 border-t-2 border-dashed border-slate-100 mt-12" : ""}`}>
                 {index > 0 && (
                   <>
                     <Button
-                      onPress={() => removeStation(id)}
+                      onPress={() => removeExperience(index)}
                       className="absolute top-8 right-0 flex items-center justify-center w-10 h-10 rounded-2xl bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all outline-none cursor-pointer border border-slate-100 hover:border-red-100 shadow-sm z-10 group"
                       aria-label="Delete station"
                     >
@@ -54,13 +55,13 @@ const Step3Modal = ({ isOpen, onOpenChange }: Step3ModalProps) => {
                     </Button>
                   </>
                 )}
-                <CareerStation index={index} />
+                <CareerStation index={index} control={control} errors={errors} />
               </div>
             ))}
 
             {/* Add Another Station */}
             <Button
-              onPress={addStation}
+              onPress={addExperience}
               className="w-full py-6 mt-6 rounded-[24px] border-2 border-dashed border-[#00a18a]/30 text-[#00a18a] font-[800] text-[16px] hover:bg-[#00a18a]/5 hover:border-[#00a18a] transition-all flex items-center justify-center gap-3 group outline-none cursor-pointer"
             >
               <div className="bg-[#00a18a] text-white p-1 rounded-lg group-hover:scale-110 transition-transform">
@@ -89,12 +90,13 @@ const Step3Modal = ({ isOpen, onOpenChange }: Step3ModalProps) => {
               Skip for now
             </Button>
             <Button
+              type="submit"
               className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
               Save & Continue to Education
             </Button>
           </div>
-        </>
+        </form>
       )}
     </StepModal>
   );

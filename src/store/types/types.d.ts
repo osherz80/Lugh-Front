@@ -46,7 +46,7 @@ export type JobExperience = {
     company: string;
     roleTag: string;
     startDate: string;
-    endDate: string;
+    endDate?: string;
     isCurrent: boolean;
     description: string;
 }
@@ -55,7 +55,7 @@ export type Education = {
     institution: string;
     degree: string;
     startDate: string;
-    endDate: string;
+    endDate?: string;
     isOngoing: boolean;
     description: string;
 }

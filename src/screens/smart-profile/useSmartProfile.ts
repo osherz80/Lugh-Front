@@ -1,6 +1,12 @@
 import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { useCreateSmartProfileMutation } from "@/store/services/api/cv";
 
 export const useSmartProfile = () => {
+    const profileData = useSelector((state: RootState) => state.smartProfile);
+    const [createSmartProfile, { isLoading: isSending }] = useCreateSmartProfileMutation();
+
     const [isStep1ModalOpen, setIsStep1ModalOpen] = useState(false);
     const [isStep2ModalOpen, setIsStep2ModalOpen] = useState(false);
     const [isStep3ModalOpen, setIsStep3ModalOpen] = useState(false);
@@ -36,6 +42,16 @@ export const useSmartProfile = () => {
     const openStep6Modal = () => setIsStep6ModalOpen(true);
     const closeStep6Modal = () => setIsStep6ModalOpen(false);
 
+    const handleSend = async () => {
+        try {
+            await createSmartProfile(profileData).unwrap();
+            alert("Profile sent successfully!");
+        } catch (err) {
+            console.error("Failed to send profile:", err);
+            alert("Failed to send profile. Please try again.");
+        }
+    };
+
     return {
         scrollRef,
         handleWheel,
@@ -57,5 +73,7 @@ export const useSmartProfile = () => {
         isStep6ModalOpen,
         openStep6Modal,
         closeStep6Modal,
+        handleSend,
+        isSending
     };
-};
+};

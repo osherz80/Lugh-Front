@@ -104,7 +104,9 @@ export const SmartProfileScreen = () => {
     closeStep5Modal,
     isStep6ModalOpen,
     openStep6Modal,
-    closeStep6Modal
+    closeStep6Modal,
+    handleSend,
+    isSending
   } = useSmartProfile();
 
   return (
@@ -160,10 +162,21 @@ export const SmartProfileScreen = () => {
             </div>
 
             <button 
-              className="w-full bg-[#00a18a] hover:bg-[#008f7a] text-white font-black py-6 px-10 rounded-[28px] transition-all shadow-2xl shadow-[#00a18a]/30 active:scale-[0.98] text-[20px] flex items-center justify-center gap-4 group"
+              onClick={handleSend}
+              disabled={isSending}
+              className="w-full bg-[#00a18a] hover:bg-[#008f7a] text-white font-black py-6 px-10 rounded-[28px] transition-all shadow-2xl shadow-[#00a18a]/30 active:scale-[0.98] text-[20px] flex items-center justify-center gap-4 group disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Finish & Send
-              <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              {isSending ? (
+                <>
+                  Sending Profile...
+                  <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+                </>
+              ) : (
+                <>
+                  Finish & Send
+                  <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </>
+              )}
             </button>
           </div>
         </div>

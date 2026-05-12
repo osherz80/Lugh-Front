@@ -11,22 +11,26 @@ export const useStep2Modal = () => {
   const dispatch = useDispatch();
   const skills = useSelector((state: RootState) => state.smartProfile.skills);
 
-  const { control, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<SkillsSchema>({
+  const { control, handleSubmit, setValue, watch, getValues, formState: { errors } } = useForm<SkillsSchema>({
     resolver: zodResolver(skillsSchema),
     defaultValues: skills,
   });
 
+  const [selectedSkillNames, setSelectedSkillNames] = useState<string[]>(Object.keys(skills));
   const [expandedSkills, setExpandedSkills] = useState<string[]>([]);
+  
   const currentSkills = watch();
-  const selectedSkillNames = Object.keys(currentSkills);
 
   const toggleSkill = (skillName: string) => {
-    if (skillName in currentSkills) {
-      const { [skillName]: _, ...rest } = currentSkills;
-      reset(rest as SkillsSchema);
+    if (selectedSkillNames.includes(skillName)) {
+      setSelectedSkillNames(prev => prev.filter(s => s !== skillName));
       setExpandedSkills(prev => prev.filter(s => s !== skillName));
     } else {
-      setValue(skillName, "");
+      setSelectedSkillNames(prev => [...prev, skillName]);
+      // If the skill doesn't exist in form state yet, initialize it
+      if (!(skillName in getValues())) {
+        setValue(skillName, "");
+      }
     }
   };
 
@@ -39,7 +43,13 @@ export const useStep2Modal = () => {
   };
 
   const onSubmit = (data: SkillsSchema, close: () => void) => {
-    dispatch(setProfileData({ key: PROFILE_SECTIONS.SKILLS, value: data }));
+    // Only save the skills that are currently selected
+    const filteredSkills: SkillsSchema = {};
+    selectedSkillNames.forEach(name => {
+      filteredSkills[name] = data[name] || "";
+    });
+
+    dispatch(setProfileData({ key: PROFILE_SECTIONS.SKILLS, value: filteredSkills }));
     dispatch(setProfileStep(3));
     close();
   };

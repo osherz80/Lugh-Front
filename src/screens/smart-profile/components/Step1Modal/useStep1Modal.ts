@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { basicsSchema, BasicsSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setProfileData, setProfileStep } from '@/store/features/smatProfileSlice';
+import { setProfileData, setProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
 export const useStep1Modal = () => {

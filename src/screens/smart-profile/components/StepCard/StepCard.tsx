@@ -7,12 +7,15 @@ type stepProps = {
     onAction?: () => void,
     totalSteps: number,
     isLocked?: boolean,
-    isCompleted?: boolean
+    isCompleted?: boolean,
+    id?: string
 }
 
-export const StepCard = ({ step, onAction, totalSteps, isLocked, isCompleted }: stepProps) => (
+export const StepCard = ({ step, onAction, totalSteps, isLocked, isCompleted, id }: stepProps) => (
     <motion.div
+        id={id}
         initial={{ opacity: 0, x: 20 }}
+
         whileInView={{ opacity: isLocked ? 0.6 : 1, x: 0 }}
         viewport={{ once: true }}
         className={`relative bg-white rounded-[40px] p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] border border-slate-100/50 flex flex-col items-center text-center w-[440px] h-[580px] transition-opacity ${isLocked ? "opacity-80 pointer-events-none" : ""}`}

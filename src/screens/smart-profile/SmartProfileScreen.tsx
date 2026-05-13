@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Trail } from "@/components/shared/Trail/Trail";
 import { StartNode } from "./components/StartNode/StartNode";
 import { StepCard } from "./components/StepCard/StepCard";
@@ -35,6 +35,22 @@ export const SmartProfileScreen = () => {
     handleSend,
     isSending
   } = useSmartProfile();
+
+  useEffect(() => {
+    // Delay slightly to ensure layout is ready
+    const timer = setTimeout(() => {
+      const activeCard = document.getElementById(`step-card-${currentStep}`);
+      if (activeCard) {
+        activeCard.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [currentStep]);
 
   const steps: StepData[] = [
     {
@@ -110,12 +126,12 @@ export const SmartProfileScreen = () => {
           {steps.map((step, index) => (
             <React.Fragment key={step.id}>
               <StepCard
+                id={`step-card-${step.stepNumber}`}
                 step={step}
                 onAction={() => openStep(step.stepNumber)}
                 totalSteps={steps.length}
                 isLocked={step.stepNumber > currentStep}
                 isCompleted={currentStep > step.stepNumber}
-
               />
               {index < steps.length - 1 && (
                 <Trail isCompleted={currentStep > step.stepNumber} />
@@ -123,8 +139,8 @@ export const SmartProfileScreen = () => {
             </React.Fragment>
           ))}
 
-
           {/* Finish & Send Action */}
+
           <Trail isCompleted={currentStep > steps.length} />
 
           <div className="w-[400px] flex flex-col items-center justify-center gap-10 py-12 px-8 bg-white/40 rounded-[40px] border-2 border-dashed border-[#00a18a]/30 backdrop-blur-sm">

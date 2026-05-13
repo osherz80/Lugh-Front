@@ -104,7 +104,7 @@ export const SmartProfileScreen = () => {
           {/* Start Node */}
           <StartNode />
 
-          <Trail />
+          <Trail isCompleted={currentStep >= 1} />
 
           {/* Steps Flow */}
           {steps.map((step, index) => (
@@ -115,13 +115,16 @@ export const SmartProfileScreen = () => {
                 totalSteps={steps.length}
                 isLocked={step.stepNumber > currentStep}
               />
-              {index < steps.length - 1 && <Trail />}
+              {index < steps.length - 1 && (
+                <Trail isCompleted={currentStep > step.stepNumber} />
+              )}
             </React.Fragment>
           ))}
 
 
           {/* Finish & Send Action */}
-          <Trail />
+          <Trail isCompleted={currentStep > steps.length} />
+
           <div className="w-[400px] flex flex-col items-center justify-center gap-10 py-12 px-8 bg-white/40 rounded-[40px] border-2 border-dashed border-[#00a18a]/30 backdrop-blur-sm">
             <div className="relative">
               <div className="w-28 h-28 bg-[#00a18a]/10 rounded-full flex items-center justify-center animate-pulse">

@@ -4,7 +4,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { educationSchema, EducationSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setProfileData, setProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
 export const useStep4Modal = (isOpen: boolean) => {
@@ -59,8 +59,8 @@ export const useStep4Modal = (isOpen: boolean) => {
   };
 
   const onSubmit = (data: EducationSchema, close: () => void) => {
-    dispatch(setProfileData({ key: PROFILE_SECTIONS.EDUCATION, value: data.education }));
-    dispatch(setProfileStep(5));
+    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.EDUCATION, value: data.education }));
+    dispatch(setSmartProfileStep(5));
     close();
   };
 

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { basicsSchema, BasicsSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setProfileData, setProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
 export const useStep1Modal = (isOpen: boolean) => {
@@ -23,8 +23,8 @@ export const useStep1Modal = (isOpen: boolean) => {
   }, [isOpen, reset, basics]);
 
   const onSubmit = (data: BasicsSchema, close: () => void) => {
-    dispatch(setProfileData({ key: PROFILE_SECTIONS.BASICS, value: data }));
-    dispatch(setProfileStep(2));
+    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.BASICS, value: data }));
+    dispatch(setSmartProfileStep(2));
     close();
   };
 

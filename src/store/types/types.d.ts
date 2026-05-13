@@ -72,6 +72,7 @@ export type Contact = {
     linkedin: string;
     github: string;
     portfolio: string;
+    anythingElse: string;
 }
 
 export type SmartProfile = {
@@ -81,18 +82,19 @@ export type SmartProfile = {
     [PROFILE_SECTIONS.EDUCATION]: Education[];
     [PROFILE_SECTIONS.PERSONA]: Persona;
     [PROFILE_SECTIONS.CONTACT]: Contact;
-    [PROFILE_SECTIONS.ANYTHING_ELSE]: string;
 }
 
-export type SmartProfileKey = (typeof PROFILE_SECTIONS)[keyof typeof PROFILE_SECTIONS];
+export type SmartProfileSection = (typeof PROFILE_SECTIONS)[keyof typeof PROFILE_SECTIONS];
 
-export type StepTracker = {
+export type ProfileExtras = {
+    smartProfileId: string | null;
     currentStep: number;
+    isMaster: boolean;
 }
 
-export type SmartProfileState = SmartProfile & StepTracker;
+export type SmartProfileState = SmartProfile & ProfileExtras;
 
 export type SmartProfilePayload = {
-    key: SmartProfileKey;
+    key: SmartProfileSection;
     value: SmartProfile[keyof SmartProfile];
 };

@@ -4,7 +4,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { experienceSchema, ExperienceSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setProfileData, setProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
 export const useStep3Modal = (isOpen: boolean) => {
@@ -62,8 +62,8 @@ export const useStep3Modal = (isOpen: boolean) => {
   };
 
   const onSubmit = (data: ExperienceSchema, close: () => void) => {
-    dispatch(setProfileData({ key: PROFILE_SECTIONS.EXPERIENCE, value: data.experience }));
-    dispatch(setProfileStep(4));
+    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.EXPERIENCE, value: data.experience }));
+    dispatch(setSmartProfileStep(4));
     close();
   };
 

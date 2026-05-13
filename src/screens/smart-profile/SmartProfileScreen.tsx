@@ -15,66 +15,8 @@ export interface StepData {
   quote: string;
   icon: string;
   isEmoji?: boolean;
+  openModal: () => void;
 }
-
-const steps: StepData[] = [
-  {
-    id: 1,
-    stepNumber: 1,
-    icon: "/assets/svg/waving-hand.svg",
-    title: "Hello!",
-    description: "Hi nice to meet you! I am so excited to get to know you!",
-    quote: "Every great CV starts with a single, authentic introduction. Let’s build yours.",
-    isEmoji: false,
-  },
-  {
-    id: 2,
-    stepNumber: 2,
-    title: "Skills",
-    description: "Let us know what Skills & Tools you good at",
-    quote: "Your skills are the tools, but your expertise is the masterpiece.",
-    icon: "/assets/svg/radar.svg",
-    isEmoji: false,
-  },
-  {
-    id: 3,
-    stepNumber: 3,
-    title: "Experience",
-    description: "Tell us about your career milestones and achievements",
-    quote: "Don't just list where you've worked—show us the impact you've made.",
-    icon: "/assets/svg/construction-building.svg",
-    isEmoji: false,
-  },
-  {
-    id: 4,
-    stepNumber: 4,
-    title: "Education",
-    description: "Showcase your degrees, certifications and self-taught paths",
-    quote: "Education is the foundation; lifelong learning is the skyscraper.",
-    icon: "/assets/svg/gear-book.svg",
-    isEmoji: false,
-  },
-  {
-    id: 5,
-    stepNumber: 5,
-    title: "Personality",
-    description: "Define your professional style and strongest attributes",
-    quote: "Hard skills get you the interview, but your persona gets you the job.",
-    icon: "/assets/svg/personality.svg",
-    isEmoji: false,
-  },
-  {
-    id: 6,
-    stepNumber: 6,
-    title: "Contact",
-    description: "We would like to stay in touch and hear more about you",
-    quote: "Your story is global. Let's make sure the world knows how to reach it.",
-    icon: "/assets/svg/contact-book.svg",
-    isEmoji: false,
-  },
-];
-
-
 
 const Step1Modal = dynamic(() => import("./components/Step1Modal/Step1Modal"), { ssr: false });
 const Step2Modal = dynamic(() => import("./components/Step2Modal/Step2Modal"), { ssr: false });
@@ -108,6 +50,69 @@ export const SmartProfileScreen = () => {
     handleSend,
     isSending
   } = useSmartProfile();
+
+  const steps: StepData[] = [
+    {
+      id: 1,
+      stepNumber: 1,
+      icon: "/assets/svg/waving-hand.svg",
+      title: "Hello!",
+      description: "Hi nice to meet you! I am so excited to get to know you!",
+      quote: "Every great CV starts with a single, authentic introduction. Let’s build yours.",
+      isEmoji: false,
+      openModal: openStep1Modal,
+    },
+    {
+      id: 2,
+      stepNumber: 2,
+      title: "Skills",
+      description: "Let us know what Skills & Tools you good at",
+      quote: "Your skills are the tools, but your expertise is the masterpiece.",
+      icon: "/assets/svg/radar.svg",
+      isEmoji: false,
+      openModal: openStep2Modal,
+    },
+    {
+      id: 3,
+      stepNumber: 3,
+      title: "Experience",
+      description: "Tell us about your career milestones and achievements",
+      quote: "Don't just list where you've worked—show us the impact you've made.",
+      icon: "/assets/svg/construction-building.svg",
+      isEmoji: false,
+      openModal: openStep3Modal,
+    },
+    {
+      id: 4,
+      stepNumber: 4,
+      title: "Education",
+      description: "Showcase your degrees, certifications and self-taught paths",
+      quote: "Education is the foundation; lifelong learning is the skyscraper.",
+      icon: "/assets/svg/gear-book.svg",
+      isEmoji: false,
+      openModal: openStep4Modal,
+    },
+    {
+      id: 5,
+      stepNumber: 5,
+      title: "Personality",
+      description: "Define your professional style and strongest attributes",
+      quote: "Hard skills get you the interview, but your persona gets you the job.",
+      icon: "/assets/svg/personality.svg",
+      isEmoji: false,
+      openModal: openStep5Modal,
+    },
+    {
+      id: 6,
+      stepNumber: 6,
+      title: "Contact",
+      description: "We would like to stay in touch and hear more about you",
+      quote: "Your story is global. Let's make sure the world knows how to reach it.",
+      icon: "/assets/svg/contact-book.svg",
+      isEmoji: false,
+      openModal: openStep6Modal,
+    },
+  ];
 
   return (
     <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden bg-[#F8FAFC]">

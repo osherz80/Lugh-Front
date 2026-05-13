@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { skillsSchema, SkillsSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setProfileData, setProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
 export const useStep2Modal = (isOpen: boolean) => {
@@ -24,7 +24,7 @@ export const useStep2Modal = (isOpen: boolean) => {
 
   const [selectedSkillNames, setSelectedSkillNames] = useState<string[]>(Object.keys(skills));
   const [expandedSkills, setExpandedSkills] = useState<string[]>([]);
-  
+
   const currentSkills = watch();
 
   const toggleSkill = (skillName: string) => {
@@ -55,8 +55,8 @@ export const useStep2Modal = (isOpen: boolean) => {
       filteredSkills[name] = data[name] || "";
     });
 
-    dispatch(setProfileData({ key: PROFILE_SECTIONS.SKILLS, value: filteredSkills }));
-    dispatch(setProfileStep(3));
+    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.SKILLS, value: filteredSkills }));
+    dispatch(setSmartProfileStep(3));
     close();
   };
 

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { personaSchema, PersonaSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setProfileData, setProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
 export const useStep5Modal = (isOpen: boolean) => {
@@ -27,8 +27,8 @@ export const useStep5Modal = (isOpen: boolean) => {
 
   const toggleStyle = (style: string) => {
     const current = selectedStyles;
-    const next = current.includes(style) 
-      ? current.filter(s => s !== style) 
+    const next = current.includes(style)
+      ? current.filter(s => s !== style)
       : [...current, style];
     setValue("style", next, { shouldValidate: true });
   };
@@ -43,8 +43,8 @@ export const useStep5Modal = (isOpen: boolean) => {
   };
 
   const onSubmit = (data: PersonaSchema, close: () => void) => {
-    dispatch(setProfileData({ key: PROFILE_SECTIONS.PERSONA, value: data }));
-    dispatch(setProfileStep(6));
+    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.PERSONA, value: data }));
+    dispatch(setSmartProfileStep(6));
     close();
   };
 

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactSchema, ContactSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setProfileData } from '@/store/features/smartProfileSlice';
+import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 
 export const useStep6Modal = (isOpen: boolean) => {
@@ -23,8 +23,7 @@ export const useStep6Modal = (isOpen: boolean) => {
   }, [isOpen, reset, contact]);
 
   const onSubmit = (data: ContactSchema, close: () => void) => {
-    dispatch(setProfileData({ key: PROFILE_SECTIONS.CONTACT, value: data }));
-    // Final step logic - usually closing or navigating to result
+    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.CONTACT, value: data }));
     close();
   };
 

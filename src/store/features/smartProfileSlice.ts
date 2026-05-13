@@ -3,7 +3,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 const initialState: SmartProfileState = {
+    smartProfileId: null,
     currentStep: 1,
+    isMaster: false,
     basics: {
         fullName: "",
         targetRole: "",
@@ -25,23 +27,37 @@ const initialState: SmartProfileState = {
         linkedin: "",
         github: "",
         portfolio: "",
+        anythingElse: "",
     },
-    anythingElse: "",
 };
 
 export const smartProfileSlice = createSlice({
     name: "smartProfile",
     initialState,
     reducers: {
-        setProfileData: (state, action: PayloadAction<SmartProfilePayload>) => {
+        setSmartProfileData: (state, action: PayloadAction<SmartProfilePayload>) => {
             (state as any)[action.payload.key] = action.payload.value;
         },
-        setProfileStep: (state, action: PayloadAction<number>) => {
+        setSmartProfileId: (state, action: PayloadAction<string>) => {
+            state.smartProfileId = action.payload;
+        },
+        setSmartProfileStep: (state, action: PayloadAction<number>) => {
             state.currentStep = action.payload;
         },
+        setSmartProfileMaster: (state, action: PayloadAction<boolean>) => {
+            state.isMaster = action.payload;
+        },
+
         reset: () => initialState,
     }
 });
 
-export const { setProfileData, setProfileStep, reset } = smartProfileSlice.actions;
+export const {
+    setSmartProfileData,
+    setSmartProfileStep,
+    setSmartProfileId,
+    setSmartProfileMaster,
+    reset
+} = smartProfileSlice.actions;
+
 export default smartProfileSlice.reducer;

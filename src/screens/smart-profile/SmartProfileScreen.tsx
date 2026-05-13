@@ -114,6 +114,8 @@ export const SmartProfileScreen = () => {
                 onAction={() => openStep(step.stepNumber)}
                 totalSteps={steps.length}
                 isLocked={step.stepNumber > currentStep}
+                isCompleted={currentStep > step.stepNumber}
+
               />
               {index < steps.length - 1 && (
                 <Trail isCompleted={currentStep > step.stepNumber} />

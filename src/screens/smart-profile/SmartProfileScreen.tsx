@@ -29,6 +29,7 @@ export const SmartProfileScreen = () => {
     scrollRef,
     handleWheel,
     activeStep,
+    currentStep,
     openStep,
     closeModal,
     handleSend,
@@ -112,10 +113,12 @@ export const SmartProfileScreen = () => {
                 step={step}
                 onAction={() => openStep(step.stepNumber)}
                 totalSteps={steps.length}
+                isLocked={step.stepNumber > currentStep}
               />
               {index < steps.length - 1 && <Trail />}
             </React.Fragment>
           ))}
+
 
           {/* Finish & Send Action */}
           <Trail />

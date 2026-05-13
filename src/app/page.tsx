@@ -1,16 +1,13 @@
+import { LandingScreen } from "@/screens/landing/LandingScreen";
 import { Header } from "@/screens/landing/components/Header/Header";
 import { Footer } from "@/screens/landing/components/Footer/Footer";
 
-export default function LandingLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Home() {
   return (
     <>
       <Header />
       <main className="flex-1 w-full">
-        {children}
+        <LandingScreen />
       </main>
       <Footer />
     </>

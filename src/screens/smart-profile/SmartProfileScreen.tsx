@@ -15,7 +15,6 @@ export interface StepData {
   quote: string;
   icon: string;
   isEmoji?: boolean;
-  openModal: () => void;
 }
 
 const Step1Modal = dynamic(() => import("./components/Step1Modal/Step1Modal"), { ssr: false });
@@ -29,24 +28,9 @@ export const SmartProfileScreen = () => {
   const {
     scrollRef,
     handleWheel,
-    isStep1ModalOpen,
-    openStep1Modal,
-    closeStep1Modal,
-    isStep2ModalOpen,
-    openStep2Modal,
-    closeStep2Modal,
-    isStep3ModalOpen,
-    openStep3Modal,
-    closeStep3Modal,
-    isStep4ModalOpen,
-    openStep4Modal,
-    closeStep4Modal,
-    isStep5ModalOpen,
-    openStep5Modal,
-    closeStep5Modal,
-    isStep6ModalOpen,
-    openStep6Modal,
-    closeStep6Modal,
+    activeStep,
+    openStep,
+    closeModal,
     handleSend,
     isSending
   } = useSmartProfile();
@@ -60,7 +44,6 @@ export const SmartProfileScreen = () => {
       description: "Hi nice to meet you! I am so excited to get to know you!",
       quote: "Every great CV starts with a single, authentic introduction. Let’s build yours.",
       isEmoji: false,
-      openModal: openStep1Modal,
     },
     {
       id: 2,
@@ -70,7 +53,6 @@ export const SmartProfileScreen = () => {
       quote: "Your skills are the tools, but your expertise is the masterpiece.",
       icon: "/assets/svg/radar.svg",
       isEmoji: false,
-      openModal: openStep2Modal,
     },
     {
       id: 3,
@@ -80,7 +62,6 @@ export const SmartProfileScreen = () => {
       quote: "Don't just list where you've worked—show us the impact you've made.",
       icon: "/assets/svg/construction-building.svg",
       isEmoji: false,
-      openModal: openStep3Modal,
     },
     {
       id: 4,
@@ -90,7 +71,6 @@ export const SmartProfileScreen = () => {
       quote: "Education is the foundation; lifelong learning is the skyscraper.",
       icon: "/assets/svg/gear-book.svg",
       isEmoji: false,
-      openModal: openStep4Modal,
     },
     {
       id: 5,
@@ -100,7 +80,6 @@ export const SmartProfileScreen = () => {
       quote: "Hard skills get you the interview, but your persona gets you the job.",
       icon: "/assets/svg/personality.svg",
       isEmoji: false,
-      openModal: openStep5Modal,
     },
     {
       id: 6,
@@ -110,7 +89,6 @@ export const SmartProfileScreen = () => {
       quote: "Your story is global. Let's make sure the world knows how to reach it.",
       icon: "/assets/svg/contact-book.svg",
       isEmoji: false,
-      openModal: openStep6Modal,
     },
   ];
 
@@ -132,15 +110,7 @@ export const SmartProfileScreen = () => {
             <React.Fragment key={step.id}>
               <StepCard
                 step={step}
-                onAction={
-                  step.id === 1 ? openStep1Modal :
-                    step.id === 2 ? openStep2Modal :
-                      step.id === 3 ? openStep3Modal :
-                        step.id === 4 ? openStep4Modal :
-                          step.id === 5 ? openStep5Modal :
-                            step.id === 6 ? openStep6Modal :
-                              undefined
-                }
+                onAction={() => openStep(step.stepNumber)}
                 totalSteps={steps.length}
               />
               {index < steps.length - 1 && <Trail />}
@@ -188,40 +158,41 @@ export const SmartProfileScreen = () => {
       </section>
 
       <Step1Modal
-        isOpen={isStep1ModalOpen}
-        onOpenChange={closeStep1Modal}
+        isOpen={activeStep === 1}
+        onOpenChange={closeModal}
         icon={steps[0].icon}
       />
 
       <Step2Modal
-        isOpen={isStep2ModalOpen}
-        onOpenChange={closeStep2Modal}
+        isOpen={activeStep === 2}
+        onOpenChange={closeModal}
         icon={steps[1].icon}
       />
 
       <Step3Modal
-        isOpen={isStep3ModalOpen}
-        onOpenChange={closeStep3Modal}
+        isOpen={activeStep === 3}
+        onOpenChange={closeModal}
         icon={steps[2].icon}
       />
 
       <Step4Modal
-        isOpen={isStep4ModalOpen}
-        onOpenChange={closeStep4Modal}
+        isOpen={activeStep === 4}
+        onOpenChange={closeModal}
         icon={steps[3].icon}
       />
 
       <Step5Modal
-        isOpen={isStep5ModalOpen}
-        onOpenChange={closeStep5Modal}
+        isOpen={activeStep === 5}
+        onOpenChange={closeModal}
         icon={steps[4].icon}
       />
 
       <Step6Modal
-        isOpen={isStep6ModalOpen}
-        onOpenChange={closeStep6Modal}
+        isOpen={activeStep === 6}
+        onOpenChange={closeModal}
         icon={steps[5].icon}
       />
+
     </main>
   );
 };

@@ -1,6 +1,7 @@
 import { api } from '@/store/services/api/api'
-import { CV, SmartProfileState } from '@/store/types/types'
 import { saveCvs } from '@/store/services/handlers/cvHandler'
+import { SmartProfileState } from '@/store/types/smartProfile'
+import { CV } from '@/store/types/cv'
 
 export const cvApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -36,5 +37,5 @@ export const cvApi = api.injectEndpoints({
 export const {
     useUploadCVMutation,
     useLazyGetCandidateCVsQuery,
-    useCreateSmartProfileMutation
+    useCreateSmartProfileMutation,
 } = cvApi;

@@ -1,5 +1,5 @@
-import { CV, SmartProfilePayload, SmartProfileState } from "@/store/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SmartProfileState, SmartProfilePayload } from "@/store/types/smartProfile";
 
 
 const initialState: SmartProfileState = {

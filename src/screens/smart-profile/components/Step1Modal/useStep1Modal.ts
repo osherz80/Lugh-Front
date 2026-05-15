@@ -6,10 +6,13 @@ import { basicsSchema, BasicsSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
 import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
+import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
+
 
 export const useStep1Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
-  const basics = useSelector((state: RootState) => state.smartProfile.basics);
+  const { basics, smartProfileId } = useSelector((state: RootState) => state.smartProfile);
+  const [upsertSmartProfile, { isLoading: isUpserting }] = useUpsertSmartProfileMutation();
 
   const { control, handleSubmit, reset, formState: { errors } } = useForm<BasicsSchema>({
     resolver: zodResolver(basicsSchema),
@@ -22,7 +25,12 @@ export const useStep1Modal = (isOpen: boolean) => {
     }
   }, [isOpen, reset, basics]);
 
-  const onSubmit = (data: BasicsSchema, close: () => void) => {
+  const onSubmit = async (data: BasicsSchema, close: () => void) => {
+    const dataWithSmartProfileId = {
+      ...data,
+      smartProfileId
+    };
+    await upsertSmartProfile({ ...dataWithSmartProfileId, section: PROFILE_SECTIONS.BASICS });
     dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.BASICS, value: data }));
     dispatch(setSmartProfileStep(2));
     close();
@@ -33,5 +41,6 @@ export const useStep1Modal = (isOpen: boolean) => {
     handleSubmit,
     errors,
     onSubmit,
+    isUpserting,
   };
 };

@@ -1,5 +1,5 @@
 import { api } from '@/store/services/api/api'
-import { SmartProfileState, SmartProfileSection } from '@/store/types/smartProfile'
+import { SmartProfileSection, SmartProfileState } from '@/store/types/smartProfile'
 
 
 export const smartProfileApi = api.injectEndpoints({

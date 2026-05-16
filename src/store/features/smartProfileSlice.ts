@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SmartProfileState, SmartProfilePayload } from "@/store/types/smartProfile";
+import { SmartProfileState, SmartProfilePayload, OtherProfile } from "@/store/types/smartProfile";
 
 
 const initialState: SmartProfileState = {
     smartProfileId: null,
     currentStep: 1,
     isMaster: false,
+    otherProfiles: [],
     basics: {
         fullName: "",
         targetRole: "",
@@ -37,6 +38,9 @@ export const smartProfileSlice = createSlice({
     reducers: {
         setSmartProfileData: (state, action: PayloadAction<SmartProfilePayload>) => {
             (state as any)[action.payload.key] = action.payload.value;
+        },
+        setOtherProfiles: (state, action: PayloadAction<OtherProfile[]>) => {
+            state.otherProfiles = action.payload;
         },
         setSmartProfileId: (state, action: PayloadAction<string>) => {
             state.smartProfileId = action.payload;

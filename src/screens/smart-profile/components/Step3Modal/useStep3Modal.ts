@@ -6,10 +6,13 @@ import { experienceSchema, ExperienceSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
 import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
+import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
 
 export const useStep3Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
   const experience = useSelector((state: RootState) => state.smartProfile.experience);
+
+  const [upsertSmartProfile, { isLoading: isUpserting }] = useUpsertSmartProfileMutation();
 
   const today = new Date().toISOString().split('T')[0];
 
@@ -61,7 +64,8 @@ export const useStep3Modal = (isOpen: boolean) => {
     });
   };
 
-  const onSubmit = (data: ExperienceSchema, close: () => void) => {
+  const onSubmit = async (data: ExperienceSchema, close: () => void) => {
+    await upsertSmartProfile({ ...data, section: PROFILE_SECTIONS.EXPERIENCE });
     dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.EXPERIENCE, value: data.experience }));
     dispatch(setSmartProfileStep(4));
     close();
@@ -75,5 +79,6 @@ export const useStep3Modal = (isOpen: boolean) => {
     fields,
     addExperience,
     removeExperience: remove,
+    isUpserting,
   };
 };

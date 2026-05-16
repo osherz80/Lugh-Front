@@ -6,11 +6,12 @@ import { personaSchema, PersonaSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
 import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
+import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
 
 export const useStep5Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
   const persona = useSelector((state: RootState) => state.smartProfile.persona);
-
+  const [upsertSmartProfile, { isLoading: isUpserting }] = useUpsertSmartProfileMutation();
   const { control, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<PersonaSchema>({
     resolver: zodResolver(personaSchema),
     defaultValues: persona,
@@ -42,7 +43,8 @@ export const useStep5Modal = (isOpen: boolean) => {
     }
   };
 
-  const onSubmit = (data: PersonaSchema, close: () => void) => {
+  const onSubmit = async (data: PersonaSchema, close: () => void) => {
+    await upsertSmartProfile({ ...data, section: PROFILE_SECTIONS.PERSONA });
     dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.PERSONA, value: data }));
     dispatch(setSmartProfileStep(6));
     close();
@@ -57,5 +59,6 @@ export const useStep5Modal = (isOpen: boolean) => {
     selectedStrengths,
     toggleStyle,
     toggleStrength,
+    isUpserting,
   };
 };

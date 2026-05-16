@@ -6,10 +6,12 @@ import { skillsSchema, SkillsSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
 import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
+import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
 
 export const useStep2Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
   const skills = useSelector((state: RootState) => state.smartProfile.skills);
+  const [upsertSmartProfile, { isLoading: isUpserting }] = useUpsertSmartProfileMutation();
 
   const { control, handleSubmit, setValue, watch, getValues, reset, formState: { errors } } = useForm<SkillsSchema>({
     resolver: zodResolver(skillsSchema),
@@ -48,13 +50,14 @@ export const useStep2Modal = (isOpen: boolean) => {
     );
   };
 
-  const onSubmit = (data: SkillsSchema, close: () => void) => {
+  const onSubmit = async (data: SkillsSchema, close: () => void) => {
     // Only save the skills that are currently selected
     const filteredSkills: SkillsSchema = {};
     selectedSkillNames.forEach(name => {
       filteredSkills[name] = data[name] || "";
     });
 
+    await upsertSmartProfile({ ...data, section: PROFILE_SECTIONS.SKILLS });
     dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.SKILLS, value: filteredSkills }));
     dispatch(setSmartProfileStep(3));
     close();
@@ -80,5 +83,6 @@ export const useStep2Modal = (isOpen: boolean) => {
     toggleSkill,
     toggleExpand,
     initialSkills,
+    isUpserting
   };
 };

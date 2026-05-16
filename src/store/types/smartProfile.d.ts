@@ -56,10 +56,16 @@ export type SmartProfile = {
 
 export type SmartProfileSection = (typeof PROFILE_SECTIONS)[keyof typeof PROFILE_SECTIONS];
 
+type OtherProfile = {
+    profileId: string;
+    profileName: string;
+}
+
 export type ProfileExtras = {
     smartProfileId: string | null;
     currentStep: number;
     isMaster: boolean;
+    otherProfiles: OtherProfile[];
 }
 
 export type SmartProfileState = SmartProfile & ProfileExtras;

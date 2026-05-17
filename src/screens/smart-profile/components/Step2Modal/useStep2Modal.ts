@@ -7,6 +7,7 @@ import { RootState } from '@/store/store';
 import { setSmartProfileSectionKey, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
+import { Skills } from '@/store/types/smartProfile';
 
 export const useStep2Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
@@ -50,15 +51,9 @@ export const useStep2Modal = (isOpen: boolean) => {
     );
   };
 
-  const onSubmit = async (stepData: SkillsSchema, close: () => void) => {
-    // Only save the skills that are currently selected
-    const filteredSkills: SkillsSchema = {};
-    selectedSkillNames.forEach(name => {
-      filteredSkills[name] = stepData[name] || "";
-    });
-
-    await upsertSmartProfile({ stepData: filteredSkills, section: PROFILE_SECTIONS.SKILLS });
-    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.SKILLS, value: filteredSkills }));
+  const onSubmit = async (stepData: Skills, close: () => void) => {
+    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.SKILLS });
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.SKILLS, value: stepData }));
     dispatch(setSmartProfileStep(3));
     close();
   };

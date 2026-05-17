@@ -12,7 +12,7 @@ export type Basics = {
 export type Skills = Record<string, string>;
 
 export type JobExperience = {
-    id: string;
+    id?: string;
     company: string;
     roleTag: string;
     startDate: string;

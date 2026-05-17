@@ -11,8 +11,8 @@ import { ExperienceSchema } from '@/lib/schemas';
 
 interface CareerStationProps {
   index: number;
-  control: Control<ExperienceSchema>;
-  errors: FieldErrors<ExperienceSchema>;
+  control: Control<{ experience: ExperienceSchema }>;
+  errors: FieldErrors<{ experience: ExperienceSchema }>;
 }
 
 export const CareerStation = ({ index, control, errors }: CareerStationProps) => {

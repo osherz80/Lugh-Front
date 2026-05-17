@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { z } from 'zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,11 +18,10 @@ export const useStep3Modal = (isOpen: boolean) => {
 
   const today = new Date().toISOString().split('T')[0];
 
-  const { control, handleSubmit, reset, formState: { errors } } = useForm<ExperienceSchema>({
-    resolver: zodResolver(experienceSchema),
+  const { control, handleSubmit, reset, formState: { errors } } = useForm<{ experience: ExperienceSchema }>({
+    resolver: zodResolver(z.object({ experience: z.array(experienceSchema) })),
     defaultValues: {
       experience: experience?.length > 0 ? experience : [{
-        id: Math.random().toString(36).substring(7),
         company: "",
         roleTag: "",
         startDate: today,
@@ -36,7 +36,6 @@ export const useStep3Modal = (isOpen: boolean) => {
     if (!isOpen) {
       reset({
         experience: experience?.length > 0 ? experience : [{
-          id: Math.random().toString(36).substring(7),
           company: "",
           roleTag: "",
           startDate: today,
@@ -55,7 +54,6 @@ export const useStep3Modal = (isOpen: boolean) => {
 
   const addExperience = () => {
     append({
-      id: Math.random().toString(36).substring(7),
       company: "",
       roleTag: "",
       startDate: today,

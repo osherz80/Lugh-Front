@@ -19,7 +19,7 @@ export const useStep4Modal = (isOpen: boolean) => {
   const { control, handleSubmit, reset, formState: { errors } } = useForm<EducationSchema>({
     resolver: zodResolver(educationSchema),
     defaultValues: {
-      education: education.length > 0 ? education : [{
+      education: education?.length > 0 ? education : [{
         institution: "",
         degree: "",
         startDate: today,
@@ -33,7 +33,7 @@ export const useStep4Modal = (isOpen: boolean) => {
   useEffect(() => {
     if (!isOpen) {
       reset({
-        education: education.length > 0 ? education : [{
+        education: education?.length > 0 ? education : [{
           institution: "",
           degree: "",
           startDate: today,

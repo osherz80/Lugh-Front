@@ -18,18 +18,16 @@ export type BasicsSchema = z.infer<typeof basicsSchema>;
 export type SkillsSchema = z.infer<typeof skillsSchema>;
 
 export const experienceSchema = z.object({
-  experience: z.array(z.object({
-    id: z.string(),
-    company: z.string().min(2, "Company is required"),
-    roleTag: z.string().min(2, "Title is required"),
-    startDate: z.string().min(2, "Start date is required"),
-    endDate: z.string().optional(),
-    isCurrent: z.boolean(),
-    description: z.string().max(600, "Description is too long"),
-  }))
+  id: z.string().optional(),
+  company: z.string().min(2, "Company is required"),
+  roleTag: z.string().min(2, "Title is required"),
+  startDate: z.string().min(2, "Start date is required"),
+  endDate: z.string().optional(),
+  isCurrent: z.boolean(),
+  description: z.string().max(600, "Description is too long"),
 });
 
-export type ExperienceSchema = z.infer<typeof experienceSchema>;
+export type ExperienceSchema = z.infer<typeof experienceSchema>[];
 
 export const educationSchema = z.object({
   education: z.array(z.object({

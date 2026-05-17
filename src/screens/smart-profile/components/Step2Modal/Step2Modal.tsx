@@ -139,7 +139,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
                                   name={skillName}
                                   control={control}
                                   render={({ field }) => (
-                                    <TextField 
+                                    <TextField
                                       className="w-full relative"
                                       isInvalid={!!errors[skillName]}
                                     >

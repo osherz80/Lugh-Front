@@ -29,7 +29,7 @@ const Step4Modal = ({ isOpen, onOpenChange, icon }: Step4ModalProps) => {
       stepNumber={4}
     >
       {({ close }) => (
-        <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
+        <form onSubmit={handleSubmit((data) => onSubmit(data.education, close))} className="flex flex-col h-full">
           <StepModalHeader
             icon={icon}
             title="Where did you gain your expertise?"

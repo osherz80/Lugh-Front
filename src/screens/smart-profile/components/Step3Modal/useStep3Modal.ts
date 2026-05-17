@@ -4,9 +4,10 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { experienceSchema, ExperienceSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileSectionKey, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
+import { JobExperience } from '@/store/types/smartProfile';
 
 export const useStep3Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export const useStep3Modal = (isOpen: boolean) => {
   const { control, handleSubmit, reset, formState: { errors } } = useForm<ExperienceSchema>({
     resolver: zodResolver(experienceSchema),
     defaultValues: {
-      experience: experience.length > 0 ? experience : [{
+      experience: experience?.length > 0 ? experience : [{
         id: Math.random().toString(36).substring(7),
         company: "",
         roleTag: "",
@@ -34,7 +35,7 @@ export const useStep3Modal = (isOpen: boolean) => {
   useEffect(() => {
     if (!isOpen) {
       reset({
-        experience: experience.length > 0 ? experience : [{
+        experience: experience?.length > 0 ? experience : [{
           id: Math.random().toString(36).substring(7),
           company: "",
           roleTag: "",
@@ -64,9 +65,9 @@ export const useStep3Modal = (isOpen: boolean) => {
     });
   };
 
-  const onSubmit = async (data: ExperienceSchema, close: () => void) => {
-    await upsertSmartProfile({ ...data, section: PROFILE_SECTIONS.EXPERIENCE });
-    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.EXPERIENCE, value: data.experience }));
+  const onSubmit = async (stepData: JobExperience[], close: () => void) => {
+    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.EXPERIENCE });
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.EXPERIENCE, value: stepData }));
     dispatch(setSmartProfileStep(4));
     close();
   };

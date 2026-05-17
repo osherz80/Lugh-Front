@@ -4,9 +4,10 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { educationSchema, EducationSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileSectionKey, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
+import { Education } from '@/store/types/smartProfile';
 
 export const useStep4Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
@@ -60,9 +61,9 @@ export const useStep4Modal = (isOpen: boolean) => {
     });
   };
 
-  const onSubmit = async (data: EducationSchema, close: () => void) => {
-    await upsertSmartProfile({ ...data, section: PROFILE_SECTIONS.EDUCATION });
-    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.EDUCATION, value: data.education }));
+  const onSubmit = async (stepData: Education[], close: () => void) => {
+    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.EDUCATION });
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.EDUCATION, value: stepData }));
     dispatch(setSmartProfileStep(5));
     close();
   };

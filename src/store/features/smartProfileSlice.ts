@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SmartProfileState, SmartProfilePayload, OtherProfile } from "@/store/types/smartProfile";
+import { FullSmartProfile, SmartProfilePayload, OtherProfile } from "@/store/types/smartProfile";
+import { smartProfileApi } from "../services/api/smartProfile";
 
 
-const initialState: SmartProfileState = {
-    smartProfileId: null,
+const initialState: FullSmartProfile = {
+    profileId: null,
     currentStep: 1,
     isMaster: false,
     otherProfiles: [],
@@ -26,7 +27,6 @@ const initialState: SmartProfileState = {
         phone: "",
         email: "",
         linkedin: "",
-        github: "",
         portfolio: "",
         anythingElse: "",
     },
@@ -36,14 +36,17 @@ export const smartProfileSlice = createSlice({
     name: "smartProfile",
     initialState,
     reducers: {
-        setSmartProfileData: (state, action: PayloadAction<SmartProfilePayload>) => {
+        setSmartProfile: (state, action: PayloadAction<FullSmartProfile>) => {
+            return action.payload;
+        },
+        setSmartProfileSectionKey: (state, action: PayloadAction<SmartProfilePayload>) => {
             (state as any)[action.payload.key] = action.payload.value;
         },
         setOtherProfiles: (state, action: PayloadAction<OtherProfile[]>) => {
             state.otherProfiles = action.payload;
         },
-        setSmartProfileId: (state, action: PayloadAction<string>) => {
-            state.smartProfileId = action.payload;
+        setprofileId: (state, action: PayloadAction<string>) => {
+            state.profileId = action.payload;
         },
         setSmartProfileStep: (state, action: PayloadAction<number>) => {
             state.currentStep = action.payload;
@@ -53,13 +56,20 @@ export const smartProfileSlice = createSlice({
         },
 
         reset: () => initialState,
+    },
+    extraReducers: (builder) => {
+        builder.addMatcher(smartProfileApi.endpoints.upsertSmartProfile.matchFulfilled, (state, action) => {
+            console.log("action", action.payload);
+            return action.payload;
+        });
     }
 });
 
 export const {
-    setSmartProfileData,
+    setSmartProfile,
+    setSmartProfileSectionKey,
     setSmartProfileStep,
-    setSmartProfileId,
+    setprofileId,
     setSmartProfileMaster,
     reset
 } = smartProfileSlice.actions;

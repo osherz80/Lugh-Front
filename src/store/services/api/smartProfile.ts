@@ -1,21 +1,43 @@
 import { api } from '@/store/services/api/api'
-import { SmartProfileSection, SmartProfileState } from '@/store/types/smartProfile'
+import { SmartProfileSectionKey, FullSmartProfile, BackendSmartProfile, SmartProfileSection, UpsertSmartProfilePayload } from '@/store/types/smartProfile'
 import { RootState } from '@/store/store'
+import { mapBackendToFrontendSmartProfile } from '@/lib/mappers'
+import { setSmartProfile } from '@/store/features/smartProfileSlice'
 
 
 export const smartProfileApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        upsertSmartProfile: builder.mutation<any, Partial<SmartProfileState & { section: SmartProfileSection }>>({
+        getMasterSmartProfile: builder.query<FullSmartProfile | null, void>({
+            query: () => ({
+                url: "/smartProfile",
+                method: "GET",
+            }),
+            transformResponse: (response: BackendSmartProfile | null) => mapBackendToFrontendSmartProfile(response),
+            async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log("action.payload from onQueryStarted:", data);
+                    if (data) {
+                        dispatch(setSmartProfile(data));
+                    }
+                } catch (error) {
+                    console.error("Error fetching master smart profile", error);
+                }
+            }
+        }),
+        upsertSmartProfile: builder.mutation<any, UpsertSmartProfilePayload>({
             async queryFn(profileData, { getState }, _extraOptions, baseQuery) {
+                const { stepData, section } = profileData;
                 const state = getState() as RootState;
-                const smartProfileId = state.smartProfile.smartProfileId;
+                const profileId = state.smartProfile.profileId;
 
                 const result = await baseQuery({
                     url: "/smartProfile",
                     method: "PATCH",
                     body: {
-                        ...profileData,
-                        smartProfileId,
+                        stepData,
+                        section,
+                        profileId,
                     },
                 });
 
@@ -26,7 +48,6 @@ export const smartProfileApi = api.injectEndpoints({
 });
 
 export const {
-    useUpsertSmartProfileMutation
+    useUpsertSmartProfileMutation,
+    useGetMasterSmartProfileQuery,
 } = smartProfileApi;
-
-

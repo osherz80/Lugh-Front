@@ -4,9 +4,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { personaSchema, PersonaSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileSectionKey, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
+import { Persona } from '@/store/types/smartProfile';
 
 export const useStep5Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
@@ -43,9 +44,9 @@ export const useStep5Modal = (isOpen: boolean) => {
     }
   };
 
-  const onSubmit = async (data: PersonaSchema, close: () => void) => {
-    await upsertSmartProfile({ ...data, section: PROFILE_SECTIONS.PERSONA });
-    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.PERSONA, value: data }));
+  const onSubmit = async (stepData: Persona, close: () => void) => {
+    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.PERSONA });
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.PERSONA, value: stepData }));
     dispatch(setSmartProfileStep(6));
     close();
   };

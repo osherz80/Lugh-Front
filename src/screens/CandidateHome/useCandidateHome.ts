@@ -1,11 +1,13 @@
 import { useAppSelector } from "@/store/hooks";
 import { useLazyGetCandidateCVsQuery } from "@/store/services/api/cv";
+import { useGetMasterSmartProfileQuery } from "@/store/services/api/smartProfile";
 import { useLayoutEffect } from "react";
 
 export const useCandidateHome = () => {
 
     const user = useAppSelector((state) => state.auth.user);
     const [getCandidateCVs, { data: cvs, error, isLoading }] = useLazyGetCandidateCVsQuery();
+    const { data: smartProfile, isLoading: isSmartProfileLoading } = useGetMasterSmartProfileQuery();
 
 
     useLayoutEffect(() => {

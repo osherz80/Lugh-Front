@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { basicsSchema, BasicsSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileSectionKey, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
 
@@ -25,10 +25,10 @@ export const useStep1Modal = (isOpen: boolean) => {
     }
   }, [isOpen, reset, basics]);
 
-  const onSubmit = async (data: BasicsSchema, close: () => void) => {
-    await upsertSmartProfile({ ...data, section: PROFILE_SECTIONS.BASICS });
-    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.BASICS, value: data }));
+  const onSubmit = async (stepData: BasicsSchema, close: () => void) => {
+    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.BASICS });
     dispatch(setSmartProfileStep(2));
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.BASICS, value: stepData }));
     close();
   };
 

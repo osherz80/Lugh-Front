@@ -34,7 +34,7 @@ const Step3Modal = ({ isOpen, onOpenChange, icon }: Step3ModalProps) => {
       stepNumber={3}
     >
       {({ close }) => (
-        <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
+        <form onSubmit={handleSubmit((data) => onSubmit(data.experience, close))} className="flex flex-col h-full">
           <StepModalHeader
             icon={icon}
             title="Let's build your professional story, step-by-step."

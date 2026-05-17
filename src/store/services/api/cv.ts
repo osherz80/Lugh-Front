@@ -1,6 +1,6 @@
 import { api } from '@/store/services/api/api'
 import { saveCvs } from '@/store/services/handlers/cvHandler'
-import { SmartProfileState } from '@/store/types/smartProfile'
+import { FullSmartProfile } from '@/store/types/smartProfile'
 import { CV } from '@/store/types/cv'
 
 export const cvApi = api.injectEndpoints({
@@ -24,7 +24,7 @@ export const cvApi = api.injectEndpoints({
             }),
             onQueryStarted: saveCvs,
         }),
-        createSmartProfile: builder.mutation<any, SmartProfileState>({
+        createSmartProfile: builder.mutation<any, FullSmartProfile>({
             query: (profileData) => ({
                 url: "/cv/smart-profile",
                 method: "POST",

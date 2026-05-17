@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { skillsSchema, SkillsSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileSectionKey, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
 
@@ -50,15 +50,15 @@ export const useStep2Modal = (isOpen: boolean) => {
     );
   };
 
-  const onSubmit = async (data: SkillsSchema, close: () => void) => {
+  const onSubmit = async (stepData: SkillsSchema, close: () => void) => {
     // Only save the skills that are currently selected
     const filteredSkills: SkillsSchema = {};
     selectedSkillNames.forEach(name => {
-      filteredSkills[name] = data[name] || "";
+      filteredSkills[name] = stepData[name] || "";
     });
 
-    await upsertSmartProfile({ ...data, section: PROFILE_SECTIONS.SKILLS });
-    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.SKILLS, value: filteredSkills }));
+    await upsertSmartProfile({ stepData: filteredSkills, section: PROFILE_SECTIONS.SKILLS });
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.SKILLS, value: filteredSkills }));
     dispatch(setSmartProfileStep(3));
     close();
   };

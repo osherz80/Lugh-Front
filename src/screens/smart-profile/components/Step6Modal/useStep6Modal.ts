@@ -4,9 +4,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactSchema, ContactSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
-import { setSmartProfileData, setSmartProfileStep } from '@/store/features/smartProfileSlice';
+import { setSmartProfileSectionKey, setSmartProfileStep } from '@/store/features/smartProfileSlice';
 import { PROFILE_SECTIONS } from '@/common/consts';
 import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
+import { Contact } from '@/store/types/smartProfile';
 
 export const useStep6Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
@@ -24,9 +25,9 @@ export const useStep6Modal = (isOpen: boolean) => {
     }
   }, [isOpen, reset, contact]);
 
-  const onSubmit = async (data: ContactSchema, close: () => void) => {
-    await upsertSmartProfile({ ...data, section: PROFILE_SECTIONS.CONTACT });
-    dispatch(setSmartProfileData({ key: PROFILE_SECTIONS.CONTACT, value: data }));
+  const onSubmit = async (stepData: Contact, close: () => void) => {
+    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.CONTACT });
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.CONTACT, value: stepData }));
     close();
   };
 

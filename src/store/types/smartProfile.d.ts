@@ -39,10 +39,9 @@ export type Persona = {
 export type Contact = {
     phone: string;
     email: string;
-    linkedin: string;
-    github: string;
-    portfolio: string;
-    anythingElse: string;
+    linkedin?: string;
+    portfolio?: string;
+    anythingElse?: string;
 }
 
 export type SmartProfile = {
@@ -54,7 +53,8 @@ export type SmartProfile = {
     [PROFILE_SECTIONS.CONTACT]: Contact;
 }
 
-export type SmartProfileSection = (typeof PROFILE_SECTIONS)[keyof typeof PROFILE_SECTIONS];
+export type SmartProfileSectionKey = (typeof PROFILE_SECTIONS)[keyof typeof PROFILE_SECTIONS];
+export type SmartProfileSection = SmartProfile[keyof SmartProfile];
 
 type OtherProfile = {
     profileId: string;
@@ -62,15 +62,49 @@ type OtherProfile = {
 }
 
 export type ProfileExtras = {
-    smartProfileId: string | null;
+    profileId: string | null;
     currentStep: number;
     isMaster: boolean;
     otherProfiles: OtherProfile[];
 }
 
-export type SmartProfileState = SmartProfile & ProfileExtras;
+export type FullSmartProfile = SmartProfile & ProfileExtras;
+
+export type BackendSmartProfile = {
+    profileId: string;
+    email: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    candidateId: string;
+    fullName: string | null;
+    targetRole: string | null;
+    yearsOfExperience: number | null;
+    country: string | null;
+    city: string | null;
+    skills: Record<string, string> | null;
+    persona: {
+        style: string[];
+        strengths: string[];
+        story: string;
+    } | null;
+    phone: string | null;
+    linkedin: string | null;
+    github: string | null;
+    portfolio: string | null;
+    anythingElse: string | null;
+    currentStep: number | null;
+    isMaster: boolean | null;
+    education: Education[];
+    experiences: JobExperience[];
+    otherProfiles?: OtherProfile[];
+}
 
 export type SmartProfilePayload = {
-    key: SmartProfileSection;
+    key: SmartProfileSectionKey;
     value: SmartProfile[keyof SmartProfile];
 };
+
+export type UpsertSmartProfilePayload = {
+    stepData: SmartProfileSection | SmartProfileSection[];
+    section: SmartProfileSectionKey;
+}

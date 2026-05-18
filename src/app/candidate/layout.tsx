@@ -10,7 +10,6 @@ export default function CandidateLayout({
   return (
     <div className="relative min-h-screen bg-canvas">
       <Sidebar />
-      <Header />
       {children}
     </div>
   );

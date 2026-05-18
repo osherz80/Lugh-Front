@@ -1,10 +1,8 @@
 "use client";
 
 import { ModeToggle } from "@/components/shared/ModeToggle/ModeToggle";
-import { useHeader } from "./useHeader";
 
-export const Header = () => {
-  const { } = useHeader();
+export const LandingHeader = () => {
   return (
     <header className="absolute top-0 left-0 w-full z-50 py-4 px-8 flex justify-center bg-transparent shadow-lugh-blur">
       <div className="w-full flex items-center justify-between">

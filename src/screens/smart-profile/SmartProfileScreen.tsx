@@ -114,7 +114,7 @@ export const SmartProfileScreen = () => {
       <section
         ref={scrollRef}
         onWheel={handleWheel}
-        className="flex-grow overflow-x-auto no-scrollbar py-12 px-20 flex items-center"
+        className="flex-grow no-scrollbar py-12 px-20 flex items-center"
       >
         <div className="flex items-center min-w-max pr-40 h-full">
           {/* Start Node */}

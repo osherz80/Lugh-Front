@@ -6,6 +6,7 @@ import { StartNode } from "./components/StartNode/StartNode";
 import { StepCard } from "./components/StepCard/StepCard";
 import { useSmartProfile } from "./useSmartProfile";
 import dynamic from "next/dynamic";
+import { ActiveProfileDropdown } from "./components/ActiveProfileDropdown/ActiveProfileDropdown";
 
 export interface StepData {
   id: number;
@@ -110,11 +111,25 @@ export const SmartProfileScreen = () => {
   ];
 
   return (
-    <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden bg-[#F8FAFC]">
+    <main className="ml-[16.25rem] flex flex-col h-screen overflow-hidden bg-[#F8FAFC]">
+      {/* Header Area */}
+      <header className="px-20 mt-5 h-[20%] flex flex-row items-center justify-between shrink-0">
+        <div className="space-y-2">
+          <h1 className="text-4xl font-black text-[#1e293b] tracking-tight">Build Your Identity</h1>
+          <p className="text-[#64748b] text-base font-medium max-w-[500px] leading-relaxed">
+            Curate different versions of your career narrative for specific roles while keeping your core facts synchronized.
+          </p>
+        </div>
+        <div>
+          <ActiveProfileDropdown />
+        </div>
+      </header>
+
+      {/* Steps Horizontal Scroll */}
       <section
         ref={scrollRef}
         onWheel={handleWheel}
-        className="flex-grow no-scrollbar py-12 px-20 flex items-center"
+        className="h-[80%] overflow-x-auto overflow-y-hidden no-scrollbar px-20 flex items-center"
       >
         <div className="flex items-center min-w-max pr-40 h-full">
           {/* Start Node */}

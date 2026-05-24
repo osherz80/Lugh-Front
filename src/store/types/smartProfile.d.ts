@@ -56,9 +56,9 @@ export type SmartProfile = {
 export type SmartProfileSectionKey = (typeof PROFILE_SECTIONS)[keyof typeof PROFILE_SECTIONS];
 export type SmartProfileSection = SmartProfile[keyof SmartProfile];
 
-type OtherProfile = {
+export type OtherProfile = {
     profileId: string;
-    profileName: string;
+    targetRole: string;
 }
 
 export type ProfileExtras = {

@@ -64,10 +64,10 @@ jobs:
               cd $TARGET_DIR
             else
               cd $TARGET_DIR
-              git fetch origin development
-              git reset --hard origin/development
-              git clean -fd
             fi
+            git fetch origin ${{ github.ref_name }}
+            git checkout -f -B ${{ github.ref_name }} origin/${{ github.ref_name }}
+            git clean -fd
 
             echo "Building Docker image..."
             docker build --no-cache \

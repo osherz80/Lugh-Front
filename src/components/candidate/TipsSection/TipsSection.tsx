@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CVTip } from '@/store/types/types';
+import { CVTip } from '@/store/types/cv';
 import { TipCard } from './TipCard';
 
 interface TipsSectionProps {

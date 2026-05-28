@@ -1,5 +1,5 @@
 import React from 'react';
-import { CVTip } from '@/store/types/types';
+import { CVTip } from '@/store/types/cv';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface TipCardProps {

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - development
-      - smart-profile-e2e
   workflow_dispatch:
 
 jobs:

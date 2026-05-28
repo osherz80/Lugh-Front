@@ -52,9 +52,9 @@ export const useStep2Modal = (isOpen: boolean) => {
   };
 
   const onSubmit = async (stepData: Skills, close: () => void) => {
-    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.SKILLS });
-    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.SKILLS, value: stepData }));
     dispatch(setSmartProfileStep(3));
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.SKILLS, value: stepData }));
+    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.SKILLS });
     close();
   };
 

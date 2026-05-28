@@ -59,7 +59,7 @@ export type SmartProfileSection = SmartProfile[keyof SmartProfile];
 export type OtherProfile = {
     profileId: string;
     targetRole: string;
-}
+} | Exclude<FullSmartProfile, "otherProfiles">;
 
 export type ProfileExtras = {
     profileId: string | null;

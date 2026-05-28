@@ -45,9 +45,9 @@ export const useStep5Modal = (isOpen: boolean) => {
   };
 
   const onSubmit = async (stepData: Persona, close: () => void) => {
-    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.PERSONA });
-    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.PERSONA, value: stepData }));
     dispatch(setSmartProfileStep(6));
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.PERSONA, value: stepData }));
+    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.PERSONA });
     close();
   };
 

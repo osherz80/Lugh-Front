@@ -2,7 +2,7 @@ import { api } from '@/store/services/api/api'
 import { SmartProfileSectionKey, FullSmartProfile, BackendSmartProfile, SmartProfileSection, UpsertSmartProfilePayload } from '@/store/types/smartProfile'
 import { RootState } from '@/store/store'
 import { mapBackendToFrontendSmartProfile } from '@/lib/mappers'
-import { setSmartProfile } from '@/store/features/smartProfileSlice'
+import { setOtherProfiles, setSmartProfile } from '@/store/features/smartProfileSlice'
 
 
 export const smartProfileApi = api.injectEndpoints({
@@ -25,6 +25,18 @@ export const smartProfileApi = api.injectEndpoints({
                 }
             }
         }),
+        getOtherSmartProfiles: builder.query<FullSmartProfile[], void>({
+            query: () => ({
+                url: "/smartProfile/other",
+                method: "GET",
+            }),
+            transformResponse: (response: BackendSmartProfile[] | null): FullSmartProfile[] => {
+                if (!response) return [];
+                return response
+                    .map(mapBackendToFrontendSmartProfile)
+                    .filter((p): p is FullSmartProfile => p !== null);
+            }
+        }),
         upsertSmartProfile: builder.mutation<any, UpsertSmartProfilePayload>({
             async queryFn(profileData, { getState }, _extraOptions, baseQuery) {
                 const { stepData, section } = profileData;
@@ -44,10 +56,19 @@ export const smartProfileApi = api.injectEndpoints({
                 return result.data ? { data: result.data } : { error: result.error };
             }
         }),
+        setMaster: builder.mutation<any, { profileId: string }>({
+            query: ({ profileId }) => ({
+                url: "/smartProfile/setMaster",
+                method: "PATCH",
+                body: { profileId },
+            }),
+        }),
     }),
 });
 
 export const {
     useUpsertSmartProfileMutation,
     useGetMasterSmartProfileQuery,
+    useGetOtherSmartProfilesQuery,
+    useSetMasterMutation
 } = smartProfileApi;

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, current } from "@reduxjs/toolkit";
 import { FullSmartProfile, SmartProfilePayload, OtherProfile } from "@/store/types/smartProfile";
 import { smartProfileApi } from "../services/api/smartProfile";
 
@@ -54,10 +54,52 @@ export const smartProfileSlice = createSlice({
         setSmartProfileMaster: (state, action: PayloadAction<boolean>) => {
             state.isMaster = action.payload;
         },
+        switchActiveProfile: (state, action: PayloadAction<string>) => {
+            const targetId = action.payload;
+            const chosenProfile = state.otherProfiles.find(p => p.profileId === targetId);
+            if (!chosenProfile) return;
 
+            const currentState = current(state);
+            const { otherProfiles, ...currentProfileWithoutOthers } = currentState;
+            const shouldAdd = currentProfileWithoutOthers.profileId !== null;
+
+            const remainingOthers = otherProfiles.filter(p => p.profileId !== targetId);
+            const newOtherProfiles = shouldAdd
+                ? [currentProfileWithoutOthers, ...remainingOthers]
+                : remainingOthers;
+
+            return {
+                ...chosenProfile,
+                otherProfiles: newOtherProfiles
+            } as FullSmartProfile;
+        },
+        addActiveProfileToOthers: (state) => {
+            const currentState = current(state);
+            const { otherProfiles, ...currentProfileWithoutOthers } = currentState;
+            const newOtherProfiles = [
+                currentProfileWithoutOthers,
+                ...otherProfiles,
+            ];
+
+            return {
+                ...initialState,
+                otherProfiles: newOtherProfiles,
+                currentStep: 1,
+            } as FullSmartProfile;
+        },
+        resetCurrentProfile: (state) => {
+            return {
+                ...initialState,
+                otherProfiles: state.otherProfiles,
+            };
+        },
         reset: () => initialState,
     },
     extraReducers: (builder) => {
+        builder.addMatcher(smartProfileApi.endpoints.getOtherSmartProfiles.matchFulfilled, (state, action) => {
+            console.log("action-others", action.payload);
+            state.otherProfiles = action.payload;
+        });
         builder.addMatcher(smartProfileApi.endpoints.upsertSmartProfile.matchFulfilled, (state, action) => {
             console.log("action", action.payload);
             return action.payload;
@@ -68,9 +110,13 @@ export const smartProfileSlice = createSlice({
 export const {
     setSmartProfile,
     setSmartProfileSectionKey,
-    setSmartProfileStep,
+    setOtherProfiles,
     setprofileId,
+    setSmartProfileStep,
     setSmartProfileMaster,
+    switchActiveProfile,
+    addActiveProfileToOthers,
+    resetCurrentProfile,
     reset
 } = smartProfileSlice.actions;
 

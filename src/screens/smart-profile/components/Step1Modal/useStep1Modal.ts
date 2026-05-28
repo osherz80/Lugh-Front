@@ -26,9 +26,9 @@ export const useStep1Modal = (isOpen: boolean) => {
   }, [isOpen, reset, basics]);
 
   const onSubmit = async (stepData: BasicsSchema, close: () => void) => {
-    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.BASICS });
     dispatch(setSmartProfileStep(2));
     dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.BASICS, value: stepData }));
+    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.BASICS });
     close();
   };
 

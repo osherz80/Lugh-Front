@@ -1,61 +1,80 @@
-import { useRef, useState } from "react";
+import { useReducer, useRef } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { useCreateSmartProfileMutation } from "@/store/services/api/cv";
+
+type ModalState = {
+    activeStep: number | null;
+};
+
+type ModalAction =
+    | { type: "OPEN_STEP"; step: number; maxAllowedStep: number }
+    | { type: "CLOSE_MODAL" };
+
+const modalReducer = (state: ModalState, action: ModalAction): ModalState => {
+    switch (action.type) {
+        case "OPEN_STEP":
+            if (action.step <= action.maxAllowedStep) {
+                return { activeStep: action.step };
+            }
+            return state;
+        case "CLOSE_MODAL":
+            return { activeStep: null };
+        default:
+            return state;
+    }
+};
+
+const initialState: ModalState = {
+    activeStep: null,
+};
 
 export const useSmartProfile = () => {
-    const [isStep1ModalOpen, setIsStep1ModalOpen] = useState(false);
-    const [isStep2ModalOpen, setIsStep2ModalOpen] = useState(false);
-    const [isStep3ModalOpen, setIsStep3ModalOpen] = useState(false);
-    const [isStep4ModalOpen, setIsStep4ModalOpen] = useState(false);
-    const [isStep5ModalOpen, setIsStep5ModalOpen] = useState(false);
-    const [isStep6ModalOpen, setIsStep6ModalOpen] = useState(false);
+    const profileData = useSelector((state: RootState) => state.smartProfile);
+    const [createSmartProfile, { isLoading: isSending }] = useCreateSmartProfileMutation();
+
+    const [state, dispatch] = useReducer(modalReducer, initialState);
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const handleWheel = (e: React.WheelEvent) => {
         if (scrollRef.current) {
-            // Direct scrollLeft modification for smooth horizontal scrolling with mouse wheel
-            // Multiplied by 1.5 to increase scroll speed as requested
             scrollRef.current.scrollLeft += e.deltaY * 0.8;
         }
     };
 
-    const openStep1Modal = () => setIsStep1ModalOpen(true);
-    const closeStep1Modal = () => setIsStep1ModalOpen(false);
+    const openStep = (stepNumber: number) => {
+        dispatch({
+            type: "OPEN_STEP",
+            step: stepNumber,
+            maxAllowedStep: profileData.currentStep,
+        });
+    };
 
-    const openStep2Modal = () => setIsStep2ModalOpen(true);
-    const closeStep2Modal = () => setIsStep2ModalOpen(false);
+    const closeModal = () => {
+        dispatch({ type: "CLOSE_MODAL" });
+    };
 
-    const openStep3Modal = () => setIsStep3ModalOpen(true);
-    const closeStep3Modal = () => setIsStep3ModalOpen(false);
-
-    const openStep4Modal = () => setIsStep4ModalOpen(true);
-    const closeStep4Modal = () => setIsStep4ModalOpen(false);
-
-    const openStep5Modal = () => setIsStep5ModalOpen(true);
-    const closeStep5Modal = () => setIsStep5ModalOpen(false);
-
-    const openStep6Modal = () => setIsStep6ModalOpen(true);
-    const closeStep6Modal = () => setIsStep6ModalOpen(false);
+    const handleSend = async () => {
+        try {
+            await createSmartProfile(profileData).unwrap();
+            alert("Profile sent successfully!");
+        } catch (err) {
+            console.error("Failed to send profile:", err);
+            alert("Failed to send profile. Please try again.");
+        }
+    };
 
     return {
         scrollRef,
         handleWheel,
-        isStep1ModalOpen,
-        openStep1Modal,
-        closeStep1Modal,
-        isStep2ModalOpen,
-        openStep2Modal,
-        closeStep2Modal,
-        isStep3ModalOpen,
-        openStep3Modal,
-        closeStep3Modal,
-        isStep4ModalOpen,
-        openStep4Modal,
-        closeStep4Modal,
-        isStep5ModalOpen,
-        openStep5Modal,
-        closeStep5Modal,
-        isStep6ModalOpen,
-        openStep6Modal,
-        closeStep6Modal,
+        activeStep: state.activeStep,
+        currentStep: profileData.currentStep,
+        openStep,
+        closeModal,
+        handleSend,
+        isSending,
     };
 };
+
+

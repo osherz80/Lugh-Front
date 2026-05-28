@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import appReducer from "@/store/features/appSlice";
 import authReducer from "@/store/features/authSlice";
 import cvReducer from "@/store/features/cvSlice";
+import smartProfileReducer from "@/store/features/smartProfileSlice";
 import { api } from "@/store/services/api/api";
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
     cv: cvReducer,
+    smartProfile: smartProfileReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>

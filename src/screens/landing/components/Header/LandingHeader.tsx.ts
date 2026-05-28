@@ -1,6 +1,6 @@
 /**
  * useHeader Hook
  */
-export const useHeader = () => {
+export const useLandingHeader = () => {
   return {};
 };

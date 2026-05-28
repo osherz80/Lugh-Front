@@ -1,4 +1,4 @@
-import { CV } from "@/store/services/types/types";
+import { CV } from "@/store/types/types";
 import { DonutChart } from "@/components/shared/DonutChart/DonutChart";
 import { CVSkeleton } from "@/components/candidate/ResumeLab/CVCard/CVSkeleton";
 import { Tag } from "@/components/shared/Tag/Tag";

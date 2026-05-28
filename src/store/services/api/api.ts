@@ -1,4 +1,3 @@
-import { FullUser, User, UserRes } from "@/common/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
@@ -19,5 +18,5 @@ export const api = createApi({
       return headers;
     },
   }),
-  endpoints: (builder) => ({}),
+  endpoints: () => ({}),
 });

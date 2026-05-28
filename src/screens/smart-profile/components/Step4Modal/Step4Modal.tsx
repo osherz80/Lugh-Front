@@ -1,27 +1,26 @@
-"use client";
-
-import React from 'react';
 import { Button } from 'react-aria-components';
 import { Plus, Trash2, Lightbulb } from 'lucide-react';
 import { StepModal } from '../StepModal/StepModal';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
 import { EducationStation } from '../EducationStation/EducationStation';
+import { useStep4Modal } from './useStep4Modal';
 
 interface Step4ModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  icon: string;
 }
 
-const Step4Modal = ({ isOpen, onOpenChange }: Step4ModalProps) => {
-  const [educations, setEducations] = React.useState([0]);
-
-  const addEducation = () => {
-    setEducations(prev => [...prev, Math.max(...prev, -1) + 1]);
-  };
-
-  const removeEducation = (id: number) => {
-    setEducations(prev => prev.filter(e => e !== id));
-  };
+const Step4Modal = ({ isOpen, onOpenChange, icon }: Step4ModalProps) => {
+  const {
+    control,
+    handleSubmit,
+    errors,
+    onSubmit,
+    fields,
+    addEducation,
+    removeEducation,
+  } = useStep4Modal(isOpen);
 
   return (
     <StepModal
@@ -30,26 +29,26 @@ const Step4Modal = ({ isOpen, onOpenChange }: Step4ModalProps) => {
       stepNumber={4}
     >
       {({ close }) => (
-        <>
+        <form onSubmit={handleSubmit((data) => onSubmit(data.education, close))} className="flex flex-col h-full">
           <StepModalHeader
-            icon="👋"
+            icon={icon}
             title="Where did you gain your expertise?"
             subTitle="Academic degrees, certifications, or even self-taught paths—it all counts."
           />
 
           <div className="space-y-12 mb-10">
-            {educations.map((id, index) => (
-              <div key={id} className={`relative ${index > 0 ? "pt-12 border-t-2 border-dashed border-slate-100 mt-12" : ""}`}>
+            {fields.map((field, index) => (
+              <div key={field.id} className={`relative ${index > 0 ? "pt-12 border-t-2 border-dashed border-slate-100 mt-12" : ""}`}>
                 {index > 0 && (
                   <Button
-                    onPress={() => removeEducation(id)}
+                    onPress={() => removeEducation(index)}
                     className="absolute top-8 right-0 flex items-center justify-center w-10 h-10 rounded-2xl bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all outline-none cursor-pointer border border-slate-100 hover:border-red-100 shadow-sm z-10 group"
                     aria-label="Delete education"
                   >
                     <Trash2 size={18} className="group-hover:scale-110 transition-transform" />
                   </Button>
                 )}
-                <EducationStation index={index} />
+                <EducationStation index={index} control={control} errors={errors} />
               </div>
             ))}
 
@@ -92,12 +91,13 @@ const Step4Modal = ({ isOpen, onOpenChange }: Step4ModalProps) => {
               Skip for now
             </Button>
             <Button
+              type="submit"
               className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
               Save & Continue to Work Persona
             </Button>
           </div>
-        </>
+        </form>
       )}
     </StepModal>
   );

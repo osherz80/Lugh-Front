@@ -1,6 +1,7 @@
 import { api } from '@/store/services/api/api'
-import { CV } from '@/store/services/types/types.d'
 import { saveCvs } from '@/store/services/handlers/cvHandler'
+import { FullSmartProfile } from '@/store/types/smartProfile'
+import { CV } from '@/store/types/cv'
 
 export const cvApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -23,10 +24,18 @@ export const cvApi = api.injectEndpoints({
             }),
             onQueryStarted: saveCvs,
         }),
+        createSmartProfile: builder.mutation<any, FullSmartProfile>({
+            query: (profileData) => ({
+                url: "/cv/smart-profile",
+                method: "POST",
+                body: profileData,
+            }),
+        }),
     }),
 });
 
 export const {
     useUploadCVMutation,
-    useLazyGetCandidateCVsQuery
+    useLazyGetCandidateCVsQuery,
+    useCreateSmartProfileMutation,
 } = cvApi;

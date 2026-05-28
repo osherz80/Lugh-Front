@@ -1,7 +1,7 @@
 import React from "react";
 import { ProgressBar } from "@/components/shared/ProgressBar/ProgressBar";
 import { ProgressLabel } from "@/components/shared/ProgressBar/ProgressLabel";
-import { CV } from '@/store/types/types'
+import { CV } from '@/store/types/cv'
 
 export function CVMetricsCard({ cv }: { cv: CV }) {
   return (

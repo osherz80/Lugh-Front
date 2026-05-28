@@ -1,5 +1,5 @@
 import React from "react";
-import { CV } from "@/store/types/types";
+import { CV } from "@/store/types/cv";
 import { CVCard } from "./CVCard/CVCard";
 
 interface CVListProps {

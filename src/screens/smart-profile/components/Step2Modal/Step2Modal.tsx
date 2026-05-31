@@ -29,6 +29,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
 
   const { contains } = useFilter({ sensitivity: 'base' });
   const [searchValue, setSearchValue] = useState('');
+
   const [customSkills, setCustomSkills] = useState<string[]>(() =>
     selectedSkillNames.filter((skill) => !UNIVERSAL_AUTOCOMPLETE_SKILLS.includes(skill))
   );

@@ -5,14 +5,29 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { skillsSchema, SkillsSchema } from '@/lib/schemas';
 import { RootState } from '@/store/store';
 import { setSmartProfileSectionKey, setSmartProfileStep } from '@/store/features/smartProfileSlice';
-import { PROFILE_SECTIONS } from '@/common/consts';
+import { PROFILE_SECTIONS, UNIVERSAL_AUTOCOMPLETE_SKILLS } from '@/common/consts';
 import { useUpsertSmartProfileMutation } from '@/store/services/api/smartProfile';
 import { Skills } from '@/store/types/smartProfile';
+
+const getCanonicalSkillName = (name: string): string => {
+  const match = UNIVERSAL_AUTOCOMPLETE_SKILLS.find(
+    (s) => s.toLowerCase() === name.toLowerCase()
+  );
+  return match || name;
+};
 
 export const useStep2Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
   const rawSkills = useSelector((state: RootState) => state.smartProfile.skills);
-  const skills = useMemo(() => rawSkills ?? {}, [rawSkills]);
+  const skills = useMemo(() => {
+    if (!rawSkills) return {};
+    const normalized: Record<string, string> = {};
+    for (const [key, value] of Object.entries(rawSkills)) {
+      const canonicalKey = getCanonicalSkillName(key);
+      normalized[canonicalKey] = value ?? "";
+    }
+    return normalized;
+  }, [rawSkills]);
   const [upsertSmartProfile, { isLoading: isUpserting }] = useUpsertSmartProfileMutation();
 
   const { control, handleSubmit, setValue, watch, getValues, reset, formState: { errors } } = useForm<SkillsSchema>({
@@ -20,26 +35,30 @@ export const useStep2Modal = (isOpen: boolean) => {
     defaultValues: skills,
   });
 
+  // Keep form values in sync with skills when skills change or modal opens
   useEffect(() => {
-    if (!isOpen) {
-      reset(skills);
-    }
-  }, [isOpen, reset, skills]);
+    reset(skills);
+  }, [skills, reset]);
 
   const [selectedSkillNames, setSelectedSkillNames] = useState<string[]>(Object.keys(skills));
   const [expandedSkills, setExpandedSkills] = useState<string[]>([]);
 
+  useEffect(() => {
+    setSelectedSkillNames(Object.keys(skills));
+  }, [skills]);
+
   const currentSkills = watch();
 
   const toggleSkill = (skillName: string) => {
-    if (selectedSkillNames.includes(skillName)) {
-      setSelectedSkillNames(prev => prev.filter(s => s !== skillName));
-      setExpandedSkills(prev => prev.filter(s => s !== skillName));
+    const canonicalName = getCanonicalSkillName(skillName);
+    if (selectedSkillNames.includes(canonicalName)) {
+      setSelectedSkillNames(prev => prev.filter(s => s !== canonicalName));
+      setExpandedSkills(prev => prev.filter(s => s !== canonicalName));
     } else {
-      setSelectedSkillNames(prev => [...prev, skillName]);
+      setSelectedSkillNames(prev => [...prev, canonicalName]);
       // If the skill doesn't exist in form state yet, initialize it
-      if (!(skillName in getValues())) {
-        setValue(skillName, "");
+      if (!(canonicalName in getValues())) {
+        setValue(canonicalName, "");
       }
     }
   };
@@ -52,10 +71,16 @@ export const useStep2Modal = (isOpen: boolean) => {
     );
   };
 
-  const onSubmit = async (stepData: Skills, close: () => void) => {
+  const onSubmit = async (stepData: SkillsSchema, close: () => void) => {
+    console.log('submitting');
+    // Filter stepData to only include currently selected skills and normalize null/undefined to ""
+    const filteredData: Skills = {};
+    for (const skillName of selectedSkillNames) {
+      filteredData[skillName] = stepData[skillName] ?? "";
+    }
     dispatch(setSmartProfileStep(3));
-    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.SKILLS, value: stepData }));
-    await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.SKILLS });
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.SKILLS, value: filteredData }));
+    await upsertSmartProfile({ stepData: filteredData, section: PROFILE_SECTIONS.SKILLS });
     close();
   };
 

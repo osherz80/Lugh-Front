@@ -12,7 +12,10 @@ export const basicsSchema = z.object({
   city: z.string().min(2, "City is required"),
 });
 
-export const skillsSchema = z.record(z.string(), z.string().max(600, "Description is too long"));
+export const skillsSchema = z.record(
+  z.string(),
+  z.string().max(600, "Description is too long").optional().nullable()
+);
 
 export type BasicsSchema = z.infer<typeof basicsSchema>;
 export type SkillsSchema = z.infer<typeof skillsSchema>;

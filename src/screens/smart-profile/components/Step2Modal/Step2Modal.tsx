@@ -6,6 +6,7 @@ import { Search, Sparkles } from 'lucide-react';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
 import { useStep2Modal } from './useStep2Modal';
 import { Controller } from 'react-hook-form';
+import { INITIAL_SKILLS_SUGGESTIONS } from '@/common/consts';
 
 interface Step2ModalProps {
   isOpen: boolean;
@@ -24,7 +25,6 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
     expandedSkills,
     toggleSkill,
     toggleExpand,
-    initialSkills,
   } = useStep2Modal(isOpen);
 
   return (
@@ -54,7 +54,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
 
           {/* Skills Chips */}
           <div className="flex flex-wrap gap-3 mb-12">
-            {initialSkills.map((skillName) => {
+            {INITIAL_SKILLS_SUGGESTIONS.filter(skill => !selectedSkillNames.includes(skill)).map((skillName) => {
               const isSelected = selectedSkillNames.includes(skillName);
               return (
                 <div
@@ -74,6 +74,26 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
             })}
           </div>
 
+          {/* My Skills Section */}
+          <div>
+            <Heading className="text-[#1e293b] font-[900] text-[20px] tracking-tight ml-1">My Skills</Heading>
+            {selectedSkillNames.length === 0 ? (
+              <p className="text-slate-500 italic">No skill was selected</p>
+            ) : (
+              <div className="flex flex-wrap gap-3 mt-5">
+                {selectedSkillNames.map((skillName) => (
+                  <div
+                    key={skillName}
+                    onClick={() => toggleSkill(skillName)}
+                    className="px-5 py-2.5 rounded-2xl bg-[#005c4d] text-white text-[14px] font-bold cursor-pointer hover:opacity-80"
+                  >
+                    [ {skillName} ]
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Adaptive Input Fields */}
           <AnimatePresence mode="popLayout">
             {selectedSkillNames.length > 0 && (
@@ -81,7 +101,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="space-y-6 mb-10"
+                className="space-y-6 mb-10 mt-10"
               >
                 <Heading className="text-[#1e293b] font-[900] text-[20px] tracking-tight ml-1">Adaptive Input Fields</Heading>
 

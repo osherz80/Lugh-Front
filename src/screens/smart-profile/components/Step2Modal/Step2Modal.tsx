@@ -30,12 +30,46 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
   const { contains } = useFilter({ sensitivity: 'base' });
   const [searchValue, setSearchValue] = useState('');
 
-  const availableSkills = UNIVERSAL_AUTOCOMPLETE_SKILLS.filter(
+  const [customSkills, setCustomSkills] = useState<string[]>(() =>
+    selectedSkillNames.filter((skill) => !UNIVERSAL_AUTOCOMPLETE_SKILLS.includes(skill))
+  );
+
+  const allUniversalSkills = [
+    ...UNIVERSAL_AUTOCOMPLETE_SKILLS,
+    ...customSkills
+  ];
+
+  const availableSkills = allUniversalSkills.filter(
     (skill) => !selectedSkillNames.includes(skill)
   );
 
+  const trimmedSearch = searchValue.trim();
+  const isSkillAlreadySelected = selectedSkillNames.some(
+    (skill) => skill.toLowerCase() === trimmedSearch.toLowerCase()
+  );
+  const existsInUniversal = allUniversalSkills.some(
+    (skill) => skill.toLowerCase() === trimmedSearch.toLowerCase()
+  );
+  const showAddOption = trimmedSearch.length > 0 && !isSkillAlreadySelected && !existsInUniversal;
+
+  const suggestions = availableSkills.map((skill) => ({ id: skill, name: skill }));
+  if (showAddOption) {
+    suggestions.push({
+      id: `add-custom-skill:${trimmedSearch}`,
+      name: `add - ${trimmedSearch}`
+    });
+  }
+
   const handleSkillSelect = (skillName: string) => {
-    toggleSkill(skillName);
+    if (skillName.startsWith('add-custom-skill:')) {
+      const customSkill = skillName.substring('add-custom-skill:'.length);
+      if (!customSkills.includes(customSkill)) {
+        setCustomSkills((prev) => [...prev, customSkill]);
+      }
+      toggleSkill(customSkill);
+    } else {
+      toggleSkill(skillName);
+    }
     setSearchValue('');
   };
 
@@ -75,7 +109,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
               {searchValue.length > 0 && (
                 <ListBox
                   aria-label="Skill suggestions"
-                  items={availableSkills.map((skill) => ({ id: skill, name: skill }))}
+                  items={suggestions}
                   onAction={(key) => handleSkillSelect(key as string)}
                   renderEmptyState={() => (
                     <div className="p-4 text-slate-400 text-center text-[14px]">No matching skills found.</div>

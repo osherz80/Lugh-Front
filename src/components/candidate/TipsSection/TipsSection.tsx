@@ -13,7 +13,7 @@ export function TipsSection({ tips }: TipsSectionProps) {
 
     return (
         <section className="space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Insights & Fixes</h3>
+            <h3 className="text-lg font-bold text-slate-900">Insights & Fixes</h3>
             <div className="space-y-3">
                 {tips.map((fix, index) => (
                     <TipCard

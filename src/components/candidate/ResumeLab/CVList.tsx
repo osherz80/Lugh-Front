@@ -12,10 +12,10 @@ export function CVList({ cvs, onCvClick, currentCvId }: CVListProps) {
   return (
     <>
       <header className="mb-10">
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
+        <h1 className="text-4xl font-bold text-slate-900 mb-3 tracking-tight">
           My Curated Assets
         </h1>
-        <p className="text-slate-500 dark:text-zinc-400 text-lg max-w-2xl leading-relaxed">
+        <p className="text-slate-500 text-lg max-w-2xl leading-relaxed">
           Manage your master record and its specialized variants. AI-powered matching
           ensures your CV speaks the language of every opportunity.
         </p>

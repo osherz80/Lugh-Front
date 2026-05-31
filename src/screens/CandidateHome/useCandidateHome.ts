@@ -13,7 +13,7 @@ export const useCandidateHome = () => {
 
     useEffect(() => {
         if (user?.hasCv && user?.id) {
-            getCandidateCVs(user.id);
+            getCandidateCVs();
         }
 
     }, [user?.id]);

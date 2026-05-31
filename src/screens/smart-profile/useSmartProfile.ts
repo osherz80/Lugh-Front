@@ -2,6 +2,7 @@ import { useReducer, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useCreateSmartProfileMutation } from "@/store/services/api/cv";
+import { useGenerateCvMutation } from "@/store/services/api/smartProfile";
 
 type ModalState = {
     activeStep: number | null;
@@ -31,7 +32,7 @@ const initialState: ModalState = {
 
 export const useSmartProfile = () => {
     const profileData = useSelector((state: RootState) => state.smartProfile);
-    const [createSmartProfile, { isLoading: isSending }] = useCreateSmartProfileMutation();
+    const [smartProfileToCv, { isLoading: isSending, data: cvData }] = useGenerateCvMutation();
 
     const [state, dispatch] = useReducer(modalReducer, initialState);
 
@@ -57,11 +58,11 @@ export const useSmartProfile = () => {
 
     const handleSend = async () => {
         try {
-            await createSmartProfile(profileData).unwrap();
-            alert("Profile sent successfully!");
+            profileData.profileId && await smartProfileToCv({ smartProfileId: profileData.profileId })
+            console.log("CV Data: ", cvData);
         } catch (err) {
             console.error("Failed to send profile:", err);
-            alert("Failed to send profile. Please try again.");
+            console.error("Failed to send profile. Please try again.");
         }
     };
 
@@ -77,4 +78,4 @@ export const useSmartProfile = () => {
     };
 };
 
-
+

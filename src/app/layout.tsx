@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lugh - Elite Talent Network",
+  title: "Lugh - Smarter. Better.",
   description: "Matching the best talent with the best opportunities.",
 };
 

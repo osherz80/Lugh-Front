@@ -4,7 +4,7 @@ import React from 'react';
 import {
   Button,
 } from 'react-aria-components';
-import { Sparkles, Plus, Trash2 } from 'lucide-react';
+import { Sparkles, Plus, Trash2, Loader2 } from 'lucide-react';
 import { StepModal } from '../StepModal/StepModal';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
 import { CareerStation } from '../CareerStation/CareerStation';
@@ -24,7 +24,9 @@ const Step3Modal = ({ isOpen, onOpenChange, icon }: Step3ModalProps) => {
     onSubmit,
     fields,
     addExperience,
-    removeExperience,
+    handleRemoveExperience,
+    isDeleting,
+    deletingIndex,
   } = useStep3Modal(isOpen);
 
   return (
@@ -44,15 +46,20 @@ const Step3Modal = ({ isOpen, onOpenChange, icon }: Step3ModalProps) => {
           {/* Form Fields */}
           <div className="space-y-12 mb-10">
             {fields.map((field, index) => (
-              <div key={field.id} className={`relative ${index > 0 ? "pt-12 border-t-2 border-dashed border-slate-100 mt-12" : ""}`}>
+              <div key={field.id || index} className={`relative ${index > 0 ? "pt-12 border-t-2 border-dashed border-slate-100 mt-12" : ""}`}>
                 {index > 0 && (
                   <>
                     <Button
-                      onPress={() => removeExperience(index)}
+                      onPress={() => handleRemoveExperience(index)}
                       className="absolute top-8 right-0 flex items-center justify-center w-10 h-10 rounded-2xl bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all outline-none cursor-pointer border border-slate-100 hover:border-red-100 shadow-sm z-10 group"
                       aria-label="Delete station"
+                      isDisabled={deletingIndex !== null}
                     >
-                      <Trash2 size={18} className="group-hover:scale-110 transition-transform" />
+                      {deletingIndex === index ? (
+                        <Loader2 size={18} className="animate-spin text-red-500" />
+                      ) : (
+                        <Trash2 size={18} className="group-hover:scale-110 transition-transform" />
+                      )}
                     </Button>
                   </>
                 )}

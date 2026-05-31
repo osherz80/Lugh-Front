@@ -5,11 +5,10 @@ import { CV } from '@/store/types/cv'
 
 export const cvApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        uploadCV: builder.mutation<any, { file: Blob | File; userId: string }>({
-            query: ({ file, userId }) => {
+        uploadCV: builder.mutation<any, { file: Blob | File }>({
+            query: ({ file }) => {
                 const formData = new FormData();
                 formData.append("file", file);
-                formData.append("userId", userId);
                 return {
                     url: "/cv/upload",
                     method: "POST",
@@ -17,9 +16,9 @@ export const cvApi = api.injectEndpoints({
                 };
             },
         }),
-        getCandidateCVs: builder.query<CV[], string>({
-            query: (userId) => ({
-                url: `/cv/${userId}`,
+        getCandidateCVs: builder.query<CV[], void>({
+            query: () => ({
+                url: `/cv`,
                 method: "GET",
             }),
             onQueryStarted: saveCvs,

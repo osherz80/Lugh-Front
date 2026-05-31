@@ -58,15 +58,6 @@ export const useStep2Modal = (isOpen: boolean) => {
     close();
   };
 
-  const initialSkills = [
-    'Project Management',
-    'Marketing Strategy',
-    'Figma',
-    'Data Analysis',
-    'AWS',
-    'React',
-  ];
-
   return {
     control,
     handleSubmit,
@@ -77,7 +68,6 @@ export const useStep2Modal = (isOpen: boolean) => {
     expandedSkills,
     toggleSkill,
     toggleExpand,
-    initialSkills,
     isUpserting
   };
 };

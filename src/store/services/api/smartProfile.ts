@@ -63,6 +63,24 @@ export const smartProfileApi = api.injectEndpoints({
                 body: { profileId },
             }),
         }),
+        generateCv: builder.mutation<any, { smartProfileId: string }>({
+            query: ({ smartProfileId }) => ({
+                url: `/smartProfile/cv/${smartProfileId}`,
+                method: "POST",
+            }),
+        }),
+        deleteExperience: builder.mutation<any, { experienceId: string }>({
+            query: ({ experienceId }) => ({
+                url: `/smartProfile/experience/${experienceId}`,
+                method: "DELETE",
+            }),
+        }),
+        deleteEducation: builder.mutation<any, { educationId: string }>({
+            query: ({ educationId }) => ({
+                url: `/smartProfile/education/${educationId}`,
+                method: "DELETE",
+            }),
+        }),
     }),
 });
 
@@ -70,5 +88,8 @@ export const {
     useUpsertSmartProfileMutation,
     useGetMasterSmartProfileQuery,
     useGetOtherSmartProfilesQuery,
-    useSetMasterMutation
+    useSetMasterMutation,
+    useGenerateCvMutation,
+    useDeleteExperienceMutation,
+    useDeleteEducationMutation
 } = smartProfileApi;

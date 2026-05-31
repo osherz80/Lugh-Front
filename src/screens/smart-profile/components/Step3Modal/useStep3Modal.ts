@@ -84,9 +84,9 @@ export const useStep3Modal = (isOpen: boolean) => {
   };
 
   const onSubmit = async (stepData: JobExperience[], close: () => void) => {
-    dispatch(setSmartProfileStep(4));
-    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.EXPERIENCE, value: stepData }));
     await upsertSmartProfile({ stepData, section: PROFILE_SECTIONS.EXPERIENCE });
+    dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.EXPERIENCE, value: stepData }));
+    dispatch(setSmartProfileStep(4));
     close();
   };
 

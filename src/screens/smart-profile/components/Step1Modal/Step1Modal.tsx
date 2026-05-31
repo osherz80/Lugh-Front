@@ -7,7 +7,7 @@ import {
   Button,
   FieldError
 } from 'react-aria-components';
-import { Sparkles } from 'lucide-react';
+import { Loader2, Sparkles } from 'lucide-react';
 import { StepModal } from '../StepModal/StepModal';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
 import { Controller } from 'react-hook-form';
@@ -20,7 +20,7 @@ interface Step1ModalProps {
 }
 
 const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
-  const { control, handleSubmit, errors, onSubmit } = useStep1Modal(isOpen);
+  const { control, handleSubmit, errors, onSubmit, isUpserting } = useStep1Modal(isOpen);
 
   return (
     <StepModal
@@ -30,7 +30,7 @@ const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
     >
       {({ close }) => (
         <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
-          <StepModalHeader 
+          <StepModalHeader
             icon={icon}
             title="First, let's build your foundation."
             subTitle="This info will form the header of your smart resume."
@@ -43,7 +43,7 @@ const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
               name="fullName"
               control={control}
               render={({ field }) => (
-                <TextField 
+                <TextField
                   className="flex flex-col gap-2.5"
                   value={field.value}
                   onChange={field.onChange}
@@ -64,7 +64,7 @@ const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
               name="targetRole"
               control={control}
               render={({ field }) => (
-                <TextField 
+                <TextField
                   className="flex flex-col gap-2.5"
                   value={field.value}
                   onChange={field.onChange}
@@ -85,7 +85,7 @@ const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
               name="yearsOfExperience"
               control={control}
               render={({ field }) => (
-                <NumberField 
+                <NumberField
                   className="flex flex-col gap-2.5"
                   value={field.value}
                   onChange={field.onChange}
@@ -108,7 +108,7 @@ const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
                 name="country"
                 control={control}
                 render={({ field }) => (
-                  <TextField 
+                  <TextField
                     className="flex flex-col gap-2.5"
                     value={field.value}
                     onChange={field.onChange}
@@ -129,7 +129,7 @@ const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
                 name="city"
                 control={control}
                 render={({ field }) => (
-                  <TextField 
+                  <TextField
                     className="flex flex-col gap-2.5"
                     value={field.value}
                     onChange={field.onChange}
@@ -167,9 +167,10 @@ const Step1Modal = ({ isOpen, onOpenChange, icon }: Step1ModalProps) => {
             </Button>
             <Button
               type="submit"
-              className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
+              className="flex items-center gap-2 bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
               Save & Continue to Arsenal
+              {isUpserting && <Loader2 size={18} className="animate-spin text-green-500" />}
             </Button>
           </div>
         </form>

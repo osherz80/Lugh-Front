@@ -27,6 +27,7 @@ const Step3Modal = ({ isOpen, onOpenChange, icon }: Step3ModalProps) => {
     handleRemoveExperience,
     isDeleting,
     deletingIndex,
+    isUpserting
   } = useStep3Modal(isOpen);
 
   return (
@@ -99,9 +100,10 @@ const Step3Modal = ({ isOpen, onOpenChange, icon }: Step3ModalProps) => {
             </Button>
             <Button
               type="submit"
-              className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
+              className="flex items-center gap-2 bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
               Save & Continue to Education
+              {isUpserting && <Loader2 size={18} className="animate-spin text-green-500" />}
             </Button>
           </div>
         </form>

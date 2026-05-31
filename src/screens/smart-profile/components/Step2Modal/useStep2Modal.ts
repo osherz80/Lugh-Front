@@ -78,9 +78,9 @@ export const useStep2Modal = (isOpen: boolean) => {
     for (const skillName of selectedSkillNames) {
       filteredData[skillName] = stepData[skillName] ?? "";
     }
+    await upsertSmartProfile({ stepData: filteredData, section: PROFILE_SECTIONS.SKILLS });
     dispatch(setSmartProfileStep(3));
     dispatch(setSmartProfileSectionKey({ key: PROFILE_SECTIONS.SKILLS, value: filteredData }));
-    await upsertSmartProfile({ stepData: filteredData, section: PROFILE_SECTIONS.SKILLS });
     close();
   };
 

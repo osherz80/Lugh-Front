@@ -10,16 +10,16 @@ export const PROFILE_SECTIONS = {
 
 export const INITIAL_SKILLS_SUGGESTIONS = [
     "React", "Project Management", "Data Analysis", "Figma", "Python",
-    "SQL", "Digital Marketing", "Product Management", "Excel", "Node.js",
+    "SQL", "Digital Marketing", "Product Management", "Excel", "NodeJs",
     "Content Writing", "Sales", "AWS", "UI/UX Design", "Customer Success"
 ];
 
 export const UNIVERSAL_AUTOCOMPLETE_SKILLS = [
     ...INITIAL_SKILLS_SUGGESTIONS,
     // --- Software Engineering & Architecture ---
-    "React Native", "TypeScript", "JavaScript", "Java", "C#", ".NET", "C++",
-    "Go (Golang)", "Ruby on Rails", "PHP", "HTML5", "CSS3", "Angular", "Vue.js",
-    "Next.js", "NestJS", "Express.js", "Spring Boot", "Docker", "Kubernetes",
+    "React Native", "TypeScript", "JavaScript", "Java", "C#", "DotNet", "C++",
+    "Go (Golang)", "Ruby on Rails", "PHP", "HTML5", "CSS3", "Angular", "VueJs",
+    "NextJs", "NestJS", "ExpressJs", "Spring Boot", "Docker", "Kubernetes",
     "Azure", "Google Cloud Platform (GCP)", "CI/CD Pipelines", "Git", "GitHub",
     "Microservices", "REST APIs", "GraphQL",
 

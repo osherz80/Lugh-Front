@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StepModal } from '../StepModal/StepModal';
 import { Autocomplete, Button, Heading, Input, ListBox, ListBoxItem, SearchField, TextArea, TextField, FieldError, useFilter } from 'react-aria-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Search, Sparkles } from 'lucide-react';
+import { Loader2, Search, Sparkles } from 'lucide-react';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
 import { useStep2Modal } from './useStep2Modal';
 import { Controller } from 'react-hook-form';
@@ -25,6 +25,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
     expandedSkills,
     toggleSkill,
     toggleExpand,
+    isUpserting,
   } = useStep2Modal(isOpen);
 
   const { contains } = useFilter({ sensitivity: 'base' });
@@ -89,7 +90,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
       stepNumber={2}
     >
       {({ close }) => (
-        <form 
+        <form
           onSubmit={handleSubmit(
             (data) => {
               console.log('Form valid, data:', data);
@@ -98,7 +99,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
             (err) => {
               console.error('Form invalid, errors:', err);
             }
-          )} 
+          )}
           className="flex flex-col h-full"
         >
           <StepModalHeader
@@ -307,9 +308,10 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
             </Button>
             <Button
               type="submit"
-              className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
+              className="flex items-center gap-2 bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
-              Save & Continue to Arsenal
+              Save & Continue to Experience
+              {isUpserting && <Loader2 size={18} className="animate-spin text-green-500" />}
             </Button>
           </div>
         </form>

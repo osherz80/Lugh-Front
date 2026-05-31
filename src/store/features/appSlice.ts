@@ -4,10 +4,12 @@ export type AppMode = "candidate" | "recruiter";
 
 interface AppState {
   mode: AppMode;
+  shouldFetchProfile: boolean;
 }
 
 const initialState: AppState = {
   mode: "candidate",
+  shouldFetchProfile: true,
 };
 
 export const appSlice = createSlice({
@@ -17,8 +19,14 @@ export const appSlice = createSlice({
     setMode: (state, action: PayloadAction<AppMode>) => {
       state.mode = action.payload;
     },
+    setShouldFetchProfile: (state, action: PayloadAction<boolean>) => {
+      state.shouldFetchProfile = action.payload;
+    }
   },
 });
 
-export const { setMode } = appSlice.actions;
+export const {
+  setMode,
+  setShouldFetchProfile
+} = appSlice.actions;
 export default appSlice.reducer;

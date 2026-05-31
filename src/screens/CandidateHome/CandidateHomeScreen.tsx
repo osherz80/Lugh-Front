@@ -55,7 +55,7 @@ export const CandidateHomeScreen = () => {
   const { cvs, error, isLoading } = useCandidateHome();
 
   return (
-    <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden">
+    <main className="ml-[16.25rem] flex h-screen overflow-hidden">
       {/* Main Content Area - Only this part scrolls */}
       <section className="flex-grow overflow-y-auto px-8 py-12 space-y-6 no-scrollbar">
         {hasCV ? (

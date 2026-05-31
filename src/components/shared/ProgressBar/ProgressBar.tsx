@@ -38,7 +38,7 @@ export function ProgressBar({
               </span>
             )}
           </div>
-          <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden relative">
+          <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden relative">
             <div
               className={`absolute top-0 left-0 h-full rounded-full transition-all duration-500 ease-out ${barClassName}`}
               style={{ width: `${percentage}%` }}

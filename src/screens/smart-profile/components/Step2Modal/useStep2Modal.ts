@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,7 +11,8 @@ import { Skills } from '@/store/types/smartProfile';
 
 export const useStep2Modal = (isOpen: boolean) => {
   const dispatch = useDispatch();
-  const skills = useSelector((state: RootState) => state.smartProfile.skills);
+  const rawSkills = useSelector((state: RootState) => state.smartProfile.skills);
+  const skills = useMemo(() => rawSkills ?? {}, [rawSkills]);
   const [upsertSmartProfile, { isLoading: isUpserting }] = useUpsertSmartProfileMutation();
 
   const { control, handleSubmit, setValue, watch, getValues, reset, formState: { errors } } = useForm<SkillsSchema>({

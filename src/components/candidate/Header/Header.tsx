@@ -3,7 +3,7 @@ import React from "react";
 
 export function Header() {
   return (
-    <header className="fixed top-0 right-0 w-[calc(100%-16.25rem)] z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl flex justify-between items-center h-20 px-8 ml-[16.25rem]">
+    <header className="fixed top-0 right-0 w-[calc(100%-16.25rem)] z-40 bg-white/80 backdrop-blur-xl flex justify-between items-center h-20 px-8 ml-[16.25rem]">
       <div className="flex items-center gap-8 font-sans text-sm font-medium">
         <Link href="/candidate" className="text-brand font-bold border-b-2 border-brand pb-1">
           Dashboard

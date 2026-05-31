@@ -2,7 +2,8 @@ import { api } from '@/store/services/api/api'
 import { SmartProfileSectionKey, FullSmartProfile, BackendSmartProfile, SmartProfileSection, UpsertSmartProfilePayload } from '@/store/types/smartProfile'
 import { RootState } from '@/store/store'
 import { mapBackendToFrontendSmartProfile } from '@/lib/mappers'
-import { setOtherProfiles, setSmartProfile } from '@/store/features/smartProfileSlice'
+import { setSmartProfile } from '@/store/features/smartProfileSlice'
+import { setShouldFetchProfile } from '@/store/features/appSlice'
 
 
 export const smartProfileApi = api.injectEndpoints({
@@ -19,6 +20,7 @@ export const smartProfileApi = api.injectEndpoints({
                     console.log("action.payload from onQueryStarted:", data);
                     if (data) {
                         dispatch(setSmartProfile(data));
+                        dispatch(setShouldFetchProfile(false));
                     }
                 } catch (error) {
                     console.error("Error fetching master smart profile", error);

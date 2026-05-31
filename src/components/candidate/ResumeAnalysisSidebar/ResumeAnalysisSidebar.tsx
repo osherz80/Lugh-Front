@@ -12,13 +12,13 @@ import { TipsSection } from "../TipsSection/TipsSection";
 export function ResumeAnalysisSidebar({ cv }: ResumeAnalysisSidebarProps) {
   if (!cv) {
     return (
-      <aside className="w-[24rem] border-l border-zinc-200/50 bg-white dark:bg-slate-900/50 overflow-y-auto no-scrollbar hidden 2xl:block">
+      <aside className="w-[24rem] border-l border-zinc-200/50 bg-white overflow-y-auto no-scrollbar hidden lg:block">
         <div className="p-8 h-full flex flex-col items-center justify-center text-center space-y-4">
           <span className="material-symbols-outlined text-5xl text-slate-300">
             description
           </span>
           <div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">No CV Selected</h3>
+            <h3 className="text-lg font-bold text-slate-900">No CV Selected</h3>
             <p className="text-sm text-slate-500">Select a CV from your assets to see detailed analysis and insights.</p>
           </div>
         </div>
@@ -27,14 +27,14 @@ export function ResumeAnalysisSidebar({ cv }: ResumeAnalysisSidebarProps) {
   }
 
   return (
-    <aside className="w-[24rem] border-l border-zinc-200/50 bg-white dark:bg-slate-900/50 overflow-y-auto no-scrollbar hidden 2xl:block">
+    <aside className="w-[24rem] border-l border-zinc-200/50 bg-white overflow-y-auto no-scrollbar hidden lg:block">
       <div className="p-8 space-y-10">
         {/* Active Asset Info */}
         <section className="space-y-1">
-          <h2 className="text-sm font-semibold text-zinc-900 dark:text-white">
+          <h2 className="text-sm font-semibold text-zinc-900">
             {cv.roleTag}
           </h2>
-          <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+          <h3 className="text-2xl font-bold text-slate-900 tracking-tight">
             {cv.fileName}
           </h3>
         </section>

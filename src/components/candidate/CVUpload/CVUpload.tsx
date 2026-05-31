@@ -33,9 +33,9 @@ export function CVUpload() {
 
   const handleUpload = async () => {
     console.log('user', user)
-    if (!file || !userId) return;
+    if (!file) return;
     try {
-      await uploadCV({ file, userId }).unwrap();
+      await uploadCV({ file }).unwrap();
       setFile(null); // Clear after success
     } catch (err) {
       console.error("Upload failed:", err);

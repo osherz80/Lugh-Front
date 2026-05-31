@@ -16,11 +16,11 @@ export function AdaptationCard() {
     if (!files || files.length === 0) return;
 
     const file = files[0];
-    
+
     // Basic validation
     const allowedExtensions = [".pdf", ".docx"];
     const isAllowed = allowedExtensions.some(ext => file.name.toLowerCase().endsWith(ext));
-    
+
     if (!isAllowed) {
       alert("Please upload only PDF or DOCX files.");
       return;
@@ -33,9 +33,9 @@ export function AdaptationCard() {
     if (!selectedFile || !user?.id) return;
 
     try {
-      await uploadCV({ file: selectedFile, userId: user.id }).unwrap();
+      await uploadCV({ file: selectedFile }).unwrap();
       // Refetch CVs to update the list in ResumeLabScreen
-      refetchCvs(user.id);
+      refetchCvs();
       // Reset state on success
       setSelectedFile(null);
     } catch (error) {
@@ -64,13 +64,12 @@ export function AdaptationCard() {
     >
       {({ isDropTarget }) => (
         <div
-          className={`relative rounded-3xl p-10 border-2 border-dashed transition-all duration-300 flex flex-col items-center text-center h-full min-h-[420px] outline-none focus-visible:ring-2 focus-visible:ring-brand/50 ${
-            isDropTarget 
-              ? "border-brand bg-brand/10 shadow-2xl ring-4 ring-brand/10" 
-              : selectedFile 
-                ? "border-brand/40 bg-white shadow-md" 
+          className={`relative rounded-3xl p-10 border-2 border-dashed transition-all duration-300 flex flex-col items-center text-center h-full min-h-[420px] outline-none focus-visible:ring-2 focus-visible:ring-brand/50 ${isDropTarget
+              ? "border-brand bg-brand/10 shadow-2xl ring-4 ring-brand/10"
+              : selectedFile
+                ? "border-brand/40 bg-white shadow-md"
                 : "border-zinc-200/80 bg-surface-low hover:border-brand/40"
-          }`}
+            }`}
         >
           {/* Animated Background Pulse for Dragging */}
           <AnimatePresence>
@@ -87,17 +86,16 @@ export function AdaptationCard() {
 
           {/* Icon with animation */}
           <div className="h-24 flex items-center justify-center mb-2">
-            <motion.div 
-              animate={{ 
+            <motion.div
+              animate={{
                 scale: isDropTarget || selectedFile ? 1.25 : 1,
                 rotate: isDropTarget ? [0, -5, 5, -5, 5, 0] : 0
               }}
               transition={{
                 rotate: isDropTarget ? { repeat: Infinity, duration: 0.5 } : { duration: 0.3 }
               }}
-              className={`w-16 h-16 rounded-full flex items-center justify-center shadow-sm transition-colors relative z-10 ${
-                isDropTarget || selectedFile ? "bg-brand text-white shadow-brand/20" : "bg-white text-brand"
-              }`}
+              className={`w-16 h-16 rounded-full flex items-center justify-center shadow-sm transition-colors relative z-10 ${isDropTarget || selectedFile ? "bg-brand text-white shadow-brand/20" : "bg-white text-brand"
+                }`}
             >
               <span
                 className="material-symbols-outlined text-3xl"
@@ -113,7 +111,7 @@ export function AdaptationCard() {
             <h2 className="text-2xl font-bold text-slate-900 mb-3 tracking-tight">
               {isDropTarget ? "Drop it here!" : selectedFile ? "Ready to Adapt" : "The Adaptation"}
             </h2>
-            
+
             <div className="h-20 flex items-start justify-center w-full">
               <AnimatePresence mode="wait">
                 {selectedFile && !isDropTarget ? (
@@ -128,7 +126,7 @@ export function AdaptationCard() {
                       <span className="text-sm font-medium text-slate-700 truncate max-w-[180px]">
                         {selectedFile.name}
                       </span>
-                      <button 
+                      <button
                         onClick={clearSelection}
                         className="ml-2 text-slate-400 hover:text-red-500 transition-colors cursor-pointer p-0.5"
                       >
@@ -138,15 +136,15 @@ export function AdaptationCard() {
                     <p className="text-slate-400 text-xs mt-3 font-medium">Click send to upload and analyze</p>
                   </motion.div>
                 ) : (
-                  <motion.p 
+                  <motion.p
                     key="default-text"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     className="text-slate-500 leading-relaxed text-[0.95rem] max-w-sm"
                   >
-                    {isDropTarget 
-                      ? "Release to stage your resume" 
+                    {isDropTarget
+                      ? "Release to stage your resume"
                       : "Drop your existing resume here or paste a job link to tailor perfectly to the role requirements."}
                   </motion.p>
                 )}
@@ -176,7 +174,7 @@ export function AdaptationCard() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                   >
-                    <Button 
+                    <Button
                       onClick={handleSend}
                       className="w-full bg-brand text-white font-bold py-4 px-6 rounded-xl transition-all hover:bg-brand/90 hover:shadow-lg hover:shadow-brand/20 active:scale-[0.98] shadow-md cursor-pointer flex items-center justify-center"
                     >

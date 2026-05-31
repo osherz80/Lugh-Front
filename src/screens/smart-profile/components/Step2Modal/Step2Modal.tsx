@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StepModal } from '../StepModal/StepModal';
-import { Button, Heading, Input, TextArea, TextField, FieldError } from 'react-aria-components';
+import { Autocomplete, Button, Heading, Input, ListBox, ListBoxItem, SearchField, TextArea, TextField, FieldError, useFilter } from 'react-aria-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Search, Sparkles } from 'lucide-react';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
 import { useStep2Modal } from './useStep2Modal';
 import { Controller } from 'react-hook-form';
-import { INITIAL_SKILLS_SUGGESTIONS } from '@/common/consts';
+import { INITIAL_SKILLS_SUGGESTIONS, UNIVERSAL_AUTOCOMPLETE_SKILLS } from '@/common/consts';
 
 interface Step2ModalProps {
   isOpen: boolean;
@@ -27,6 +27,18 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
     toggleExpand,
   } = useStep2Modal(isOpen);
 
+  const { contains } = useFilter({ sensitivity: 'base' });
+  const [searchValue, setSearchValue] = useState('');
+
+  const availableSkills = UNIVERSAL_AUTOCOMPLETE_SKILLS.filter(
+    (skill) => !selectedSkillNames.includes(skill)
+  );
+
+  const handleSkillSelect = (skillName: string) => {
+    toggleSkill(skillName);
+    setSearchValue('');
+  };
+
   return (
     <StepModal
       isOpen={isOpen}
@@ -41,15 +53,47 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
             subTitle="This data powers our AI to match you with top-tier opportunities."
           />
 
-          {/* Skill Search */}
+          {/* Skill Search Autocomplete */}
           <div className="relative mb-8">
-            <div className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-              <Search size={20} />
-            </div>
-            <Input
-              placeholder="Search and add your core technical skills or professional..."
-              className="w-full bg-[#f1f5f9] border-none rounded-2xl p-5 pl-14 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
-            />
+            <Autocomplete
+              inputValue={searchValue}
+              onInputChange={setSearchValue}
+              filter={contains}
+            >
+              <SearchField
+                aria-label="Search skills"
+                className="relative w-full"
+              >
+                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none z-10">
+                  <Search size={20} />
+                </div>
+                <Input
+                  placeholder="Search and add your core technical skills or professional..."
+                  className="w-full bg-[#f1f5f9] border-none rounded-2xl p-5 pl-14 text-[16px] placeholder:text-slate-400 focus:ring-2 focus:ring-[#00a18a]/20 outline-none transition-all font-medium text-slate-700"
+                />
+              </SearchField>
+              {searchValue.length > 0 && (
+                <ListBox
+                  aria-label="Skill suggestions"
+                  items={availableSkills.map((skill) => ({ id: skill, name: skill }))}
+                  onAction={(key) => handleSkillSelect(key as string)}
+                  renderEmptyState={() => (
+                    <div className="p-4 text-slate-400 text-center text-[14px]">No matching skills found.</div>
+                  )}
+                  className="absolute z-20 w-full mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 max-h-[200px] overflow-y-auto"
+                >
+                  {(item) => (
+                    <ListBoxItem
+                      id={item.id}
+                      textValue={item.name}
+                      className="px-5 py-3 text-[14px] font-medium text-slate-700 cursor-pointer hover:bg-[#00a18a]/10 hover:text-[#005c4d] transition-colors outline-none data-[focused]:bg-[#00a18a]/10 data-[focused]:text-[#005c4d]"
+                    >
+                      {item.name}
+                    </ListBoxItem>
+                  )}
+                </ListBox>
+              )}
+            </Autocomplete>
           </div>
 
           {/* Skills Chips */}
@@ -78,7 +122,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
           <div>
             <Heading className="text-[#1e293b] font-[900] text-[20px] tracking-tight ml-1">My Skills</Heading>
             {selectedSkillNames.length === 0 ? (
-              <p className="text-slate-500 italic">No skill was selected</p>
+              <p className="mb-8 mt-1 text-slate-500 italic">No skill was selected</p>
             ) : (
               <div className="flex flex-wrap gap-3 mt-5">
                 {selectedSkillNames.map((skillName) => (

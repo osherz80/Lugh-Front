@@ -45,3 +45,7 @@ export const UNIVERSAL_AUTOCOMPLETE_SKILLS = [
     "Team Leadership", "Cross-functional Collaboration", "Problem Solving",
     "Public Speaking", "Technical Writing", "Agile Project Management"
 ];
+
+export const localStorageKeys = {
+    SMART_PROFILE: 'smartProfile',
+}

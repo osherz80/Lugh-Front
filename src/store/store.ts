@@ -1,9 +1,21 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, Middleware } from "@reduxjs/toolkit";
 import appReducer from "@/store/features/appSlice";
 import authReducer from "@/store/features/authSlice";
 import cvReducer from "@/store/features/cvSlice";
 import smartProfileReducer from "@/store/features/smartProfileSlice";
 import { api } from "@/store/services/api/api";
+import { localStorageKeys } from "@/common/consts";
+
+const persistSmartProfileMiddleware: Middleware = (storeApi) => (next) => (action: any) => {
+  const result = next(action);
+  if (action.type?.startsWith(localStorageKeys.SMART_PROFILE + '/')) {
+    const state = storeApi.getState() as any;
+    if (typeof window !== "undefined") {
+      localStorage.setItem(localStorageKeys.SMART_PROFILE, JSON.stringify(state.smartProfile));
+    }
+  }
+  return result;
+};
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +26,9 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+    getDefaultMiddleware()
+      .concat(api.middleware)
+      .concat(persistSmartProfileMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

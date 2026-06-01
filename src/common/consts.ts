@@ -47,5 +47,6 @@ export const UNIVERSAL_AUTOCOMPLETE_SKILLS = [
 ];
 
 export const localStorageKeys = {
+    USER_STORAGE: 'userStorage',
     SMART_PROFILE: 'smartProfile',
 }

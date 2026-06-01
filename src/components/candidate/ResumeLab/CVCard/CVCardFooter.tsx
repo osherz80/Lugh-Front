@@ -10,7 +10,7 @@ export function CVCardFooter({ updatedAt, fileName }: CVCardFooterProps) {
     return (
         <div className="flex items-center justify-between pt-5">
             <DateTag date={updatedAt} size="lg" />
-            <Tag label={fileName.split(".")[1].toUpperCase()} size="lg" shape="box" onClick={() => { }} />
+            <Tag label={fileName.split(".")[1]?.toUpperCase() || "PDF"} size="lg" shape="box" onClick={() => { }} />
         </div>
     );
 }

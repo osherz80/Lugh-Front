@@ -1,8 +1,8 @@
 import { useReducer, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { useCreateSmartProfileMutation } from "@/store/services/api/cv";
-import { useGenerateCvMutation } from "@/store/services/api/smartProfile";
+import { useCvFromSmartProfileMutation } from "@/store/services/api/cv";
+
 
 type ModalState = {
     activeStep: number | null;
@@ -32,7 +32,7 @@ const initialState: ModalState = {
 
 export const useSmartProfile = () => {
     const profileData = useSelector((state: RootState) => state.smartProfile);
-    const [smartProfileToCv, { isLoading: isSending, data: cvData }] = useGenerateCvMutation();
+    const [smartProfileToCv, { isLoading: isSending, data: cvData }] = useCvFromSmartProfileMutation();
 
     const [state, dispatch] = useReducer(modalReducer, initialState);
 

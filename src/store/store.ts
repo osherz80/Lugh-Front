@@ -6,12 +6,18 @@ import smartProfileReducer from "@/store/features/smartProfileSlice";
 import { api } from "@/store/services/api/api";
 import { localStorageKeys } from "@/common/consts";
 
-const persistSmartProfileMiddleware: Middleware = (storeApi) => (next) => (action: any) => {
+const persistStateSlicesMiddleware: Middleware = (storeApi) => (next) => (action: any) => {
   const result = next(action);
   if (action.type?.startsWith(localStorageKeys.SMART_PROFILE + '/')) {
     const state = storeApi.getState() as any;
     if (typeof window !== "undefined") {
       localStorage.setItem(localStorageKeys.SMART_PROFILE, JSON.stringify(state.smartProfile));
+    }
+  }
+  if (action.type?.startsWith('auth/')) {
+    const state = storeApi.getState() as any;
+    if (typeof window !== "undefined") {
+      localStorage.setItem(localStorageKeys.USER_STORAGE, JSON.stringify(state.auth.user));
     }
   }
   return result;
@@ -28,7 +34,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(api.middleware)
-      .concat(persistSmartProfileMiddleware),
+      .concat(persistStateSlicesMiddleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

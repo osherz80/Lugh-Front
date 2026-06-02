@@ -30,7 +30,7 @@ export const cvApi = api.injectEndpoints({
                 body: profileData,
             }),
         }),
-        cvFromSmartProfile: builder.mutation<any, { smartProfileId: string }>({
+        cvFromSmartProfile: builder.mutation<CV, { smartProfileId: string }>({
             query: ({ smartProfileId }) => ({
                 url: `/cv/from-profile/${smartProfileId}`,
                 method: "POST",

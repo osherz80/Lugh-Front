@@ -1,24 +1,28 @@
+import React from "react";
 import { CV } from "@/store/types/cv";
 import { DonutChart } from "@/components/shared/DonutChart/DonutChart";
 import { CVSkeleton } from "@/components/candidate/ResumeLab/CVCard/CVSkeleton";
 import { Tag } from "@/components/shared/Tag/Tag";
 import { MasterTag } from "./MasterTag";
 import { CVCardFooter } from "./CVCardFooter";
-
+import { Eye } from "lucide-react";
 
 interface CVCardProps extends CV {
     onClick?: () => void;
     isActive?: boolean;
+    onPreviewClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export function CVCard({
     overallScore,
     roleTag,
     fileName,
+    fileUrl,
     isMaster,
     updatedAt,
     onClick,
-    isActive
+    isActive,
+    onPreviewClick
 }: CVCardProps) {
 
     const shadow = (isMaster || isActive)
@@ -35,6 +39,21 @@ export function CVCard({
             className={`relative bg-white rounded-[2rem] p-6 border transition-all duration-300 flex flex-col hover:-translate-y-1.5 cursor-pointer ${shadow} ${activeStyles}`}
         >
             {isMaster && <MasterTag />}
+
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    if (onPreviewClick) {
+                        onPreviewClick(e);
+                    } else if (fileUrl) {
+                        window.open(fileUrl, "_blank");
+                    }
+                }}
+                className="absolute top-8 right-8 p-3 rounded-full bg-white/80 backdrop-blur-md text-slate-500 hover:text-brand hover:scale-110 active:scale-95 border border-slate-200/50 shadow-sm hover:shadow-md transition-all duration-300"
+                aria-label="Preview CV"
+            >
+                <Eye className="w-4.5 h-4.5" />
+            </button>
 
             <CVSkeleton />
 

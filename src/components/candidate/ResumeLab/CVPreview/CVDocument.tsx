@@ -1,7 +1,8 @@
 import React from "react";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Link, Svg, Path } from "@react-pdf/renderer";
 import { CV } from "@/store/types/cv";
 import { FullSmartProfile } from "@/store/types/smartProfile";
+import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 
 // Create custom PDF styles conforming to high design standards
 const styles = StyleSheet.create({
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#026b5d",
     fontWeight: "bold",
+    marginTop: 6,
     marginBottom: 8,
   },
   contactRow: {
@@ -35,9 +37,30 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     fontSize: 9,
     color: "#64748b",
+    alignItems: "center",
   },
   contactItem: {
     marginRight: 15,
+    textDecoration: "none",
+  },
+  linkedinPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#eff6ff",
+    borderWidth: 0.5,
+    borderColor: "#bfdbfe",
+    borderRadius: 4,
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 5,
+    paddingRight: 5,
+    marginRight: 15,
+    textDecoration: "none",
+  },
+  linkedinIcon: {
+    width: 9,
+    height: 9,
   },
   section: {
     marginBottom: 20,
@@ -79,15 +102,55 @@ const styles = StyleSheet.create({
     color: "#475569",
     marginTop: 2,
   },
+  tableRow: {
+    flexDirection: "row",
+    gap: 12,
+    marginTop: 5,
+  },
+  tableColumn: {
+    flexDirection: "column",
+    flex: 1,
+    borderWidth: 0.5,
+    borderColor: "#cbd5e1",
+    borderRadius: 4,
+    overflow: "hidden",
+  },
+  columnHeader: {
+    backgroundColor: "#f8fafc",
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 8,
+    paddingRight: 8,
+    fontSize: 8.5,
+    fontWeight: "bold",
+    color: "#0f172a",
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#cbd5e1",
+    textAlign: "center",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  columnCell: {
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 8,
+    paddingRight: 8,
+    fontSize: 8,
+    color: "#334155",
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#f1f5f9",
+    textAlign: "center",
+  },
 });
 
 interface CVDocumentProps {
   profile: FullSmartProfile;
-  cv?: CV | null;
+  cv: CV;
 }
 
 export function CVDocument({ profile, cv }: CVDocumentProps) {
   const { basics, contact, persona, experience, education } = profile;
+  const { structuredSkills } = cv;
 
   // Derive display values from profile with fallbacks from cv or default placeholders
   const fullName = basics?.fullName || "Candidate Name";
@@ -96,9 +159,9 @@ export function CVDocument({ profile, cv }: CVDocumentProps) {
   const phone = contact?.phone || "";
   const linkedin = contact?.linkedin || "";
   const portfolio = contact?.portfolio || "";
-  
+
   // Use the persona story as professional summary, fall back to cv.content if story is empty
-  const summary = persona?.story || cv?.content || "";
+  const summary = cv?.summary || persona?.story || "";
 
   return (
     <Document title={`${fullName} - Resume`}>
@@ -110,8 +173,16 @@ export function CVDocument({ profile, cv }: CVDocumentProps) {
           <View style={styles.contactRow}>
             {email ? <Text style={styles.contactItem}>Email: {email}</Text> : null}
             {phone ? <Text style={styles.contactItem}>Phone: {phone}</Text> : null}
-            {linkedin ? <Text style={styles.contactItem}>LinkedIn: {linkedin}</Text> : null}
-            {portfolio ? <Text style={styles.contactItem}>Portfolio: {portfolio}</Text> : null}
+          </View>
+          <View style={styles.contactRow}>
+            {linkedin ? (
+              <Link src={linkedin} style={styles.linkedinPill}>
+                <Svg viewBox={`0 0 ${faLinkedinIn.icon[0]} ${faLinkedinIn.icon[1]}`} style={styles.linkedinIcon}>
+                  <Path d={faLinkedinIn.icon[4] as string} fill="#0077B5" />
+                </Svg>
+              </Link>
+            ) : null}
+            {portfolio ? <Link src={portfolio} style={styles.contactItem}>Portfolio</Link> : null}
           </View>
         </View>
 
@@ -140,6 +211,30 @@ export function CVDocument({ profile, cv }: CVDocumentProps) {
                 <Text style={styles.descText}>{exp.description}</Text>
               </View>
             ))}
+          </View>
+        ) : null}
+
+        {structuredSkills && structuredSkills.length > 0 ? (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Skills</Text>
+            <View style={styles.tableRow}>
+              {structuredSkills.map((skillItem, index) => (
+                <View key={index} style={styles.tableColumn}>
+                  <Text style={styles.columnHeader}>{skillItem.category}</Text>
+                  {skillItem.skills.map((skill, sIdx) => (
+                    <Text
+                      key={sIdx}
+                      style={[
+                        styles.columnCell,
+                        sIdx === skillItem.skills.length - 1 ? { borderBottomWidth: 0 } : {},
+                      ]}
+                    >
+                      {skill}
+                    </Text>
+                  ))}
+                </View>
+              ))}
+            </View>
           </View>
         ) : null}
 

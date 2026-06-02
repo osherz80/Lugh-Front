@@ -5,6 +5,11 @@ export type CVTip = {
     gain: number;
 }
 
+export type SkillItem = {
+    category: string;
+    skills: string[];
+}
+
 export type CV = {
     id: string;
     candidateId: string;
@@ -19,6 +24,8 @@ export type CV = {
     layoutScore: number;
     embedding?: number[];
     content?: string;
+    summary?: string;
+    structuredSkills: SkillItem[]
     tips: CVTip[];
     createdAt: Date;
     updatedAt: Date;

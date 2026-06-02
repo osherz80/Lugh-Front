@@ -5,12 +5,14 @@ import { CVSkeleton } from "@/components/candidate/ResumeLab/CVCard/CVSkeleton";
 import { Tag } from "@/components/shared/Tag/Tag";
 import { MasterTag } from "./MasterTag";
 import { CVCardFooter } from "./CVCardFooter";
-import { Eye } from "lucide-react";
+import { Eye, Edit, Edit2, X, Trash, Trash2, } from "lucide-react";
 
 interface CVCardProps extends CV {
     onClick?: () => void;
     isActive?: boolean;
     onPreviewClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onEditClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onDeleteClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export function CVCard({
@@ -22,7 +24,9 @@ export function CVCard({
     updatedAt,
     onClick,
     isActive,
-    onPreviewClick
+    onPreviewClick,
+    onEditClick,
+    onDeleteClick
 }: CVCardProps) {
 
     const shadow = (isMaster || isActive)
@@ -53,6 +57,34 @@ export function CVCard({
                 aria-label="Preview CV"
             >
                 <Eye className="w-4.5 h-4.5" />
+            </button>
+
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    if (onEditClick) {
+                        onEditClick(e);
+                    } else if (fileUrl) {
+                        window.open(fileUrl, "_blank");
+                    }
+                }}
+                className="absolute top-22 right-8 p-3 rounded-full bg-white/80 backdrop-blur-md text-slate-500 hover:text-brand hover:scale-110 active:scale-95 border border-slate-200/50 shadow-sm hover:shadow-md transition-all duration-300"
+                aria-label="Edit CV"
+            >
+                <Edit2 className="w-4.5 h-4.5" />
+            </button>
+
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    if (onDeleteClick) {
+                        onDeleteClick(e);
+                    }
+                }}
+                className="absolute top-36 right-8 p-3 rounded-full bg-white/80 backdrop-blur-md text-slate-500 hover:text-red-600 hover:scale-110 active:scale-95 border border-slate-200/50 shadow-sm hover:shadow-md transition-all duration-300"
+                aria-label="Delete CV"
+            >
+                <Trash2 className="w-4.5 h-4.5" />
             </button>
 
             <CVSkeleton />

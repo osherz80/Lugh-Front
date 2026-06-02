@@ -5,10 +5,11 @@ import { CVCard } from "./CVCard/CVCard";
 interface CVListProps {
   cvs: CV[];
   onCvClick: (cv: CV) => void;
+  onPreviewClick?: (cv: CV) => void;
   currentCvId?: string;
 }
 
-export function CVList({ cvs, onCvClick, currentCvId }: CVListProps) {
+export function CVList({ cvs, onCvClick, onPreviewClick, currentCvId }: CVListProps) {
   return (
     <>
       <header className="mb-10">
@@ -27,6 +28,7 @@ export function CVList({ cvs, onCvClick, currentCvId }: CVListProps) {
           <CVCard
             key={cv.id}
             onClick={() => onCvClick(cv)}
+            onPreviewClick={() => onPreviewClick?.(cv)}
             isActive={cv.id === currentCvId}
             {...cv}
           />

@@ -8,6 +8,9 @@ import { AdaptationCard } from "@/components/candidate/ResumeLab/AdaptationCard"
 import { CVList } from "@/components/candidate/ResumeLab/CVList";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useResumeLab } from "./useResumeLab";
+import { useState } from "react";
+import { CV } from "@/store/types/cv";
+import { CVPreviewModal } from "@/components/candidate/ResumeLab/CVPreview/CVPreviewModal";
 
 
 /**
@@ -17,6 +20,7 @@ export const ResumeLabScreen = () => {
   const dispatch = useAppDispatch();
   const cvs = useAppSelector((state) => state.cv.cvs);
   const { currentCv, handleCvClick } = useResumeLab();
+  const [previewCv, setPreviewCv] = useState<CV | null>(null);
 
   return (
     <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden bg-canvas">
@@ -32,6 +36,7 @@ export const ResumeLabScreen = () => {
           <CVList
             cvs={cvs}
             onCvClick={handleCvClick}
+            onPreviewClick={(cv) => setPreviewCv(cv)}
             currentCvId={currentCv?.id}
           />
         </div>
@@ -39,6 +44,13 @@ export const ResumeLabScreen = () => {
 
       {/* Right Sidebar - Analysis & Insights */}
       <ResumeAnalysisSidebar cv={currentCv} />
+
+      {/* CV PDF Preview Modal */}
+      <CVPreviewModal
+        isOpen={previewCv !== null}
+        onClose={() => setPreviewCv(null)}
+        cv={previewCv}
+      />
     </main>
   );
 };

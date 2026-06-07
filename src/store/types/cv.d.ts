@@ -12,7 +12,8 @@ export type SkillItem = {
 
 export type CV = {
     id: string;
-    candidateId: string;
+    candidateId?: string;
+    profileId?: string;
     roleTag: string;
     fileName: string;
     fileUrl?: string;
@@ -29,6 +30,13 @@ export type CV = {
     tips: CVTip[];
     createdAt: Date;
     updatedAt: Date;
+    country?: string;
+    city?: string;
+    email?: string;
+    phone?: string;
+    linkedin?: string;
+    portfolio?: string;
+    github?: string;
 }
 
 export type CVRes = {

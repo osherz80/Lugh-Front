@@ -6,10 +6,11 @@ interface CVListProps {
   cvs: CV[];
   onCvClick: (cv: CV) => void;
   onPreviewClick?: (cv: CV) => void;
+  onEditClick?: (cv: CV) => void;
   currentCvId?: string;
 }
 
-export function CVList({ cvs, onCvClick, onPreviewClick, currentCvId }: CVListProps) {
+export function CVList({ cvs, onCvClick, onPreviewClick, onEditClick, currentCvId }: CVListProps) {
   return (
     <>
       <header className="mb-10">
@@ -29,6 +30,7 @@ export function CVList({ cvs, onCvClick, onPreviewClick, currentCvId }: CVListPr
             key={cv.id}
             onClick={() => onCvClick(cv)}
             onPreviewClick={() => onPreviewClick?.(cv)}
+            onEditClick={() => onEditClick?.(cv)}
             isActive={cv.id === currentCvId}
             {...cv}
           />

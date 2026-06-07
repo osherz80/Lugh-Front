@@ -41,6 +41,7 @@ export type Contact = {
     email: string;
     linkedin?: string;
     portfolio?: string;
+    github?: string;
     anythingElse?: string;
 }
 

@@ -24,6 +24,13 @@ export const cvSlice = createSlice({
     clearCvs: (state) => {
       state.cvs = [];
     },
+    updateCv: (state, action: PayloadAction<{ id: string; changes: Partial<CV> }>) => {
+      const { id, changes } = action.payload;
+      const cvIndex = state.cvs.findIndex((cv) => cv.id === id);
+      if (cvIndex !== -1) {
+        state.cvs[cvIndex] = { ...state.cvs[cvIndex], ...changes };
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(cvApi.endpoints.cvFromSmartProfile.matchFulfilled, (state, action) => {
@@ -35,5 +42,5 @@ export const cvSlice = createSlice({
   }
 });
 
-export const { setCvs, addCv, clearCvs } = cvSlice.actions;
+export const { setCvs, addCv, clearCvs, updateCv } = cvSlice.actions;
 export default cvSlice.reducer;

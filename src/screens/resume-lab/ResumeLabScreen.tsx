@@ -11,6 +11,7 @@ import { useResumeLab } from "./useResumeLab";
 import { useState } from "react";
 import { CV } from "@/store/types/cv";
 import { CVPreviewModal } from "@/components/candidate/ResumeLab/CVPreview/CVPreviewModal";
+import { CVEditModal } from "@/components/candidate/ResumeLab/CVEdit/CVEditModal";
 
 
 /**
@@ -21,6 +22,7 @@ export const ResumeLabScreen = () => {
   const cvs = useAppSelector((state) => state.cv.cvs);
   const { currentCv, handleCvClick } = useResumeLab();
   const [previewCv, setPreviewCv] = useState<CV | null>(null);
+  const [editCv, setEditCv] = useState<CV | null>(null);
 
   return (
     <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden bg-canvas">
@@ -37,6 +39,7 @@ export const ResumeLabScreen = () => {
             cvs={cvs}
             onCvClick={handleCvClick}
             onPreviewClick={(cv) => setPreviewCv(cv)}
+            onEditClick={(cv) => setEditCv(cv)}
             currentCvId={currentCv?.id}
           />
         </div>
@@ -50,6 +53,13 @@ export const ResumeLabScreen = () => {
         isOpen={previewCv !== null}
         onClose={() => setPreviewCv(null)}
         cv={previewCv}
+      />
+
+      {/* CV Edit Modal */}
+      <CVEditModal
+        isOpen={editCv !== null}
+        onClose={() => setEditCv(null)}
+        cv={editCv}
       />
     </main>
   );

@@ -10,7 +10,7 @@ export function Sidebar() {
   const navItems = [
     { href: "/recruiter", icon: "home", label: "Home" },
     { href: "#", icon: "account_circle", label: "Candidates" },
-    { href: "/recruiter/jobs", icon: "work", label: "Jobs" },
+    { href: "/recruiter/listed-jobs", icon: "work", label: "Jobs" },
   ];
 
   const bottomItems = [
@@ -21,7 +21,7 @@ export function Sidebar() {
   const NavLink = ({ href, icon, label }: { href: string; icon: string; label: string }) => {
     const isActive =
       pathname === href ||
-      (href === "/recruiter/jobs" && (pathname.startsWith("/recruiter/jobs") || pathname.startsWith("/recruiter/job-post")));
+      (href === "/recruiter/listed-jobs" && (pathname.startsWith("/recruiter/listed-jobs") || pathname.startsWith("/recruiter/post-job")));
 
     return (
       <Link

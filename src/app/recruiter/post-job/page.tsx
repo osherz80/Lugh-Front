@@ -1,6 +1,6 @@
-import PostJob from "@/screens/jobPost/JobPost";
+import PostJob from "@/screens/postJob/PostJob";
 
-export default function RecruiterHomePage() {
+export default function RecruiterPostJobPage() {
   return (
     <PostJob />
   );

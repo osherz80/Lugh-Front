@@ -9,7 +9,7 @@ export function ListedJobs() {
   const router = useRouter();
 
   const handlePostNewJob = () => {
-    router.push("/recruiter/job-post");
+    router.push("/recruiter/post-job");
   };
 
   return (

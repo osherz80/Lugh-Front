@@ -1,5 +1,5 @@
 import { ListedJobs } from "@/screens/listedJobs/ListedJobs";
 
-export default function RecruiterListedJobsPage() {
+export default function RecruiterJobsPage() {
   return <ListedJobs />;
 }

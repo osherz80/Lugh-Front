@@ -10,7 +10,7 @@ export function Sidebar() {
   const navItems = [
     { href: "/recruiter", icon: "home", label: "Home" },
     { href: "#", icon: "account_circle", label: "Candidates" },
-    { href: "/recruiter/job-post", icon: "description", label: "Jobs" },
+    { href: "/recruiter/jobs", icon: "work", label: "Jobs" },
   ];
 
   const bottomItems = [
@@ -19,9 +19,9 @@ export function Sidebar() {
   ];
 
   const NavLink = ({ href, icon, label }: { href: string; icon: string; label: string }) => {
-    // A navigation link is active if the current pathname matches its href
-    // or if the pathname is /recruiter/job-post and the link is Jobs (/recruiter/job-post)
-    const isActive = pathname === href || (href !== "#" && pathname.startsWith(href) && href !== "/recruiter");
+    const isActive =
+      pathname === href ||
+      (href === "/recruiter/jobs" && (pathname.startsWith("/recruiter/jobs") || pathname.startsWith("/recruiter/job-post")));
 
     return (
       <Link

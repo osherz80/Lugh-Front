@@ -18,7 +18,7 @@ export function ListedJobs() {
       <header className="px-12 py-8 flex justify-between items-end sticky top-0 bg-canvas/90 backdrop-blur-md z-40">
         <div>
           <h2 className="font-sans text-3xl font-bold text-zinc-900 tracking-tight">Active Jobs</h2>
-          <p className="text-zinc-500 mt-1 text-sm font-medium">Manage and monitor your open requisitions.</p>
+          <p className="text-zinc-500 mt-1 text-sm font-medium">Manage your positions.</p>
         </div>
         <Button
           variant="primary"
@@ -32,14 +32,14 @@ export function ListedJobs() {
       {/* Content Area */}
       <div className="px-12 pb-24 flex-1">
         <div className="max-w-5xl mx-auto space-y-8">
-          
+
           {/* Job Card 1 */}
           <div className="bg-white rounded-2xl p-8 shadow-lugh-blur relative overflow-hidden group hover:translate-y-[-2px] transition-all duration-300 border border-zinc-100/50">
             <div className="flex justify-between items-start mb-6">
               <div className="flex gap-6">
-                <img 
-                  className="w-16 h-16 rounded-xl object-cover bg-zinc-100 border border-zinc-200/50" 
-                  alt="Stellar Systems Logo" 
+                <img
+                  className="w-16 h-16 rounded-xl object-cover bg-zinc-100 border border-zinc-200/50"
+                  alt="Stellar Systems Logo"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYh8QJGqEP7dma8sP_jxxURgCO6eKrRPJMgOlEN_6MSr915VhJLPx8VbL0X4epxBCvjMZUsOnp3o5gxR5uDv_vJlo36W0bDhhsxS7dPtAY24Qb6m63sDqtsdUUDISWrjN2bdTcB_ouqiiyRK2AukWQgxCEVxO716av8YLo9MN7a__EoOiynAoVjLe4L34mYHX7K5Fg9eUuAu9g648v7C_wslRqHHSjxO_c0skAp_gtPdukDW_Y1wWrzKZwOEYyrECk0jA"
                 />
                 <div>
@@ -56,7 +56,7 @@ export function ListedJobs() {
               <div className="flex flex-col items-end gap-4">
                 <Button
                   variant="primary"
-                  onPress={() => {}}
+                  onPress={() => { }}
                 >
                   Apply Now
                 </Button>
@@ -94,7 +94,7 @@ export function ListedJobs() {
               <div className="flex flex-col items-end gap-4">
                 <Button
                   variant="outline"
-                  onPress={() => {}}
+                  onPress={() => { }}
                 >
                   Manage Job
                 </Button>

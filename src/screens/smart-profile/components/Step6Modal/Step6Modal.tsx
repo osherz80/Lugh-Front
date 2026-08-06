@@ -1,5 +1,5 @@
 import { Button, TextField, Label, Input, TextArea, FieldError } from 'react-aria-components';
-import { Mail, Phone, Globe, Link as LinkIcon, Sparkles } from 'lucide-react';
+import { Mail, Phone, Globe, Link as LinkIcon, Sparkles, Loader2 } from 'lucide-react';
 import { Controller } from 'react-hook-form';
 import { BrandIcon } from "@/components/shared/Icon/BrandIcon";
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
@@ -19,6 +19,7 @@ const Step6Modal = ({ isOpen, onOpenChange, icon }: Step6ModalProps) => {
     handleSubmit,
     errors,
     onSubmit,
+    isUpserting,
   } = useStep6Modal(isOpen);
 
   return (
@@ -153,7 +154,7 @@ const Step6Modal = ({ isOpen, onOpenChange, icon }: Step6ModalProps) => {
           {/* Did you know? Tip Box */}
           <div className="bg-[#eefcf9] border-l-[6px] border-[#00a18a] p-6 rounded-2xl flex gap-5 items-start mb-10 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-full opacity-10 pointer-events-none">
-               <Globe size={100} className="translate-x-10 translate-y-2" />
+              <Globe size={100} className="translate-x-10 translate-y-2" />
             </div>
             <div className="bg-[#00a18a] p-2.5 rounded-xl shrink-0 mt-1 shadow-lg shadow-[#00a18a]/20">
               <span className="material-symbols-outlined text-white text-[20px] fill-white/20">lightbulb</span>
@@ -175,10 +176,10 @@ const Step6Modal = ({ isOpen, onOpenChange, icon }: Step6ModalProps) => {
             </Button>
             <Button
               type="submit"
-              className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer flex items-center gap-3"
+              className="flex items-center gap-2 bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
               Complete Profile & View Final CV
-              <Sparkles size={18} className="animate-pulse" />
+              {isUpserting && <Loader2 size={18} className="animate-spin text-green-500" />}
             </Button>
           </div>
         </form>

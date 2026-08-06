@@ -8,6 +8,10 @@ import { AdaptationCard } from "@/components/candidate/ResumeLab/AdaptationCard"
 import { CVList } from "@/components/candidate/ResumeLab/CVList";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useResumeLab } from "./useResumeLab";
+import { useState } from "react";
+import { CV } from "@/store/types/cv";
+import { CVPreviewModal } from "@/components/candidate/ResumeLab/CVPreview/CVPreviewModal";
+import { CVEditModal } from "@/components/candidate/ResumeLab/CVEdit/CVEditModal";
 
 
 /**
@@ -17,6 +21,8 @@ export const ResumeLabScreen = () => {
   const dispatch = useAppDispatch();
   const cvs = useAppSelector((state) => state.cv.cvs);
   const { currentCv, handleCvClick } = useResumeLab();
+  const [previewCv, setPreviewCv] = useState<CV | null>(null);
+  const [editCv, setEditCv] = useState<CV | null>(null);
 
   return (
     <main className="ml-[16.25rem] pt-20 flex h-screen overflow-hidden bg-canvas">
@@ -32,6 +38,8 @@ export const ResumeLabScreen = () => {
           <CVList
             cvs={cvs}
             onCvClick={handleCvClick}
+            onPreviewClick={(cv) => setPreviewCv(cv)}
+            onEditClick={(cv) => setEditCv(cv)}
             currentCvId={currentCv?.id}
           />
         </div>
@@ -39,6 +47,20 @@ export const ResumeLabScreen = () => {
 
       {/* Right Sidebar - Analysis & Insights */}
       <ResumeAnalysisSidebar cv={currentCv} />
+
+      {/* CV PDF Preview Modal */}
+      <CVPreviewModal
+        isOpen={previewCv !== null}
+        onClose={() => setPreviewCv(null)}
+        cv={previewCv}
+      />
+
+      {/* CV Edit Modal */}
+      <CVEditModal
+        isOpen={editCv !== null}
+        onClose={() => setEditCv(null)}
+        cv={editCv}
+      />
     </main>
   );
 };

@@ -5,9 +5,15 @@ export type CVTip = {
     gain: number;
 }
 
+export type SkillItem = {
+    category: string;
+    skills: string[];
+}
+
 export type CV = {
     id: string;
-    candidateId: string;
+    candidateId?: string;
+    profileId?: string;
     roleTag: string;
     fileName: string;
     fileUrl?: string;
@@ -19,9 +25,18 @@ export type CV = {
     layoutScore: number;
     embedding?: number[];
     content?: string;
+    summary?: string;
+    structuredSkills: SkillItem[]
     tips: CVTip[];
     createdAt: Date;
     updatedAt: Date;
+    country?: string;
+    city?: string;
+    email?: string;
+    phone?: string;
+    linkedin?: string;
+    portfolio?: string;
+    github?: string;
 }
 
 export type CVRes = {

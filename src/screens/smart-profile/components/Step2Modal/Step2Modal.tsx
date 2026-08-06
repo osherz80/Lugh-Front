@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StepModal } from '../StepModal/StepModal';
 import { Autocomplete, Button, Heading, Input, ListBox, ListBoxItem, SearchField, TextArea, TextField, FieldError, useFilter } from 'react-aria-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Search, Sparkles } from 'lucide-react';
+import { Loader2, Search, Sparkles } from 'lucide-react';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
 import { useStep2Modal } from './useStep2Modal';
 import { Controller } from 'react-hook-form';
@@ -25,6 +25,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
     expandedSkills,
     toggleSkill,
     toggleExpand,
+    isUpserting,
   } = useStep2Modal(isOpen);
 
   const { contains } = useFilter({ sensitivity: 'base' });
@@ -33,6 +34,12 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
   const [customSkills, setCustomSkills] = useState<string[]>(() =>
     selectedSkillNames.filter((skill) => !UNIVERSAL_AUTOCOMPLETE_SKILLS.includes(skill))
   );
+
+  useEffect(() => {
+    setCustomSkills(
+      selectedSkillNames.filter((skill) => !UNIVERSAL_AUTOCOMPLETE_SKILLS.includes(skill))
+    );
+  }, [selectedSkillNames]);
 
   const allUniversalSkills = [
     ...UNIVERSAL_AUTOCOMPLETE_SKILLS,
@@ -44,15 +51,18 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
   );
 
   const trimmedSearch = searchValue.trim();
+
+  // Filter available skills based on search value case-insensitively
+  const filteredSkills = availableSkills.filter((skill) =>
+    trimmedSearch === '' || skill.toLowerCase().includes(trimmedSearch.toLowerCase())
+  );
+
   const isSkillAlreadySelected = selectedSkillNames.some(
     (skill) => skill.toLowerCase() === trimmedSearch.toLowerCase()
   );
-  const existsInUniversal = allUniversalSkills.some(
-    (skill) => skill.toLowerCase() === trimmedSearch.toLowerCase()
-  );
-  const showAddOption = trimmedSearch.length > 0 && !isSkillAlreadySelected && !existsInUniversal;
+  const showAddOption = trimmedSearch.length > 0 && !isSkillAlreadySelected;
 
-  const suggestions = availableSkills.map((skill) => ({ id: skill, name: skill }));
+  const suggestions = filteredSkills.map((skill) => ({ id: skill, name: skill }));
   if (showAddOption) {
     suggestions.push({
       id: `add-custom-skill:${trimmedSearch}`,
@@ -80,7 +90,18 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
       stepNumber={2}
     >
       {({ close }) => (
-        <form onSubmit={handleSubmit((data) => onSubmit(data, close))} className="flex flex-col h-full">
+        <form
+          onSubmit={handleSubmit(
+            (data) => {
+              console.log('Form valid, data:', data);
+              onSubmit(data, close);
+            },
+            (err) => {
+              console.error('Form invalid, errors:', err);
+            }
+          )}
+          className="flex flex-col h-full"
+        >
           <StepModalHeader
             icon={icon}
             title="Let's uncover your Professional DNA."
@@ -186,7 +207,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
                 <div className="space-y-4">
                   {selectedSkillNames.map((skillName) => {
                     const isExpanded = expandedSkills.includes(skillName);
-                    const currentLength = currentSkills[skillName]?.length || 0;
+                    const currentLength = (currentSkills[skillName] || '').length;
 
                     return (
                       <motion.div
@@ -206,7 +227,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
                             "Tell us a bit about your work with <span className="text-[#00a18a]">{skillName}</span>."
                           </p>
                           <div className="flex items-center gap-3">
-                            {currentSkills[skillName]?.trim().length > 0 && (
+                            {(currentSkills[skillName] || '').trim().length > 0 && (
                               <motion.span
                                 initial={{ scale: 0, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
@@ -243,6 +264,7 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
                                     >
                                       <TextArea
                                         {...field}
+                                        value={field.value ?? ""}
                                         maxLength={600}
                                         placeholder={`Feel free to write naturally. e.g., working with ${skillName} in...`}
                                         className="w-full bg-white border-2 border-[#00a18a]/20 rounded-2xl p-5 pb-10 text-[16px] placeholder:text-slate-300 focus:border-[#00a18a] outline-none transition-all font-medium text-slate-700 shadow-sm min-h-[140px] resize-none"
@@ -286,9 +308,10 @@ const Step2Modal = ({ isOpen, onOpenChange, icon }: Step2ModalProps) => {
             </Button>
             <Button
               type="submit"
-              className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
+              className="flex items-center gap-2 bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
-              Save & Continue to Arsenal
+              Save & Continue to Experience
+              {isUpserting && <Loader2 size={18} className="animate-spin text-green-500" />}
             </Button>
           </div>
         </form>

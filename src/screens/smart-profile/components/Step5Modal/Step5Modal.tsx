@@ -1,5 +1,5 @@
 import { Button, TextArea, TextField, Label, FieldError } from 'react-aria-components';
-import { Lightbulb, Check } from 'lucide-react';
+import { Lightbulb, Check, Loader2 } from 'lucide-react';
 import { Controller } from 'react-hook-form';
 import { StepModal } from '../StepModal/StepModal';
 import { StepModalHeader } from '../StepModalHeader/StepModalHeader';
@@ -44,6 +44,7 @@ const Step5Modal = ({ isOpen, onOpenChange, icon }: Step5ModalProps) => {
     selectedStrengths,
     toggleStyle,
     toggleStrength,
+    isUpserting,
   } = useStep5Modal(isOpen);
 
   return (
@@ -141,7 +142,7 @@ const Step5Modal = ({ isOpen, onOpenChange, icon }: Step5ModalProps) => {
                 name="story"
                 control={control}
                 render={({ field }) => (
-                  <TextField 
+                  <TextField
                     className="relative"
                     isInvalid={!!errors.story}
                   >
@@ -182,9 +183,10 @@ const Step5Modal = ({ isOpen, onOpenChange, icon }: Step5ModalProps) => {
             </Button>
             <Button
               type="submit"
-              className="bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
+              className="flex items-center gap-2 bg-[#005c4d] hover:bg-[#004d40] text-white font-bold py-4.5 px-10 rounded-[20px] transition-all shadow-xl shadow-[#005c4d]/20 active:scale-[0.98] text-[17px] cursor-pointer"
             >
-              Save & Continue to Reach
+              Save & Continue to Contact
+              {isUpserting && <Loader2 size={18} className="animate-spin text-green-500" />}
             </Button>
           </div>
         </form>

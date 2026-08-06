@@ -1,5 +1,5 @@
 "use client";
-import { SmartProfileScreen } from "@/screens/smart-profile/SmartProfileScreen";
+import { SmartProfileScreen } from "@/screens/smartProfile/SmartProfileScreen";
 
 export default function SmartProfilePage() {
   return (

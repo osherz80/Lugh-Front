@@ -1,4 +1,4 @@
-import { ResumeLabScreen } from "@/screens/resume-lab/ResumeLabScreen";
+import { ResumeLabScreen } from "@/screens/resumeLab/ResumeLabScreen";
 
 export default function ResumeLabPage() {
   return <ResumeLabScreen />;

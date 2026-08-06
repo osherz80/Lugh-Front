@@ -1,6 +1,5 @@
 import React from "react";
-import { Sidebar } from "@/components/candidate/Sidebar/Sidebar";
-import { Header } from "@/components/candidate/Header/Header";
+import { Sidebar } from "@/components/candidate/Sidebar/CandidateSidebar";
 
 export default function CandidateLayout({
   children,

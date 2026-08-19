@@ -4,10 +4,12 @@ services:
   web:
     build:
       context: .
-      args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
-        NEXT_GOOGLE_CLIENT_ID: ${NEXT_GOOGLE_CLIENT_ID}
+      dockerfile: Dockerfile.sandbox  # או Dockerfile.dev לפי השם שבחרת
     ports:
       - "3000:3000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+      - WATCHPACK_POLLING=true
     env_file:
-      - .env.local
+      - .env.local  # במידה ויש קובץ env

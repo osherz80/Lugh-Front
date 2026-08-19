@@ -1,8 +1,9 @@
 import { api } from '@/store/services/api/api'
+import { PostJob } from '@/store/types/job'
 
 export const jobApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        createJobPost: builder.mutation<any, { jobDescription: string; jobTitle: string }>({
+        createJobPost: builder.mutation<any, PostJob>({
             query: (jobData) => ({
                 url: "/jobs/create",
                 method: "POST",

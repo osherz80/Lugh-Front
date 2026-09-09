@@ -2,7 +2,7 @@ export type PostMethod = "auto" | "manual";
 
 export type EmploymentType = "full-time" | "part-time" | "contract" | "internship";
 
-export type Seniority = "junior" | "mid" | "senior" | "lead";
+export type ExperienceLevel = "junior" | "mid" | "senior" | "lead";
 
 export type WorkModel = "on-site" | "hybrid" | "remote";
 
@@ -12,13 +12,13 @@ export type ManualJobPost = {
     location: string;
     department: string;
     employmentType: EmploymentType;
-    seniority: Seniority;
+    experienceLevel: ExperienceLevel;
     workModel: WorkModel;
     responsibilities?: string[];
     requirements?: string[];
     niceToHave?: string[];
-    perks?: string[];
-    pitch?: string;
+    benefits?: string[];
+    aboutCompany?: string;
 }
 
 export type AutoJobPost = {

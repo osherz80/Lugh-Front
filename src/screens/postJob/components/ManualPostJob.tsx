@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/shared/Button/Button";
 import { useCreateJobPostMutation } from "@/store/services/api/job";
-import { EmploymentType, Seniority, WorkModel } from "@/store/types/job";
+import { EmploymentType, ExperienceLevel, WorkModel } from "@/store/types/job";
 
 export function ManualPostJob() {
   const router = useRouter();
@@ -14,14 +14,14 @@ export function ManualPostJob() {
   const [location, setLocation] = useState("San Francisco, CA");
 
   const [employmentType, setEmploymentType] = useState("Full-time");
-  const [seniority, setSeniority] = useState("Senior");
+  const [experienceLevel, setExperienceLevel] = useState("Senior");
   const [workModel, setWorkModel] = useState("Hybrid");
 
-  const [pitch, setPitch] = useState("Stellar Systems is building the next generation of cloud-native infrastructure tooling. We are a fast-growing team focused on developer productivity and high-performance frontend interfaces.");
+  const [aboutCompany, setAboutCompany] = useState("Stellar Systems is building the next generation of cloud-native infrastructure tooling. We are a fast-growing team focused on developer productivity and high-performance frontend interfaces.");
   const [responsibilities, setResponsibilities] = useState("Architect and implement modern micro-frontend applications using React, Next.js, and TypeScript. Collaborate closely with product managers and designers to craft performant UI experiences.");
   const [requirements, setRequirements] = useState("5+ years of experience with modern React, TypeScript, and state management. Strong understanding of frontend performance optimization and CSS design systems.");
   const [niceToHave, setNiceToHave] = useState("Experience with WebSockets, GraphQL, and micro-frontend architectures.");
-  const [perks, setPerks] = useState("Comprehensive health, dental, and vision insurance. Flexible PTO, remote workspace stipend, and annual learning & conference budget.");
+  const [benefits, setBenefits] = useState("Comprehensive health, dental, and vision insurance. Flexible PTO, remote workspace stipend, and annual learning & conference budget.");
 
   const [createJobPost, { isLoading }] = useCreateJobPostMutation();
 
@@ -33,17 +33,17 @@ export function ManualPostJob() {
         method: "manual",
         manual: {
           title: jobTitle,
-          description: pitch,
+          description: aboutCompany,
           location,
           department,
           employmentType: employmentType.toLowerCase() as EmploymentType,
-          seniority: seniority.toLowerCase() as Seniority,
+          experienceLevel: experienceLevel.toLowerCase() as ExperienceLevel,
           workModel: workModel.toLowerCase() as WorkModel,
           responsibilities: responsibilities ? [responsibilities] : undefined,
           requirements: requirements ? [requirements] : undefined,
           niceToHave: niceToHave ? [niceToHave] : undefined,
-          perks: perks ? [perks] : undefined,
-          pitch,
+          benefits: benefits ? [benefits] : undefined,
+          aboutCompany,
         },
       }).unwrap();
 
@@ -56,7 +56,7 @@ export function ManualPostJob() {
   };
 
   const employmentOptions = ["Full-time", "Part-time", "Contract", "Internship"];
-  const seniorityOptions = ["Junior", "Mid", "Senior", "Lead"];
+  const experienceLevelOptions = ["Junior", "Mid", "Senior", "Lead"];
   const workModelOptions = ["On-site", "Hybrid", "Remote"];
 
   return (
@@ -132,16 +132,16 @@ export function ManualPostJob() {
             </div>
           </div>
 
-          {/* Seniority */}
+          {/* experienceLevel */}
           <div className="space-y-3">
-            <label className="block text-sm font-medium text-zinc-700">Seniority</label>
+            <label className="block text-sm font-medium text-zinc-700">experienceLevel</label>
             <div className="flex flex-wrap gap-3">
-              {seniorityOptions.map((option) => (
+              {experienceLevelOptions.map((option) => (
                 <button
                   key={option}
                   type="button"
-                  onClick={() => setSeniority(option)}
-                  className={`px-5 py-2.5 rounded-xl font-medium text-sm transition-all shadow-sm active:scale-95 ${seniority === option
+                  onClick={() => setExperienceLevel(option)}
+                  className={`px-5 py-2.5 rounded-xl font-medium text-sm transition-all shadow-sm active:scale-95 ${experienceLevel === option
                     ? "bg-brand text-white"
                     : "bg-white border border-zinc-300/80 text-zinc-600 hover:border-brand hover:text-brand"
                     }`}
@@ -176,17 +176,17 @@ export function ManualPostJob() {
 
       <hr className="border-zinc-200/60" />
 
-      {/* Section 3: The Pitch */}
+      {/* Section 3: The aboutCompany */}
       <section className="space-y-6">
-        <h3 className="font-sans text-xl font-bold tracking-tight text-zinc-950">3. The Pitch</h3>
+        <h3 className="font-sans text-xl font-bold tracking-tight text-zinc-950">3. The aboutCompany</h3>
         <div className="space-y-6">
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-zinc-700">About Us / Pitch</label>
+            <label className="block text-sm font-medium text-zinc-700">About Us / aboutCompany</label>
             <textarea
               className="w-full px-4 py-3 rounded-xl border border-zinc-300/80 focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors outline-none text-zinc-900 resize-y min-h-[120px]"
               placeholder="Introduce your company and why someone should join..."
-              value={pitch}
-              onChange={(e) => setPitch(e.target.value)}
+              value={aboutCompany}
+              onChange={(e) => setAboutCompany(e.target.value)}
             />
           </div>
           <div className="space-y-2">
@@ -230,16 +230,16 @@ export function ManualPostJob() {
 
       <hr className="border-zinc-200/60" />
 
-      {/* Section 5: Perks */}
+      {/* Section 5: benefits */}
       <section className="space-y-6">
-        <h3 className="font-sans text-xl font-bold tracking-tight text-zinc-950">5. Perks</h3>
+        <h3 className="font-sans text-xl font-bold tracking-tight text-zinc-950">5. Benefits</h3>
         <div className="space-y-2">
           <label className="block text-sm font-medium text-zinc-700">Benefits & Perks</label>
           <textarea
             className="w-full px-4 py-3 rounded-xl border border-zinc-300/80 focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors outline-none text-zinc-900 resize-y min-h-[100px]"
             placeholder="Health insurance, PTO, learning budget, etc."
-            value={perks}
-            onChange={(e) => setPerks(e.target.value)}
+            value={benefits}
+            onChange={(e) => setBenefits(e.target.value)}
           />
         </div>
       </section>

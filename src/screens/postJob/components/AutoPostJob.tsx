@@ -9,7 +9,7 @@ export function AutoPostJob() {
   const router = useRouter();
   const [autoJobDescription, setAutoJobDescription] = useState("");
   const [autoJobSourceUrl, setAutoJobSourceUrl] = useState("");
-  
+
   const [createJobPost, { isLoading }] = useCreateJobPostMutation();
 
   const handleAutoGenerate = async () => {
@@ -39,9 +39,9 @@ export function AutoPostJob() {
     <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lugh-blur border border-zinc-200/50 p-8 md:p-12 space-y-10">
       {/* 1. Job Description */}
       <section className="space-y-4">
-        <h3 className="font-sans text-xl font-bold tracking-tight text-zinc-950">1. Job Description</h3>
+        <h3 className="font-sans text-xl font-bold tracking-tight text-zinc-950">1. Job Post</h3>
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-zinc-700">Paste full job description here...</label>
+          <label className="block text-sm font-medium text-zinc-700">Paste full job Page here, we will figure it out</label>
           <textarea
             className="w-full px-4 py-3 rounded-xl border border-zinc-300/80 focus:ring-2 focus:ring-brand/50 focus:border-brand transition-colors outline-none text-zinc-900 resize-y min-h-[220px]"
             placeholder="Paste full job description here..."

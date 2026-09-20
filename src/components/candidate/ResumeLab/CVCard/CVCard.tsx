@@ -96,7 +96,7 @@ export function CVCard({
                     </h3>
                     <div className="flex gap-2 mt-2.5">
                         <Tag
-                            label={roleTag.toUpperCase()}
+                            label={roleTag?.toUpperCase() || ""}
                             onClick={() => { }}
                             size="md"
                             shape="box"

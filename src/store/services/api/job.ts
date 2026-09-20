@@ -10,7 +10,7 @@ export const jobApi = api.injectEndpoints({
                 body: jobData,
             }),
         }),
-        searchJobs: builder.mutation<any, { jobSearch: string }>({
+        searchJobs: builder.mutation<any, { resource: "job" | "cv"; query: string }>({
             query: (data) => ({
                 url: "/jobs/search",
                 method: "POST",

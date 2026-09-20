@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { RightAside } from "@/components/candidate/RightAside/RightAside";
 import { JobSearch } from "@/components/candidate/JobSearch/JobSearch";
 import { JobFilters } from "@/components/candidate/JobFilters/JobFilters";
@@ -8,6 +8,8 @@ import { JobCard } from "@/components/candidate/JobCard/JobCard";
 import { useAppSelector } from "@/store/hooks";
 import { EmptyDashboard } from "@/components/candidate/EmptyState/EmptyDashboard";
 import { useCandidateHome } from "./useCandidateHome";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useSearchJobsMutation } from "@/store/services/api/job";
 
 const MOCK_JOBS = [
   {
@@ -54,13 +56,30 @@ export const CandidateHomeScreen = () => {
 
   const { cvs, error, isLoading } = useCandidateHome();
 
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 1000);
+  const [searchJobs] = useSearchJobsMutation();
+
+  useEffect(() => {
+    if (debouncedSearch.trim().length < 3) return;
+
+    searchJobs({ resource: "job", query: debouncedSearch.trim() })
+      .unwrap()
+      .then((res) => {
+        console.log("Job search response:", res);
+      })
+      .catch((err) => {
+        console.error("Job search error:", err);
+      });
+  }, [debouncedSearch, searchJobs]);
+
   return (
     <main className="ml-[16.25rem] flex h-screen overflow-hidden">
       {/* Main Content Area - Only this part scrolls */}
       <section className="flex-grow overflow-y-auto px-8 py-12 space-y-6 no-scrollbar">
         {hasCV ? (
           <>
-            <JobSearch />
+            <JobSearch value={search} onChange={setSearch} />
             <JobFilters />
 
             <div className="space-y-6 pb-12">
